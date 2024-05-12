@@ -1,4 +1,29 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
   
+
+body {
+  @apply font-libre-franklin text-body text-text;
+}
+
+/* TYPOGRAPHY */
+h1 {
+  @apply font-lato text-h1;
+}
+
+h2 {
+  @apply font-lato text-h2;
+}
+
+h3 {
+  @apply font-lato text-h3;
+}
+
+h4 {
+  @apply font-lato text-h4;
+}
+
+h5 {
+  @apply font-lato text-h5;
+}

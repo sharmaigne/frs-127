@@ -5,7 +5,7 @@ import university from "@/public/icons/university.svg";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-clip">
       <div className="flex-1 p-3">
         <div className="flex gap-2 items-center">
           <Icon

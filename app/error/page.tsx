@@ -1,11 +1,13 @@
 import Link from "next/link";
 const ErrorPage = () => {
   return (
-    <div className="flex justify-center">
-      <h1>Sorry, something went wrong.</h1>
+    <div className="flex-col justify-center items-center w-screen h-screen">
+      <h2>Sorry, something went wrong.</h2>
       <Link href="/">
-        <a>Go back to home.</a>
+        Go back to home.
       </Link>
     </div>
   );
 }
+
+export default ErrorPage;

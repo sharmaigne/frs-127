@@ -1,19 +1,28 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, type NextResponse } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
+
+export async function middleware(request: NextRequest): Promise<NextResponse> {
+    //  const  supabase = createClient()
+    return await updateSession(request)
+    
+    // const {data, error} = await supabase.auth.getUser()
+
+    // if (error || !data?.user) {
+    //     // Redirect to login page if there's no user
+    //     redirect('/login')
+    // }
+
+    // return 
+
+
 }
+
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!api|login|signup|password-reset|email|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

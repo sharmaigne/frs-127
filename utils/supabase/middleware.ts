@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { redirect } from 'next/navigation'
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -54,7 +55,10 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getUser()
+  const {error, data} = await supabase.auth.getUser()
+  if (error || !data?.user) {
+    return NextResponse.redirect(new URL('/login', request.nextUrl))
+  }
 
   return response
 }

@@ -15,7 +15,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           />
           <p className="font-bold text-lg">UP Reserve Hub</p>
         </div>
-        <div className="flex items-center justify-center">{children}</div>
+        <div className="flex items-center justify-center h-full">{children}</div>
       </div>
 
       {/* right side: bg + logo */}

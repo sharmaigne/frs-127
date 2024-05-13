@@ -44,7 +44,7 @@ const LoginPage = () => {
                   Email
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="email@gmail.com" {...field} />
+                  <Input placeholder="name@up.edu.ph" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,7 +84,7 @@ const LoginPage = () => {
 
 const Header = () => {
   return (
-    <div className="gap-3">
+    <div className="gap-3 text-center">
       <h2 className="font-bold text-primary">Log In to UP Reserve Hub</h2>
       <p className="text-lg">Welcome Back! Reserve UP Facilities with ease.</p>
     </div>

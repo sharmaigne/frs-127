@@ -69,7 +69,7 @@ const SignupPage = () => {
                 <FormItem className="col-span-1">
                   <FormLabel>M.I.</FormLabel>
                   <FormControl>
-                    <Input placeholder="D." {...field} />
+                    <Input placeholder="D" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -130,7 +130,7 @@ const SignupPage = () => {
             )}
           />
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            CONTINUE
+            Sign Up
           </Button>
         </form>
       </Form>

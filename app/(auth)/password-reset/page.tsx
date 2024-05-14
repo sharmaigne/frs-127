@@ -36,7 +36,7 @@ const PasswordResetPage = () => {
 
   return (
     <div>
-      <div className="flex-col justify-center mb-10">
+      <div className="flex-col justify-center mb-10 text-center">
         <h1 className="text-primary font-bold">Forgot Your Password?</h1>
         <p>Enter your new password to secure your account.</p>
       </div>

@@ -20,8 +20,8 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
 
       {/* right side: bg + logo */}
       <div
-        className="flex-1 bg-cover bg-center
-          max-h-full flex items-center justify-center"
+        className={`flex-1 bg-cover bg-center
+          max-h-full flex items-center justify-center`}
         style={{ backgroundImage: `url(${maroonBg.src})` }}
       >
         <Image

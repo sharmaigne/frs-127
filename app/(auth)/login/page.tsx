@@ -18,7 +18,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/app/(auth)/_api/schemas";
 import type { LoginFields } from "@/app/(auth)/_api/types";
 
-import {login, signup} from './actions';
+import { login, signup } from "./actions";
+import GoogleAuth from "../components/GoogleAuth";
 const LoginPage = () => {
   const form = useForm<LoginFields>({
     resolver: zodResolver(LoginSchema),
@@ -28,13 +29,18 @@ const LoginPage = () => {
     },
   });
 
+  const handleLogin = (data: LoginFields) => {
+    console.log(data);
+    login(JSON.stringify(data));
+  }
+
   return (
-    <div className="w-9/12 flex flex-col gap-10">
+    <div className="w-9/12 flex flex-col">
       <Header />
       <Form {...form}>
         <form
-          // onSubmit={form.handleSubmit(handleCredentialSubmit)}
-          className="flex flex-col gap-5"
+          onSubmit={form.handleSubmit(handleLogin)}
+          className="flex flex-col gap-5 mt-10"
         >
           <FormField
             control={form.control}
@@ -73,12 +79,17 @@ const LoginPage = () => {
             forgot password?
           </Link>
 
-          <Button type="submit" disabled={form.formState.isSubmitting}>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="mt-4"
+          >
             Log In
           </Button>
         </form>
-        <Footer />
       </Form>
+      <GoogleAuth />
+      <Footer />
     </div>
   );
 };

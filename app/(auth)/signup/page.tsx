@@ -18,6 +18,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema } from "@/app/(auth)/_api/schemas";
 import type { SignupFields } from "@/app/(auth)/_api/types";
 
+import GoogleAuth from "@/app/(auth)/components/GoogleAuth";
+import { signup } from "../login/actions";
+
 const SignupPage = () => {
   const form = useForm<SignupFields>({
     resolver: zodResolver(SignupSchema),
@@ -31,21 +34,23 @@ const SignupPage = () => {
     },
   });
 
+  const handleSignup = (data: SignupFields) => {
+    signup(JSON.stringify(data));
+  }
+
   if (form.formState.isSubmitSuccessful) return <SuccessFeedback />;
 
   return (
     <div className="w-9/12">
       <div className="text-center pb-10">
-      <h2 className="font-bold text-primary text-center">Sign Up to UP Reserve Hub</h2>
-      <p>
-        Reserve UP Facilities Starting Today!
-      </p>
+        <h2 className="font-bold text-primary text-center">
+          Sign Up to UP Reserve Hub
+        </h2>
+        <p>Reserve UP Facilities Starting Today!</p>
       </div>
       <Form {...form}>
         <form
-          // onSubmit={form.handleSubmit((data: SignupFields) =>
-          //   PostSignup(data, form.setError),
-          // )}
+          onSubmit={form.handleSubmit(handleSignup)}
           className="flex flex-col gap-10"
         >
           <div className="grid grid-cols-7 gap-2">
@@ -134,6 +139,8 @@ const SignupPage = () => {
           </Button>
         </form>
       </Form>
+
+      <GoogleAuth />
 
       <p className="mt-10">
         Already have an account?{" "}

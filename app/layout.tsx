@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Libre_Franklin } from "next/font/google";
 import "./globals.css";
+import ReactQueryClientProvider from "@/components/ReactQueryClientProvider";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
@@ -23,14 +24,14 @@ const RootLayout = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-
-
   return (
-    <html lang="en">
-      <body className={lato.className + libreFranklin.className}>
-        {children}
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body className={lato.className + libreFranklin.className}>
+          {children}
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 };
 

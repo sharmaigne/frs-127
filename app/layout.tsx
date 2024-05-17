@@ -5,13 +5,13 @@ import ReactQueryClientProvider from "@/components/ReactQueryClientProvider";
 
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
-  subsets: ["latin"],
   variable: "--lato",
+  subsets: ["latin"],
 });
 
-const libreFranklin = Libre_Franklin({
-  subsets: ["latin"],
+const libre_franklin = Libre_Franklin({
   variable: "--libre-franklin",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -26,10 +26,8 @@ const RootLayout = async ({
 }>) => {
   return (
     <ReactQueryClientProvider>
-      <html lang="en">
-        <body className={lato.className + libreFranklin.className}>
-          {children}
-        </body>
+      <html lang="en" className={`${lato.variable} ${libre_franklin.variable}`}>
+        <body>{children}</body>
       </html>
     </ReactQueryClientProvider>
   );

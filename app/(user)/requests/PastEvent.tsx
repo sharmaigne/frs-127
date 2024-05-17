@@ -6,7 +6,7 @@ import Icon from "@/components/Icon";
 import archiveIcon from "@/public/icons/archive.svg";
 import repeatIcon from "@/public/icons/repeat.svg";
 
-import { stringToDate, stringToDay, stringToTime } from "@/lib/utils";
+import DateLine from "./Date";
 
 const PastEvent = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
@@ -28,18 +28,13 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
           <h5 className="font-bold">{request.event_name}</h5>
           <div className="flex-col pl-3">
             <p className="text-lg text-primary">{getFacilityName()}</p>
-            <div className="flex gap-3 items-center">
-              <p>{stringToDate(request.timestamp_start)}</p>
-              <span className="rounded-full w-1 h-1 bg-primary" />
-              <p>{stringToDay(request.timestamp_start)}</p>
-              <span className="rounded-full w-1 h-1 bg-primary" />
-              <p>
-                {stringToTime(request.timestamp_start)} -{" "}
-                {stringToTime(request.timestamp_end)}
-              </p>
-            </div>
+            <DateLine
+              dateStart={request.timestamp_start}
+              dateEnd={request.timestamp_end}
+            />
           </div>
         </div>
+
         <div className="flex gap-3 items-center">
           <Icon src={archiveIcon.src} alt="archive" className="w-7 h-7" />
           <Icon src={repeatIcon.src} alt="reuse data" className="w-7 h-7" />

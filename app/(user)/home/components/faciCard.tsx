@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, Card } from "@/components/ui/card";
+import dynamic from 'next/dynamic';
+
+const Popup = dynamic(() => import('./Popup'), { ssr: false });
 
 interface FacilityCardProps {
   title: string;
@@ -53,11 +56,7 @@ const FaciCard: React.FC<FacilityCardProps> = ({
           ))}
         </div>
         {reserveLink && (
-          <Link href={reserveLink}>
-            <Button className="bg-[#1C7B45] hover:bg-[#155c34]" variant="default">
-              Reserve
-            </Button>
-          </Link>
+          <Popup />
         )}
         {slotsLink && (
           <Link href={slotsLink}>

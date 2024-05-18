@@ -19,7 +19,7 @@ import { SignupSchema } from "@/app/(auth)/_api/schemas";
 import type { SignupFields } from "@/app/(auth)/_api/types";
 
 import GoogleAuth from "@/app/(auth)/components/GoogleAuth";
-import { signup } from "../login/actions";
+import { signup } from "./login/actions";
 
 const SignupPage = () => {
   const form = useForm<SignupFields>({

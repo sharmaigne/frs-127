@@ -10,7 +10,7 @@ interface TabsTriggerProps {
 
 const FaciTabs: React.FC<TabsTriggerProps> = ({ value, children, className = '' }) => {
   return (
-    <TabsTrigger className={`bg-[#1C7B45] text-white hover:bg-[#155c34] font-libre-franklin ${className}`} value={value}>
+    <TabsTrigger className={`bg-[#1C7B45] text-white hover:bg-[#155c34] ${className}`} value={value}>
       {children}
     </TabsTrigger>
   );

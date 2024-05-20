@@ -7,29 +7,13 @@ import dynamic from 'next/dynamic';
 
 const Popup = dynamic(() => import('./Popup'), { ssr: false });
 
-interface FacilityCardProps {
-  title: string;
-  capacity: string;
-  imageSrc: string;
-  activities: string[];
-  reserveLink: string;
-  slotsLink?: string;
-}
-
-const FaciCard: React.FC<FacilityCardProps> = ({
-  title,
-  capacity,
-  imageSrc,
-  activities,
-  reserveLink,
-  slotsLink,
-}) => {
+const FacilityCard = () => {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
         <div>
           <h3 className="text-xl font-semibold font-lato">{title}</h3>
-          <p className="text-gray-500 dark:text-gray-400 font-libre-franklin">
+          <p className="text-gray-500 dark:text-gray-400">
             Capacity: {capacity}
           </p>
         </div>
@@ -73,4 +57,4 @@ const FaciCard: React.FC<FacilityCardProps> = ({
   );
 };
 
-export default FaciCard;
+export default FacilityCard;

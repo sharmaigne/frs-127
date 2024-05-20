@@ -27,7 +27,7 @@ const RootLayout = async ({
   return (
     <ReactQueryClientProvider>
       <html lang="en">
-        <body className={lato.className + libreFranklin.className}>
+        <body className={`${lato.className} ${libreFranklin.className}`}>
           {children}
         </body>
       </html>

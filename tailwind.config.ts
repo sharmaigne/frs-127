@@ -33,8 +33,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        "lato": ["var(--font-lato)"],
-        "libre-franklin": ["var(--font-libre-franklin)"],
+        "lato": ["var(--lato)"],
+        "libre-franklin": ["var(--libre-franklin)"],
       },
       fontSize: {
         xs: '0.6875rem', // 11 px
@@ -70,18 +70,17 @@ const config = {
         },
         primary: {
           DEFAULT: "#781113",
-          50: "#f7c4c5",
-          100: "#f4b2b4",
-          200: "#ef8f91",
-          300: "#ea6b6d",
-          400: "#e5454a",
-          500: "#e02326",
-          600: "#bf1c1e",
-          700: "#9c1519",
-          800: "#781113",
-          900: "#470a0b",
-          950: "#2e0707",
-        },
+          50: '#f8e9e9',
+          100: '#eec8c8',
+          200: '#de9394',
+          300: '#ce5d5e',
+          400: '#bf2728',
+          500: '#a5181a', // lighter primary shade
+          600: '#781113', // main primary color
+          700: '#5c0d0f',
+          800: '#40090b',
+          900: '#240505'
+        },  
         secondary: {
           DEFAULT: "#004622",
           50: "#14fc85",

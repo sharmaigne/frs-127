@@ -1,4 +1,4 @@
-"use client";
+ 
 import NavbarRoute from "@/components/NavbarRoute";
 import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";

@@ -4,43 +4,35 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
+import { LoginFields, SignupFields} from '@/app/(auth)/_api/types'
 
-export async function login(formData: FormData) {
+export const login = async (data: string) => {
+  console.log("logging in...")
   const supabase = createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const dataObject = JSON.parse(data) as LoginFields
+  const { error } = await supabase.auth.signInWithPassword(dataObject)
 
   if (error) {
+    console.error(error)
     redirect('/error')
   }
 
+  console.log('logged in')
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/home')
 }
 
-export async function signup(formData: FormData) {
+export const signup = async (data: string) => {
   const supabase = createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-
-  const { error } = await supabase.auth.signUp(data)
+  const {email, password1} = JSON.parse(data) as SignupFields
+  const { error } = await supabase.auth.signUp({email, password: password1})
 
   if (error) {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+revalidatePath('/', 'layout')
+  // redirect('/')
 }

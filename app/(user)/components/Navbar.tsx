@@ -7,7 +7,7 @@ import TuneIcon from "@/public/icons/tune";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between w-full bg-primary h-[60px]">
+    <div className="flex justify-between w-full bg-primary h-[60px] sticky top-0">
       <div className="flex">
         <NavbarRoute text="Home" href={{ pathname: "/home" }} />
         <NavbarRoute

@@ -33,8 +33,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        "lato": ["var(--font-lato)"],
-        "libre-franklin": ["var(--font-libre-franklin)"],
+        "lato": ["var(--lato)"],
+        "libre-franklin": ["var(--libre-franklin)"],
       },
       fontSize: {
         xs: '0.6875rem', // 11 px
@@ -55,7 +55,7 @@ const config = {
         placeholder: "#9ba5b7",
         error: "#bf1b1e",
         text: {
-          DEFAULT: "#333333",
+          DEFAULT: "#383838",
           50: "#fafafa",
           100: "#ebebeb",
           200: "#cccccc",
@@ -84,7 +84,7 @@ const config = {
         },
         secondary: {
           DEFAULT: "#004622",
-          50: "#14fc85",
+          50: "#DCE7E1",
           100: "#03fb7e",
           200: "#06dd6e",
           300: "#03bf5f",

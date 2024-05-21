@@ -12,18 +12,12 @@ import { Facility, Request } from "@/lib/types";
 const FacilityCard = ({ facility }: { facility: any }) => {
   return (
     <Card>
-      <CardContent className="p-6 space-y-4">
-        <div>
-          <h3 className="text-xl font-semibold font-lato">{facility.name}</h3>
-          <p className="text-gray-500 dark:text-gray-400">
-            Capacity: {facility.capacity}
-          </p>
-        </div>
+      <CardContent className="p-4 space-y-4">
         <img
           alt={facility.name}
-          className="rounded-lg overflow-hidden"
+          className="rounded-lg overflow-hidden bg-cover"
           height="400"
-          // src={imageSrc}
+          src={"/images/atrium.jpg"}
           style={{
             aspectRatio: "600/400",
             objectFit: "cover",
@@ -31,6 +25,12 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           width="600"
         />
 
+        <div>
+          <h3 className="text-xl font-semibold font-lato">{facility.name}</h3>
+          <p className="text-gray-500 dark:text-gray-400">
+            Capacity: {facility.capacity}
+          </p>
+        </div>
         {/* <div className="flex flex-wrap gap-2">
           {activities && activities.map((activity) => (
             <Badge
@@ -43,15 +43,12 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           ))}
         </div> */}
 
-        <Popup />
-        <Link href="">
-          <Button
-            className="bg-white hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-50"
-            variant="outline"
-          >
-            View Slots
-          </Button>
-        </Link>
+        <div className="flex gap-2 justify-end">
+          <Link href="">
+            <Button variant="outline">View Details</Button>
+          </Link>
+          <Popup />
+        </div>
       </CardContent>
     </Card>
   );

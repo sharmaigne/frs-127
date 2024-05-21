@@ -8,18 +8,36 @@ import { TabsContent, Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 
 import { testFacilities } from "../testRequests";
+import { createClient } from "@/utils/supabase/server";
 
 import dynamic from "next/dynamic";
 const Hero = dynamic(() => import("./components/Hero"), { ssr: false });
 
-const HomePage = () => {
-  const facilities = testFacilities;
+const HomePage = async () => {
+  const supabase = createClient();
+
+  const { data: facilities, error } = await supabase
+    .from("facilities")
+    .select("*");
+
+  if (error) {
+    console.error(error);
+    return <div>Error loading facilities</div>;
+  }
+
   const halls = facilities.filter((facility) => facility.type === "hall");
   const classrooms = facilities.filter(
     (facility) => facility.type === "classroom"
   );
   const courts = facilities.filter((facility) => facility.type === "court");
   const fields = facilities.filter((facility) => facility.type === "field");
+
+  const tabs = [
+    { tab: halls, value: "halls" },
+    { tab: classrooms, value: "classrooms" },
+    { tab: courts, value: "gymnasium" },
+    { tab: fields, value: "openfields" },
+  ];
 
   return (
     <>
@@ -35,37 +53,21 @@ const HomePage = () => {
               <TabsTrigger value="gymnasium">Gymnasium Courts</TabsTrigger>
               <TabsTrigger value="openfields">Open Fields</TabsTrigger>
             </TabsList>
-            <TabsContent value="halls">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {halls.map((facility) => (
-                  <FacilityCard facility={facility} />
-                ))}
-              </div>
-            </TabsContent>
 
-            <TabsContent value="classrooms">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {classrooms.map((facility) => (
-                  <FacilityCard facility={facility} />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="gymnasium">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {courts.map((facility) => (
-                  <FacilityCard facility={facility} />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="openfields">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {fields.map((facility) => (
-                  <FacilityCard facility={facility} />
-                ))}
-              </div>
-            </TabsContent>
+            {tabs.map(({ tab, value }) => {
+              return (
+                <TabsContent
+                  value={value}
+                  className="flex justify-center w-full m-4 mx-8"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {tab.map((facility) => (
+                      <FacilityCard facility={facility} />
+                    ))}
+                  </div>
+                </TabsContent>
+              );
+            })}
           </Tabs>
         </div>
       </section>

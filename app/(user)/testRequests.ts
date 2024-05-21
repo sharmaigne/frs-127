@@ -92,6 +92,7 @@ export const testFacilities = [
         capacity: 100,
         location: null,
         master_facility_id: null,
+        type: "court"
     },
     {
         name: "Atrium",
@@ -101,15 +102,17 @@ export const testFacilities = [
         capacity: 50,
         location: null,
         master_facility_id: null,
+        type: "hall"
     },
     {
-        name: "Lounge",
+        name: "CHSS 107",
         facility_id: "abcdefgh-1234-1234-1234-123456789abc",
         facility_manager_id: "opqrstuv-3456-3456-3456-34567890abcd",
         admin_id: "34567890-3456-3456-3456-34567890abcd",
         capacity: 20,
         location: null,
         master_facility_id: null,
+        type: "classroom"
     },
     {
         name: "Lemito Hall",
@@ -119,5 +122,7 @@ export const testFacilities = [
         capacity: 30,
         location: null,
         master_facility_id: null,
-    }
+        type: "hall"
+    },
+    
 ];

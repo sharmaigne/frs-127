@@ -27,7 +27,7 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
         <div>
           <h5 className="font-bold">{request.event_name}</h5>
           <div className="flex-col pl-3">
-            <p className="text-lg text-primary">{getFacilityName()}</p>
+            <p className="text-primary">{getFacilityName()}</p>
             <DateLine
               dateStart={request.timestamp_start}
               dateEnd={request.timestamp_end}

@@ -40,7 +40,7 @@ const ProgressIcon = ({ status }: { status: string }) => {
     },
     default: {
       border: "border-darker",
-      bg: "bg-text-50",
+      bg: "bg-text-300",
     },
   };
 

@@ -17,3 +17,7 @@ const FaciTabs: React.FC<TabsTriggerProps> = ({ value, children, className = '' 
 };
 
 export default FaciTabs;
+
+
+
+

@@ -19,7 +19,7 @@ const eventSchema = z.object({
   description: z.string().min(1, 'Event description is required'),
   start: z.string().min(1, 'Start time is required'),
   end: z.string().min(1, 'End time is required'),
-  files: z.array(z.instanceof(File)).optional(),
+  // files: z.array(z.instanceof(File)).optional(),
 });
 
 type EventData = z.infer<typeof eventSchema>;

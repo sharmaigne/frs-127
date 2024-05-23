@@ -71,6 +71,18 @@ export const testRequests: Request["Row"][] = [
         risk_analysis_id: "54321098-8765-8765-8765-43210987654d",
         timestamp_end: "2022-01-05T12:00:00",
         timestamp_start: "2022-01-05T10:00:00"
+    },
+    {
+        activity_design_id: "56789012-5678-5678-5678-56789012abcf",
+        event_description: "Final Final Test Event Description",
+        event_name: "Final Final Test Event",
+        facility_id: "43210987-8765-8765-8765-43210987654d",
+        organization: "Final Test Organization",
+        request_id: "efghijkl-5678-5678-5678-56789012abcd",
+        requestor_id: "qrstuvwxy-5678-5678-5678-56789012abcd",
+        risk_analysis_id: "54321098-8765-8765-8765-43210987654d",
+        timestamp_end: "2022-01-05T12:00:00",
+        timestamp_start: "2022-01-05T10:00:00"
     }
 ];
 

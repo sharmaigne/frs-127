@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Datas } from "./types";
+import EditFacility from "./editFacility";
 
 export const columns: ColumnDef<Datas>[] = [
   {
@@ -26,36 +27,36 @@ export const columns: ColumnDef<Datas>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "user",
-    header: "User",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("user")} <div></div> {row.getValue("email")}</div>,
+    accessorKey: "facility",
+    header: "facility",
+    cell: ({ row }) => <div className="font-bold"> {row.getValue("facility")} <div></div> {row.getValue("email")}</div>,
   },
 
   {
-    accessorKey: "organization",
-    header: "Organization",
-    cell: ({ row }) => <div>{row.getValue("organization") }
+    accessorKey: "picture",
+    header: "picture",
+    cell: ({ row }) => <div>{row.getValue("picture") }
     </div>,
   },
   {
-    accessorKey: "facility",
-    header: "Facility",
-    cell: ({ row }) => <div>{row.getValue("facility")}</div>,
+    accessorKey: "description",
+    header: "description",
+    cell: ({ row }) => <div>{row.getValue("description")}</div>,
   },
   {
-    accessorKey: "dateTimeStart",
-    header: "Date & Time",
-    cell: ({ row }) => <div>{row.getValue("dateTimeStart")} </div>,
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => <div>{row.getValue("type")} </div>,
   },
   {
-    accessorKey: "dateTimeEnd",
-    header: "Date & Time End",
-    cell: ({ row }) => <div>{row.getValue("dateTimeEnd")}</div>,
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => <div>{row.getValue("location")}</div>,
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
+    accessorKey: "capacity",
+    header: "Capacity",
+    cell: ({ row }) => <div className="capacity">{row.getValue("capacity")}</div>,
   },
   {
     id: "actions",
@@ -64,14 +65,11 @@ export const columns: ColumnDef<Datas>[] = [
       const { id, someDataForRedirect } = row.original; // Access data from the row object
       return (
         <div className="flex space-x-1">
-          <Button variant="default" className="bg-secondary-400 hover:bg-secondary-300" onClick={() => handleApprove(id)}>
-            Endorse
+          <Button variant="outline" className="" onClick={() => handleEdit(id)}>
+            Edit
           </Button>
-          <Button variant="default" className="bg-primary-400 hover:bg-primary-300" onClick={() => handleReject(id)}>
-            Reject
-          </Button>
-          <Button variant="link"  onClick={() => handleRedirect(someDataForRedirect)}>
-            View Details
+          <Button variant="default" className="bg-primary-400 hover:bg-primary-300" onClick={() => handleDelete(id)}>
+            Delete
           </Button>
         </div>
       );

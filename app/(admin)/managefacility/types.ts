@@ -1,27 +1,23 @@
 export type Datas = {
-    id: string
-    amount: number
-    status: "pending" | "processing" | "endorsed" | "rejected"
-    email: string
-    user: string
-    organization: string
+    facility_id: string
     facility: string
-    dateTimeStart: string
-    dateTimeEnd: string
+    description:string
+    picture: string
+    type:  "Halls" | "Classrooms" | "Gymnasium" | "Openfields"
+    location: string
+    capacity: string
   }
   
   
   export const data: Datas[] = [
     {
-      id: "m5gr84i9",
-      amount: 316,
-      status: "endorsed",
-      email: "ken9999999@yahoo.com",
-      user: "Phillip Hufana",
-      organization: "SPARCS",
-      facility: "ATRIUM BABY",
-      dateTimeStart: "May 29, 2024 - 2:00PM",
-      dateTimeEnd: "May 30, 2024 - 5:00PM"
+      facility_id: "acbhdbch1234",
+      facility: "Atrium",
+      description:"ambot unsa ni basta",
+      picture: "iiahsadhashidha",
+      type: "Openfields",
+      location: "sa sagbotan",
+      capacity: "100 people"
     },
     
     {

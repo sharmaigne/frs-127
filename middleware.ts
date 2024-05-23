@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server'
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
     //  const  supabase = createClient()
-    return await updateSession(request)
+    // return await updateSession(request)
     
     // const {data, error} = await supabase.auth.getUser()
 

@@ -10,7 +10,6 @@ const Navbar = () => {
       <div className="flex">
         <NavbarRoute text="Manage Requests" href={{ pathname: "/managerequest" }} />
         <NavbarRoute text="Manage Facilities" href={{ pathname: "/managefacility" }} />
-        <NavbarRoute text="experimental request table" href={{ pathname: "/datatable" }} />
       </div>
 
       {/* RIGHT SIDE: filter, notifs, profile */}

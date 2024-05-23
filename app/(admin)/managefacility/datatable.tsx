@@ -74,9 +74,9 @@ export function DataTable({ data }: DataTableProps) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search user..."
-          value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("user")?.setFilterValue(event.target.value)}
+          placeholder="Search facility..."
+          value={(table.getColumn("facility")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("facility")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

@@ -55,10 +55,11 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const {error, data} = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl))
-  }
+  // NOTE: comment out the following lines if you don't want to redirect to login page
+  // const {error, data} = await supabase.auth.getUser()
+  // if (error || !data?.user) {
+  //   return NextResponse.redirect(new URL('/login', request.nextUrl))
+  // }
 
   return response
 }

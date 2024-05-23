@@ -1,11 +1,21 @@
-import Navbar from "@/app/(user)/components/Navbar";
-const UserLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Navbar />
-      <div>{children}</div>
-    </>
-  );
+import { Metadata } from "next";
+import Navbar from "./components/Navbar";
+
+export const metadata: Metadata = {
+  title: "UP Reserve Hub",
+  description: "The official reservation system of UP Mindanao",
 };
 
-export default UserLayout;
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="min-h-[100dvh] flex flex-col">
+      <Navbar />
+
+      <main className="flex-1">{children}</main>
+    </div>
+  );
+}

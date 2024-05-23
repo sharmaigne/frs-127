@@ -1,4 +1,3 @@
-"use client";
 import NavbarRoute from "@/components/NavbarRoute";
 import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";
@@ -7,7 +6,7 @@ import TuneIcon from "@/public/icons/tune";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between w-full bg-primary h-[60px]">
+    <div className="flex justify-between w-full bg-primary h-[60px] top-0 sticky z-10">
       <div className="flex">
         <NavbarRoute text="Home" href={{ pathname: "/home" }} />
         <NavbarRoute
@@ -19,8 +18,8 @@ const Navbar = () => {
 
       {/* RIGHT SIDE: filter, notifs, profile */}
       <div className="flex items-center gap-4 mr-14">
-        <TuneIcon className="w-[30px] h-[30px] fill-light"/>
-        <NotificationsIcon className="w-[30px] h-[30px] fill-light"/>
+        <TuneIcon className="w-[30px] h-[30px] fill-light" />
+        <NotificationsIcon className="w-[30px] h-[30px] fill-light" />
         <Icon
           src={accountCircle.src}
           alt="Profile"

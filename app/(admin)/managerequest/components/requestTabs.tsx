@@ -11,9 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import TableRequest from './table'
-import { DataTableDemo } from './newtable'
-import DataTableExperiment from '../../datatable/page'
+import DataTableExperiment from './page'
 
 const RequestTabs = () => {
   return (
@@ -33,11 +31,10 @@ const RequestTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="pending">
-        <h2 className='bolder'>Pending Requests</h2>
-        <TableRequest />
+              <DataTableExperiment/>
       </TabsContent>
       <TabsContent value="ongoing">
-      <DataTableExperiment/>
+
       </TabsContent>
       <TabsContent value="finished">
       <h2>Finished Requests</h2>

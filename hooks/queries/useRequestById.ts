@@ -3,14 +3,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
 
-const useFacilitiesQuery = () => {
+const useRequestByIdQuery = () => {
     const supabase = useSupabase();
 
     return useQuery({
-      queryKey: ["facilities"],
+      queryKey: ["requests"],
       queryFn: async () => {
         const { data, error } = await supabase
-            .from("facilities")
+            .from("requests")
             .select("*");
         
         if (error) {
@@ -22,4 +22,4 @@ const useFacilitiesQuery = () => {
     });
 }
 
-export default useFacilitiesQuery;
+export default useRequestByIdQuery;

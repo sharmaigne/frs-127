@@ -2,8 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
+import { UUID } from "crypto";
 
-const useFacilitiesQuery = () => {
+const useFacilityByIdQuery = (facility_id: UUID) => {
     const supabase = useSupabase();
 
     return useQuery({
@@ -11,7 +12,9 @@ const useFacilitiesQuery = () => {
       queryFn: async () => {
         const { data, error } = await supabase
             .from("facilities")
-            .select("*");
+            .select("*")
+            .eq("facility_id", facility_id)
+            .single();
         
         if (error) {
             throw error;
@@ -22,4 +25,4 @@ const useFacilitiesQuery = () => {
     });
 }
 
-export default useFacilitiesQuery;
+export default useFacilityByIdQuery;

@@ -9,7 +9,7 @@ const Popup = dynamic(() => import("./Popup"), { ssr: false });
 
 import { Facility, Request } from "@/lib/types";
 
-const FacilityCard = ({ facility }: { facility: any }) => {
+const FacilityCard = ({ facility }: { facility: Facility["Row"] }) => {
   return (
     <Card>
       <CardContent className="p-4 space-y-4">
@@ -47,7 +47,10 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           <Link href="">
             <Button variant="outline">View Details</Button>
           </Link>
-          <Popup />
+          {/* <Popup /> */}
+          <Link href={`home/reserve/${facility.facility_id}`}>
+            <Button >Reserve</Button>
+          </Link>
         </div>
       </CardContent>
     </Card>

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,24 +6,33 @@ import Tags from "./components/tags";
 import FacilityCard from "./components/faciCard";
 import FaciTabs from "./components/faciTabs";
 import { TabsContent, Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
 
 import { testFacilities } from "../testRequests";
-import { createClient } from "@/utils/supabase/server";
+import useSupabase from "@/hooks/useSupabase";
+import { useQuery } from "@tanstack/react-query";
+import { getFacilities } from "@/utils/queries/global";
 
 import dynamic from "next/dynamic";
 const Hero = dynamic(() => import("./components/Hero"), { ssr: false });
 
-const HomePage = async () => {
-  const supabase = createClient();
+const HomePage = () => {
+  const supabase = useSupabase();
 
-  const { data: facilities, error } = await supabase
-    .from("facilities")
-    .select("*");
+  const {
+    data: facilities,
+    status,
+    error,
+  } = useQuery({
+    queryKey: ["facilities"],
+    queryFn: () => getFacilities(supabase),
+  });
 
-  if (error) {
+  if (status === "error") {
     console.error(error);
     return <div>Error loading facilities</div>;
+  }
+  if (status === "pending") {
+    return <div>Loading...</div>;
   }
 
   const halls = facilities.filter((facility) => facility.type === "hall");

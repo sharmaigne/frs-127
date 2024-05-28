@@ -50,7 +50,7 @@ type FormData = z.infer<typeof formSchema>;
 
 const TableComponent = ({ control, register, fields, append, remove }: any) => (
   <div className="overflow-x-auto">
-    <table className="min-w-full bg-white">
+    <table className="min-w-full bg-white ">
       <thead>
         <tr>
           <th className="px-4 py-2">Risk</th>
@@ -62,19 +62,19 @@ const TableComponent = ({ control, register, fields, append, remove }: any) => (
           <th className="px-4 py-2">Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
         {fields.map((item: any, index: number) => (
           <tr key={item.id}>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input {...register(`table_data.${index}.risk`)} defaultValue={item.risk} placeholder="Risk" />
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input {...register(`table_data.${index}.effect`)} defaultValue={item.effect} placeholder="Effect" />
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input {...register(`table_data.${index}.likelihood`)} defaultValue={item.likelihood} placeholder="Likelihood" />
             </td>
-            <td className="border px-2 py-2">
+            <td className="border px-2 py-2 border-none">
               <Select {...register(`table_data.${index}.impact`)} defaultValue={item.impact}>
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="Select" />
@@ -86,7 +86,7 @@ const TableComponent = ({ control, register, fields, append, remove }: any) => (
                 </SelectContent>
               </Select>
             </td>
-            <td className="border px-2 py-2">
+            <td className="border px-2 py-2 border-none">
               <Select {...register(`table_data.${index}.mitigating_action`)} defaultValue={item.mitigating_action}>
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="Select" />
@@ -98,13 +98,13 @@ const TableComponent = ({ control, register, fields, append, remove }: any) => (
                 </SelectContent>
               </Select>
             </td>
-            <td className="border px-4 py-2">
-              <Textarea {...register(`table_data.${index}.escalation_point`)} defaultValue={item.escalation_point} placeholder="Escalation Point" />
+            <td className="border px-4 py-2 border-none">
+              <Textarea {...register(`table_data.${index}.escalation_point`)} defaultValue={item.escalation_point} placeholder="Escalation Point" className="border-none"/>
             </td>
-            <td className="border px-4 py-2">
-              <Textarea {...register(`table_data.${index}.actions`)} defaultValue={item.actions} placeholder="Actions" />
+            <td className="border px-4 py-2 border-none">
+              <Textarea {...register(`table_data.${index}.actions`)} defaultValue={item.actions} placeholder="Actions" className="border-none"/>
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Button type="button" onClick={() => remove(index)}>
                 Delete
               </Button>
@@ -116,6 +116,7 @@ const TableComponent = ({ control, register, fields, append, remove }: any) => (
     <Button type="button" onClick={() => append({ risk: "", effect: "", likelihood: "", impact: "low", mitigating_action: "low", escalation_point: "", actions: "" })}>
       Add Row
     </Button>
+
   </div>
 );
 
@@ -127,22 +128,22 @@ const ProgramTableComponent = ({ control, register, fields, append, remove }: an
           <th className="px-4 py-2">Start Time</th>
           <th className="px-4 py-2">End Time</th>
           <th className="px-4 py-2">Program</th>
-          <th className="px-4 py-2">Actions</th>
+
         </tr>
       </thead>
       <tbody>
         {fields.map((item: any, index: number) => (
           <tr key={item.id}>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input type="datetime-local" {...register(`program_schedule.${index}.time_start`)} defaultValue={item.time_start} />
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input type="datetime-local" {...register(`program_schedule.${index}.time_end`)} defaultValue={item.time_end} />
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Input {...register(`program_schedule.${index}.program`)} defaultValue={item.program} placeholder="Program" />
             </td>
-            <td className="border px-4 py-2">
+            <td className="border px-4 py-2 border-none">
               <Button type="button" onClick={() => remove(index)}>
                 Delete
               </Button>
@@ -286,8 +287,34 @@ const FormRequest = () => {
                   />
                   <CardTitle>Risk Table</CardTitle>
                   <TableComponent control={form.control} register={form.register} fields={tableFields} append={appendTable} remove={removeTable} />
+                  <FormField
+                    control={form.control}
+                    name="files"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Attach Risk Table File</FormLabel>
+                        <FormControl>
+                          <Input type="file" onChange={(e) => field.onChange(e.target.files)} multiple />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <CardTitle>Program Schedule</CardTitle>
                   <ProgramTableComponent control={form.control} register={form.register} fields={programFields} append={appendProgram} remove={removeProgram} />
+                  <FormField
+                    control={form.control}
+                    name="files"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Attach Program Schedule File</FormLabel>
+                        <FormControl>
+                          <Input type="file" onChange={(e) => field.onChange(e.target.files)} multiple />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <Button type="submit">Submit</Button>
                 </form>
               </Form>

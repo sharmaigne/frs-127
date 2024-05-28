@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import maroonBg from "@/public/images/maroon-bg.png";
 

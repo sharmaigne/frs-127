@@ -23,6 +23,7 @@ export const login = async (data: string) => {
   redirect('/home')
 }
 
+
 export const signup = async (data: string) => {
   const supabase = createClient()
 

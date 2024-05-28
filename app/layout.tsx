@@ -26,8 +26,10 @@ const RootLayout = async ({
 }>) => {
   return (
     <ReactQueryClientProvider>
-      <html lang="en" className={`${lato.variable} ${libre_franklin.variable}`}>
-        <body>{children}</body>
+      <html lang="en">
+        <body className={`${lato.className} ${libre_franklin.className}`}>
+          {children}
+        </body>
       </html>
     </ReactQueryClientProvider>
   );

@@ -4,7 +4,7 @@
   
 
 body {
-  @apply font-libre-franklin text-body text-text;
+  @apply  text-body text-text;
 }
 
 /* TYPOGRAPHY */
@@ -26,4 +26,8 @@ h4 {
 
 h5 {
   @apply font-lato text-h5;
+}
+
+.text-outline {
+  text-shadow: -1px -1px 5px #781113, 1px -1px 5px #781113, -1px 1px 5px #781113, 1px 1px 5px #781113;
 }

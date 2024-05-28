@@ -1,4 +1,3 @@
-import { UUID } from "crypto"
 
 export type Json =
   | string
@@ -13,41 +12,90 @@ export type Database = {
     Tables: {
       acitivity_design: {
         Row: {
-          activity_design_id: UUID
+          activity_design_id: string
           is_pdf: boolean | null
           pdf: string | null
-          request_id: UUID
+          request_id: string
         }
         Insert: {
-          activity_design_id?: UUID
+          activity_design_id?: string
           is_pdf?: boolean | null
           pdf?: string | null
-          request_id?: UUID
+          request_id?: string
         }
         Update: {
-          activity_design_id?: UUID
+          activity_design_id?: string
           is_pdf?: boolean | null
           pdf?: string | null
-          request_id?: UUID
+          request_id?: string
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          comment_id: string
+          commentor_id: string
+          content: string
+          parent_id: string | null
+          request_id: string
+        }
+        Insert: {
+          comment_id?: string
+          commentor_id: string
+          content: string
+          parent_id?: string | null
+          request_id: string
+        }
+        Update: {
+          comment_id?: string
+          commentor_id?: string
+          content?: string
+          parent_id?: string | null
+          request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_commentor_id_fkey"
+            columns: ["commentor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["comment_id"]
+          },
+          {
+            foreignKeyName: "comments_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["request_id"]
+          },
+        ]
+      }
       confirmation_ticket: {
         Row: {
-          confirmation_ticket_id: UUID
-          reservation_status: string
+          confirmation_ticket_id: string
+          confirmed_by: string | null
+          status: Database["public"]["Enums"]["ticket_status"] | null
           timestamp_created: string | null
           timestamp_last_edited: string | null
         }
         Insert: {
-          confirmation_ticket_id: UUID
-          reservation_status: string
+          confirmation_ticket_id?: string
+          confirmed_by?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"] | null
           timestamp_created?: string | null
           timestamp_last_edited?: string | null
         }
         Update: {
-          confirmation_ticket_id?: UUID
-          reservation_status?: string
+          confirmation_ticket_id?: string
+          confirmed_by?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"] | null
           timestamp_created?: string | null
           timestamp_last_edited?: string | null
         }
@@ -63,19 +111,25 @@ export type Database = {
       }
       endorsement_ticket: {
         Row: {
-          endorsement_ticket_id: UUID
-          endorsment_status: string
-          timestamp: string | null
+          date_created: string | null
+          date_edited: string | null
+          endorsement_ticket_id: string
+          endorser: string | null
+          status: Database["public"]["Enums"]["ticket_status"] | null
         }
         Insert: {
-          endorsement_ticket_id: UUID
-          endorsment_status: string
-          timestamp?: string | null
+          date_created?: string | null
+          date_edited?: string | null
+          endorsement_ticket_id?: string
+          endorser?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"] | null
         }
         Update: {
-          endorsement_ticket_id?: UUID
-          endorsment_status?: string
-          timestamp?: string | null
+          date_created?: string | null
+          date_edited?: string | null
+          endorsement_ticket_id?: string
+          endorser?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"] | null
         }
         Relationships: [
           {
@@ -85,35 +139,45 @@ export type Database = {
             referencedRelation: "requests"
             referencedColumns: ["request_id"]
           },
+          {
+            foreignKeyName: "endorsement_ticket_endorser_fkey"
+            columns: ["endorser"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
         ]
       }
       facilities: {
         Row: {
-          admin_id: UUID
+          admin_id: string
           capacity: number | null
-          facility_id: UUID
-          facility_manager_id: UUID | null
+          facility_id: string
+          facility_manager_id: string | null
           location: string | null
-          master_facility_id: UUID | null
+          master_facility_id: string | null
           name: string
+          type: Database["public"]["Enums"]["facility_type"] | null
         }
         Insert: {
-          admin_id: UUID
+          admin_id: string
           capacity?: number | null
-          facility_id?: UUID
-          facility_manager_id?: UUID | null
+          facility_id?: string
+          facility_manager_id?: string | null
           location?: string | null
-          master_facility_id?: UUID | null
+          master_facility_id?: string | null
           name: string
+          type?: Database["public"]["Enums"]["facility_type"] | null
         }
         Update: {
-          admin_id?: UUID
+          admin_id?: string
           capacity?: number | null
-          facility_id?: UUID
-          facility_manager_id?: UUID | null
+          facility_id?: string
+          facility_manager_id?: string | null
           location?: string | null
-          master_facility_id?: UUID | null
+          master_facility_id?: string | null
           name?: string
+          type?: Database["public"]["Enums"]["facility_type"] | null
         }
         Relationships: [
           {
@@ -141,19 +205,22 @@ export type Database = {
       }
       manager_approval_ticket: {
         Row: {
-          confirmed_by: UUID
+          confirmed_by: string
           created_at: string
-          manager_approval_id: UUID
+          manager_approval_id: string
+          status: Database["public"]["Enums"]["status"] | null
         }
         Insert: {
-          confirmed_by?: UUID
+          confirmed_by?: string
           created_at?: string
-          manager_approval_id?: UUID
+          manager_approval_id?: string
+          status?: Database["public"]["Enums"]["status"] | null
         }
         Update: {
-          confirmed_by?: UUID
+          confirmed_by?: string
           created_at?: string
-          manager_approval_id?: UUID
+          manager_approval_id?: string
+          status?: Database["public"]["Enums"]["status"] | null
         }
         Relationships: [
           {
@@ -168,15 +235,15 @@ export type Database = {
       organizations: {
         Row: {
           name: string
-          organization_id: UUID
+          organization_id: string
         }
         Insert: {
           name: string
-          organization_id?: UUID
+          organization_id?: string
         }
         Update: {
           name?: string
-          organization_id?: UUID
+          organization_id?: string
         }
         Relationships: []
       }
@@ -188,7 +255,7 @@ export type Database = {
           last_name: string | null
           middle_initial: string | null
           role: Database["public"]["Enums"]["user_roles"] | null
-          user_id: UUID
+          user_id: string
         }
         Insert: {
           contact_number?: string | null
@@ -197,7 +264,7 @@ export type Database = {
           last_name?: string | null
           middle_initial?: string | null
           role?: Database["public"]["Enums"]["user_roles"] | null
-          user_id: UUID
+          user_id: string
         }
         Update: {
           contact_number?: string | null
@@ -206,7 +273,7 @@ export type Database = {
           last_name?: string | null
           middle_initial?: string | null
           role?: Database["public"]["Enums"]["user_roles"] | null
-          user_id?: UUID
+          user_id?: string
         }
         Relationships: [
           {
@@ -221,19 +288,19 @@ export type Database = {
       program: {
         Row: {
           activity: string | null
-          activity_design_id: UUID
+          activity_design_id: string
           timestamp_end: string | null
           timestamp_start: string
         }
         Insert: {
           activity?: string | null
-          activity_design_id: UUID
+          activity_design_id: string
           timestamp_end?: string | null
           timestamp_start: string
         }
         Update: {
           activity?: string | null
-          activity_design_id?: UUID
+          activity_design_id?: string
           timestamp_end?: string | null
           timestamp_start?: string
         }
@@ -249,16 +316,16 @@ export type Database = {
       }
       related_facilities: {
         Row: {
-          master_facility_id: UUID
-          sub_facility_id: UUID
+          master_facility_id: string
+          sub_facility_id: string
         }
         Insert: {
-          master_facility_id: UUID
-          sub_facility_id: UUID
+          master_facility_id: string
+          sub_facility_id: string
         }
         Update: {
-          master_facility_id?: UUID
-          sub_facility_id?: UUID
+          master_facility_id?: string
+          sub_facility_id?: string
         }
         Relationships: [
           {
@@ -279,49 +346,48 @@ export type Database = {
       }
       requests: {
         Row: {
-          activity_design_id: UUID | null
+          activity_design_id: string | null
           event_description: string | null
           event_name: string
-          facility_id: UUID
+          facility_id: string
           organization: string | null
-          request_id: UUID
-          requestor_id: UUID
-          risk_analysis_id: UUID | null
+          request_id: string
+          requestor_id: string
+          risk_analysis_id: string | null
+          status: Database["public"]["Enums"]["status"] | null
           timestamp_end: string
           timestamp_start: string
+          venue_request_pdf: string | null
         }
         Insert: {
-          activity_design_id?: UUID | null
+          activity_design_id?: string | null
           event_description?: string | null
           event_name: string
-          facility_id: UUID
+          facility_id: string
           organization?: string | null
-          request_id?: UUID
-          requestor_id: UUID
-          risk_analysis_id?: UUID | null
+          request_id?: string
+          requestor_id: string
+          risk_analysis_id?: string | null
+          status?: Database["public"]["Enums"]["status"] | null
           timestamp_end: string
           timestamp_start: string
+          venue_request_pdf?: string | null
         }
         Update: {
-          activity_design_id?: UUID | null
+          activity_design_id?: string | null
           event_description?: string | null
           event_name?: string
-          facility_id?: UUID
+          facility_id?: string
           organization?: string | null
-          request_id?: UUID
-          requestor_id?: UUID
-          risk_analysis_id?: UUID | null
+          request_id?: string
+          requestor_id?: string
+          risk_analysis_id?: string | null
+          status?: Database["public"]["Enums"]["status"] | null
           timestamp_end?: string
           timestamp_start?: string
+          venue_request_pdf?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "Request Table_request_id_fkey"
-            columns: ["request_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["user_id"]
-          },
           {
             foreignKeyName: "requests_activity_design_id_fkey"
             columns: ["activity_design_id"]
@@ -333,13 +399,6 @@ export type Database = {
             foreignKeyName: "requests_facility_id_fkey"
             columns: ["facility_id"]
             isOneToOne: false
-            referencedRelation: "facilities"
-            referencedColumns: ["facility_id"]
-          },
-          {
-            foreignKeyName: "requests_request_id_fkey"
-            columns: ["request_id"]
-            isOneToOne: true
             referencedRelation: "facilities"
             referencedColumns: ["facility_id"]
           },
@@ -359,8 +418,9 @@ export type Database = {
           impact: Database["public"]["Enums"]["levels"] | null
           likelihood: Database["public"]["Enums"]["levels"] | null
           mitigating_action: string | null
+          request_id: string | null
           risk: string
-          risk_analysis_id: UUID
+          risk_id: string
         }
         Insert: {
           effect?: string | null
@@ -368,8 +428,9 @@ export type Database = {
           impact?: Database["public"]["Enums"]["levels"] | null
           likelihood?: Database["public"]["Enums"]["levels"] | null
           mitigating_action?: string | null
+          request_id?: string | null
           risk: string
-          risk_analysis_id: UUID
+          risk_id?: string
         }
         Update: {
           effect?: string | null
@@ -377,10 +438,19 @@ export type Database = {
           impact?: Database["public"]["Enums"]["levels"] | null
           likelihood?: Database["public"]["Enums"]["levels"] | null
           mitigating_action?: string | null
+          request_id?: string | null
           risk?: string
-          risk_analysis_id?: UUID
+          risk_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "risks_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["request_id"]
+          },
+        ]
       }
     }
     Views: {
@@ -390,7 +460,10 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      facility_type: "hall" | "classroom" | "court" | "field"
       levels: "low" | "medium" | "high"
+      status: "Accepted" | "Withdrawn" | "Pending" | "Denied"
+      ticket_status: "approved" | "pending" | "rejected" | "changes_requested"
       user_roles:
         | "superadmin"
         | "osa"

@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Datas } from "./types";
+import { Request } from "@/lib/types";
 
-export const columns: ColumnDef<Datas>[] = [
+import useGetProfileById from "@/hooks/queries/useGetProfileById";
+import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
+
+
+export const columns: ColumnDef<Request["Row"]>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -26,9 +30,23 @@ export const columns: ColumnDef<Datas>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "user",
+    accessorKey: "requestor_id",
     header: "User",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("user")} <div></div> {row.getValue("email")}</div>,
+    cell: ({ row }) => { 
+      const { data: profile, error, status} = useGetProfileById(row.getValue("requestor_id"));
+
+      if (status === "error") {
+        console.error(error);
+        return <div>Name not found</div>;
+      }
+
+      if (status === "pending") {
+        return <div></div>;
+      }
+      
+      return (<div className="font-bold"> 
+      {profile.first_name + " " + profile.last_name}
+      </div>)}, // not id, fetch by id
   },
 
   {
@@ -38,19 +56,33 @@ export const columns: ColumnDef<Datas>[] = [
     </div>,
   },
   {
-    accessorKey: "facility",
+    accessorKey: "facility_id",
     header: "Facility",
-    cell: ({ row }) => <div>{row.getValue("facility")}</div>,
+    cell: ({ row }) => { 
+      const { data: facility, error, status } = useGetFacilityById(row.getValue("facility_id"));
+      
+      if (status === "error") {
+        console.error(error);
+        return <div>Facility not found</div>;
+      }
+      
+      if (status === "pending") {
+        return <div></div>;
+      }
+      
+      return (<div className="font-bold"> 
+      {facility.name}
+      </div>)}
   },
   {
-    accessorKey: "dateTimeStart",
+    accessorKey: "timestamp_start",
     header: "Date & Time",
-    cell: ({ row }) => <div>{row.getValue("dateTimeStart")} </div>,
+    cell: ({ row }) => <div>{row.getValue("timestamp_start")} </div>,
   },
   {
-    accessorKey: "dateTimeEnd",
+    accessorKey: "timestamp_end",
     header: "Date & Time End",
-    cell: ({ row }) => <div>{row.getValue("dateTimeEnd")}</div>,
+    cell: ({ row }) => <div>{row.getValue("timestamp_end")}</div>,
   },
   {
     accessorKey: "status",
@@ -61,16 +93,16 @@ export const columns: ColumnDef<Datas>[] = [
     id: "actions",
     header: "Action",
     cell: ({ row }) => {
-      const { id, someDataForRedirect } = row.original; // Access data from the row object
+      // const { id, someDataForRedirect } = row.original; // Access data from the row object
       return (
         <div className="flex space-x-1">
-          <Button variant="default" className="bg-secondary-400 hover:bg-secondary-300" onClick={() => handleApprove(id)}>
+          <Button variant="default" className="bg-secondary-400 hover:bg-secondary-300" >
             Endorse
           </Button>
-          <Button variant="default" className="bg-primary-400 hover:bg-primary-300" onClick={() => handleReject(id)}>
+          <Button variant="default" className="bg-primary-400 hover:bg-primary-300">
             Reject
           </Button>
-          <Button variant="link"  onClick={() => handleRedirect(someDataForRedirect)}>
+          <Button variant="link">
             View Details
           </Button>
         </div>

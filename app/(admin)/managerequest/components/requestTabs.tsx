@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
@@ -11,9 +13,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import DataTableExperiment from './page'
+import { DataTable } from './datatable'
+
+import useGetRequests from '@/hooks/queries/useGetRequests'
 
 const RequestTabs = () => {
+  const { data: requests, status, error } = useGetRequests();
+
+  if (status === "error") {
+    console.error(error);
+    return <div>Error loading requests</div>;
+  }
+
+  if (status === "pending") {
+    return <div>Loading...</div>;
+  }
+
+  console.log(requests)
+
   return (
     <Tabs className="w-full" defaultValue="pending">
       <TabsList className="flex w-full justify-center border-b h-15">
@@ -31,13 +48,22 @@ const RequestTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="pending">
-              <DataTableExperiment/>
+        <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Pending Requests</h1>
+        <DataTable data={requests} />
+    </div>
       </TabsContent>
       <TabsContent value="ongoing">
-
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Pending Requests</h1>
+        <DataTable data={requests} />
+    </div>
       </TabsContent>
       <TabsContent value="finished">
-      <h2>Finished Requests</h2>
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Pending Requests</h1>
+        <DataTable data={requests} />
+    </div>
       </TabsContent>
     </Tabs>
   )

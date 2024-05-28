@@ -12,7 +12,6 @@ import {
   flexRender,
 } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
-import { Datas } from "./types"
 import { columns } from "./columns"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -24,8 +23,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+import { Request } from "@/lib/types"
+
 type DataTableProps = {
-  data: Datas[]
+  data: Request["Row"][]
 }
 
 export function DataTable({ data }: DataTableProps) {
@@ -53,21 +54,21 @@ export function DataTable({ data }: DataTableProps) {
     },
   })
 
-  const handleApprove = (id) => {
-    // Implement logic to approve the item with the given id (e.g., API call)
-    console.log("Approved item:", id);
-  }
+  // const handleApprove = (id) => {
+  //   // Implement logic to approve the item with the given id (e.g., API call)
+  //   console.log("Approved item:", id);
+  // }
   
-  const handleReject = (id) => {
-    // Implement logic to select the item with the given id (e.g., update state)
-    console.log("Selected item:", id);
-  }
+  // const handleReject = (id) => {
+  //   // Implement logic to select the item with the given id (e.g., update state)
+  //   console.log("Selected item:", id);
+  // }
   
-  const handleRedirect = (data) => {
-    // Implement logic to redirect the user based on the provided data
-    // You can use `window.location.href` or a routing library for this
-    console.log("Redirecting to:", data);
-  }
+  // const handleRedirect = (data) => {
+  //   // Implement logic to redirect the user based on the provided data
+  //   // You can use `window.location.href` or a routing library for this
+  //   console.log("Redirecting to:", data);
+  // }
   
 
   return (
@@ -75,8 +76,8 @@ export function DataTable({ data }: DataTableProps) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Search user..."
-          value={(table.getColumn("user")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("user")?.setFilterValue(event.target.value)}
+          value={(table.getColumn("requestor_id")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("requestor_id")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -93,7 +94,7 @@ export function DataTable({ data }: DataTableProps) {
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {column.columnDef.header?.toString() ?? column.id}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
@@ -136,6 +137,7 @@ export function DataTable({ data }: DataTableProps) {
             )}
           </TableBody>
         </Table>
+        
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">

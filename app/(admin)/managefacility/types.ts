@@ -13,7 +13,7 @@ export type Datas = {
     {
       facility_id: "acbhdbch1234",
       facility: "Atrium",
-      description:"ambot unsa ni basta",
+      description:"ambot unsa ni bastasaaaaaa aaaaaaaaa hsidsahdhshddhasj hfhasfsahfhasf hsahfkhsd fkhsadklf hlkashdfkjsa hdfkhaslk dfhskadhf",
       picture: "iiahsadhashidha",
       type: "Openfields",
       location: "sa sagbotan",

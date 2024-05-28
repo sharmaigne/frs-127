@@ -5,8 +5,9 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Datas } from "./types";
 import EditFacility from "./editFacility";
+import { Facility } from "@/lib/types";
 
-export const columns: ColumnDef<Datas>[] = [
+export const columns: ColumnDef<Facility["Row"]>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -27,9 +28,9 @@ export const columns: ColumnDef<Datas>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "facility",
+    accessorKey: "facility_name",
     header: "facility",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("facility")} <div></div> {row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="font-bold"> {row.getValue("facility_name")} <div></div> {row.getValue("email")}</div>,
   },
 
   {
@@ -62,13 +63,13 @@ export const columns: ColumnDef<Datas>[] = [
     id: "actions",
     header: "Action",
     cell: ({ row }) => {
-      const { id, someDataForRedirect } = row.original; // Access data from the row object
+      // const { id, someDataForRedirect } = row.original; // Access data from the row object
       return (
         <div className="flex space-x-1">
-          <Button variant="outline" className="" onClick={() => handleEdit(id)}>
+          <Button variant="outline" className="">
             Edit
           </Button>
-          <Button variant="default" className="bg-primary-400 hover:bg-primary-300" onClick={() => handleDelete(id)}>
+          <Button variant="default" className="bg-primary-400 hover:bg-primary-300">
             Delete
           </Button>
         </div>

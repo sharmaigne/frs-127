@@ -7,6 +7,9 @@ import { Request } from "@/lib/types";
 
 import useGetProfileById from "@/hooks/queries/useGetProfileById";
 import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
+import moment from "moment";
+
+const dateFormat = "llll";
 
 
 export const columns: ColumnDef<Request["Row"]>[] = [
@@ -69,7 +72,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
       if (status === "pending") {
         return <div></div>;
       }
-      
+
       return (<div className="font-bold"> 
       {facility.name}
       </div>)}
@@ -77,12 +80,12 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   {
     accessorKey: "timestamp_start",
     header: "Date & Time",
-    cell: ({ row }) => <div>{row.getValue("timestamp_start")} </div>,
+    cell: ({ row }) => <div>{moment(row.getValue("timestamp_start")).format(dateFormat)} </div>,
   },
   {
     accessorKey: "timestamp_end",
     header: "Date & Time End",
-    cell: ({ row }) => <div>{row.getValue("timestamp_end")}</div>,
+    cell: ({ row }) => <div>{moment(row.getValue("timestamp_end")).format(dateFormat)}</div>,
   },
   {
     accessorKey: "status",

@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/app/(auth)/_api/schemas";
 import type { LoginFields } from "@/app/(auth)/_api/types";
 
-import { login, signup } from "./actions";
+import { login } from "./actions";
 import GoogleAuth from "../components/GoogleAuth";
 const LoginPage = () => {
   const form = useForm<LoginFields>({

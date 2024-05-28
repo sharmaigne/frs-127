@@ -9,6 +9,7 @@ export type Datas = {
   }
   
   
+<<<<<<< HEAD
   // export const data: Datas[] = [
   //   {
   //     facility_id: "acbhdbch1234",
@@ -19,6 +20,18 @@ export type Datas = {
   //     location: "sa sagbotan",
   //     capacity: "100 people"
   //   },
+=======
+  export const data: Datas[] = [
+    {
+      facility_id: "acbhdbch1234",
+      facility: "Atrium",
+      description:"ambot unsa ni bastasaaaaaa aaaaaaaaa hsidsahdhshddhasj hfhasfsahfhasf hsahfkhsd fkhsadklf hlkashdfkjsa hdfkhaslk dfhskadhf",
+      picture: "iiahsadhashidha",
+      type: "Openfields",
+      location: "sa sagbotan",
+      capacity: "100 people"
+    },
+>>>>>>> FE-feature/adminpage
     
   //   {
   //     id: "3u1reuv4",

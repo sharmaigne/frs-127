@@ -7,13 +7,13 @@ import FacilityCard from "./components/faciCard";
 import FaciTabs from "./components/faciTabs";
 import { TabsContent, Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
 
-import useFacilitiesQuery from "@/hooks/queries/useFacilitiesQuery";
+import useGetFacilities from "@/hooks/queries/useGetFacilities";
 
 import dynamic from "next/dynamic";
 const Hero = dynamic(() => import("./components/Hero"), { ssr: false });
 
 const HomePage = () => {
-  const { data: facilities, status, error } = useFacilitiesQuery();
+  const { data: facilities, status, error } = useGetFacilities();
 
   if (status === "error") {
     console.error(error);

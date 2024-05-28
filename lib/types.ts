@@ -7,3 +7,4 @@ export type TypedSupabaseClient = SupabaseClient<Database>;
 export type Profile = base["profiles"];
 export type Facility = base["facilities"];
 export type Request = base["requests"];
+export type Risk = base["risks"]

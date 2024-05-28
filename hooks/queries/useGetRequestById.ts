@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
 
-const useRequestByIdQuery = () => {
+const useGetRequestById = () => {
     const supabase = useSupabase();
 
     return useQuery({
@@ -22,4 +22,4 @@ const useRequestByIdQuery = () => {
     });
 }
 
-export default useRequestByIdQuery;
+export default useGetRequestById;

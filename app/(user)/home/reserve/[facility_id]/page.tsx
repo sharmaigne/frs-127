@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { useParams } from "next/navigation";
 import useSupabase from "@/hooks/useSupabase";
 import { useQuery } from "@tanstack/react-query";
-import { getFacilityById } from "@/utils/queries/global";
 
 const reservePage = () => {
   const { facility_id }: { facility_id: UUID } = useParams();

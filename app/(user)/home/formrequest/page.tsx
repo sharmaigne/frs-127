@@ -20,56 +20,24 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
 
+import { requestFormSchema } from "@/lib/validators";
 import RiskTable from "./RiskTable";
 import ProgramTable from "./ProgramTable";
 
-// Define the Zod schema for validation
-const formSchema = z.object({
-  event_name: z
-    .string()
-    .min(2, { message: "Event name must be at least 2 characters." }),
-  event_description: z
-    .string()
-    .min(5, { message: "Event description must be at least 5 characters." }),
-  organization: z
-    .string()
-    .min(2, { message: "Organization must be at least 2 characters." }),
-  timestamp_start: z.string().min(1, { message: "Start time is required." }),
-  timestamp_end: z.string().min(1, { message: "End time is required." }),
-  files:
-    typeof window !== "undefined" ? z.instanceof(FileList).optional() : z.any(),
-  risks_table: z
-    .array(
-      z.object({
-        risk: z.string().min(1),
-        effect: z.string().min(1),
-        likelihood: z.string().min(1),
-        impact: z.enum(["low", "medium", "high"]),
-        mitigating_action: z.enum(["low", "medium", "high"]),
-        escalation_point: z.string().min(1),
-        actions: z.string().min(1),
-      })
-    )
-    .optional(),
-  program_schedule: z
-    .array(
-      z.object({
-        time_start: z.string().min(1),
-        time_end: z.string().min(1),
-        program: z.string().min(1),
-      })
-    )
-    .optional(),
-});
+import { Request, ActivityDesign, Program, Risk } from "@/lib/types";
+import useAddRequest from "@/hooks/mutations/useAddRequest";
+import useAddActivityDesign from "@/hooks/mutations/useAddActivityDesign";
+import useAddPrograms from "@/hooks/mutations/useAddPrograms";
+import useAddRiskAnalysis from "@/hooks/mutations/useAddRiskAnalysis";
+import useAddRisks from "@/hooks/mutations/useAddRisks";
 
 // Define the TypeScript type for the form data
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof requestFormSchema>;
 
 const FormRequest = () => {
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(requestFormSchema),
     defaultValues: {
       event_name: "",
       event_description: "",
@@ -81,9 +49,9 @@ const FormRequest = () => {
         {
           risk: "",
           effect: "",
-          likelihood: "",
+          likelihood: "low",
           impact: "low",
-          mitigating_action: "low",
+          mitigating_action: "",
           escalation_point: "",
           actions: "",
         },
@@ -110,7 +78,81 @@ const FormRequest = () => {
     name: "program_schedule",
   });
 
+  let requestId: string = "";
+  let activityDesignId: string = "";
+  const addRequest = useAddRequest();
+  const addActivityDesign = useAddActivityDesign();
+  const addPrograms = useAddPrograms();
+  const addRiskAnalysis = useAddRiskAnalysis();
+  const addRisks = useAddRisks();
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    // create request, send to backend
+    // doesnt handle files and facility_id yet
+    const requestData: Request["Insert"] = {
+      event_name: data.event_name,
+      event_description: data.event_description,
+      organization: data.organization,
+      timestamp_start: data.timestamp_start,
+      timestamp_end: data.timestamp_end,
+      facility_id: "dd68cc55-09a6-442d-974e-917741c02c09",
+      requestor_id: "d50a2bf8-2c06-4d6e-b230-be22220b3404",
+    };
+
+    addRequest.mutate(requestData);
+
+    if (addRequest.isSuccess) {
+      console.log("Request: ", addRequest.data);
+      requestId = addRequest.data.request_id;
+    }
+
+    // create activity design, send to backend
+    const activityDesignData: ActivityDesign["Insert"] = {
+      request_id: requestId,
+    };
+
+    addActivityDesign.mutate(activityDesignData);
+
+    if (addActivityDesign.isSuccess) {
+      console.log("Activity Design: ", addActivityDesign.data);
+      activityDesignId = addActivityDesign.data.activity_design_id;
+    }
+    // create program schedule, send to backend
+    const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
+      (program) => ({
+        activity: program.program,
+        activity_design_id: activityDesignId,
+        timestamp_end: program.time_end,
+        timestamp_start: program.time_start,
+      })
+    )!; // ! is used to tell TypeScript that the value is not null
+
+    console.log("Program: ", programScheduleData);
+    addPrograms.mutate(programScheduleData);
+
+    // create risk analysis, send to backend
+    // for some reason, not symmetric with activity design / program schedule
+    const riskAnalysisData = {
+      request_id: requestId,
+    };
+
+    addRiskAnalysis.mutate(riskAnalysisData);
+
+    const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
+      (risk) => ({
+        risk: risk.risk,
+        effect: risk.effect,
+        likelihood: risk.likelihood,
+        impact: risk.impact,
+        mitigating_action: risk.mitigating_action,
+        escalation_point: risk.escalation_point,
+        actions: risk.actions,
+      })
+    );
+
+    console.log("Risk: ", programScheduleData);
+    addRisks.mutate(risksData);
+
     console.log(data);
   };
 

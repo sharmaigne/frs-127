@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,13 @@ const Popup = dynamic(() => import("./Popup"), { ssr: false });
 
 import { Facility, Request } from "@/lib/types";
 
-const FacilityCard = ({ facility }: { facility: Facility["Row"] }) => {
+const FacilityCard = ({ facility }: { facility: any }) => {
+  const [showPopup, setShowPopup] = React.useState(false);
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  };
+
   return (
     <Card>
       <CardContent className="p-4 space-y-4">
@@ -43,15 +50,14 @@ const FacilityCard = ({ facility }: { facility: Facility["Row"] }) => {
           ))}
         </div> */}
 
-        <div className="flex gap-2 justify-end">
-          <Link href="">
-            <Button variant="outline">View Details</Button>
-          </Link>
-          {/* <Popup /> */}
-          <Link href={`home/reserve/${facility.facility_id}`}>
-            <Button >Reserve</Button>
-          </Link>
-        </div>
+        {showPopup && <Popup />}
+        <Button
+          className="bg-white hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-50"
+          variant="outline"
+          onClick={handleOpenPopup}
+        >
+          Reserve
+        </Button>
       </CardContent>
     </Card>
   );

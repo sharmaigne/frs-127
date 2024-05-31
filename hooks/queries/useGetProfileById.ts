@@ -4,16 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
 import { UUID } from "crypto";
 
-const useGetFacilityById = (facility_id: UUID) => {
+const useGetProfileById = (user_id: UUID) => {
     const supabase = useSupabase();
 
     return useQuery({
-      queryKey: ["facilities", facility_id],
+      queryKey: ["profiles", user_id],
       queryFn: async () => {
         const { data, error } = await supabase
-            .from("facilities")
+            .from("profiles")
             .select("*")
-            .eq("facility_id", facility_id)
+            .eq("user_id", user_id)
             .single();
         
         if (error) {
@@ -25,4 +25,4 @@ const useGetFacilityById = (facility_id: UUID) => {
     });
 }
 
-export default useGetFacilityById;
+export default useGetProfileById;

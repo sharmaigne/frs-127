@@ -24,8 +24,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+import { Facility } from "@/lib/types"
+
 type DataTableProps = {
-  data: Datas[]
+  data: Facility["Row"][]
 }
 
 export function DataTable({ data }: DataTableProps) {
@@ -53,21 +55,21 @@ export function DataTable({ data }: DataTableProps) {
     },
   })
 
-  const handleApprove = (id) => {
-    // Implement logic to approve the item with the given id (e.g., API call)
-    console.log("Approved item:", id);
-  }
+  // const handleApprove = (id) => {
+  //   // Implement logic to approve the item with the given id (e.g., API call)
+  //   console.log("Approved item:", id);
+  // }
   
-  const handleReject = (id) => {
-    // Implement logic to select the item with the given id (e.g., update state)
-    console.log("Selected item:", id);
-  }
+  // const handleReject = (id) => {
+  //   // Implement logic to select the item with the given id (e.g., update state)
+  //   console.log("Selected item:", id);
+  // }
   
-  const handleRedirect = (data) => {
-    // Implement logic to redirect the user based on the provided data
-    // You can use `window.location.href` or a routing library for this
-    console.log("Redirecting to:", data);
-  }
+  // const handleRedirect = (data) => {
+  //   // Implement logic to redirect the user based on the provided data
+  //   // You can use `window.location.href` or a routing library for this
+  //   console.log("Redirecting to:", data);
+  // }
   
 
   return (
@@ -75,8 +77,8 @@ export function DataTable({ data }: DataTableProps) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Search facility..."
-          value={(table.getColumn("facility")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("facility")?.setFilterValue(event.target.value)}
+          value={(table.getColumn("facility_name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("facility_name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

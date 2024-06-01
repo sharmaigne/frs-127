@@ -21,7 +21,7 @@ export function RiskAnalysisTable({ risks }: RiskAnalysisTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>TIN</TableHead>
+            <TableHead>Risk</TableHead>
             <TableHead>Effect</TableHead>
             <TableHead>Likelihood</TableHead>
             <TableHead>Impact</TableHead>

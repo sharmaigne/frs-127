@@ -1,14 +1,9 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import  CardWrapper  from "./CardWrapper";
-
-interface Program {
-  timestamp_start: string;
-  timestamp_end: string;
-  activity: string;
-}
+import { Program } from "@/lib/types";
 
 interface ProgramDetailsTableProps {
-  programs: Program[];
+  programs: Program["Row"][];
 }
 import React from 'react'
 

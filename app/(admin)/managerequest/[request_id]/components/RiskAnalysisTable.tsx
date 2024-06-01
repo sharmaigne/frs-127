@@ -2,17 +2,10 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Button } from "@/components/ui/button";
 import CardWrapper  from "./CardWrapper";
 import React from 'react'
-interface Risk {
-  risk: string;
-  effect: string;
-  likelihood: string;
-  impact: string;
-  mitigating_action: string;
-  escalation_point: string;
-}
+import { Risk } from "@/lib/types";
 
 interface RiskAnalysisTableProps {
-  risks: Risk[];
+  risks: Risk["Row"][];
 }
 
 

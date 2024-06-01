@@ -354,6 +354,7 @@ export type Database = {
       }
       requests: {
         Row: {
+          request_id: string
           activity_design_id: string | null
           confirmation_ticket_id: string | null
           endorsement_ticket_id: string | null
@@ -361,7 +362,6 @@ export type Database = {
           event_name: string
           facility_id: string
           organization: string | null
-          request_id: string
           requestor_id: string
           risk_analysis_id: string | null
           status: Database["public"]["Enums"]["status"] | null

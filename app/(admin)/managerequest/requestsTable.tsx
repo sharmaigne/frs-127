@@ -1,4 +1,6 @@
 "use client";
+
+// TODO: implement approval and rejection logic
 import React from "react";
 import {
   ColumnFiltersState,
@@ -59,7 +61,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
     state: {
       sorting,
       columnFilters,
-      columnVisibility,
+      columnVisibility: {request_id: false},
       rowSelection,
     },
   });
@@ -93,6 +95,8 @@ export function RequestsTable({ data }: RequestsTableProps) {
           }
           className="max-w-sm"
         />
+
+        {/* dropdown for toggling which columns are shown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -102,7 +106,9 @@ export function RequestsTable({ data }: RequestsTableProps) {
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter((column) => column.getCanHide())
+              .filter((column) => {
+                return column.getCanHide() && column.id !== "request_id";
+              })
               .map((column) => (
                 <DropdownMenuCheckboxItem
                   key={column.id}

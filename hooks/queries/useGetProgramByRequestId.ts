@@ -4,17 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
 import { UUID } from "crypto";
 
-const useGetRequestById = (request_id: UUID) => {
+const useGetProgramByRequestId = (request_id: UUID) => {
     const supabase = useSupabase();
 
     return useQuery({
-      queryKey: ["requests", request_id],
+      queryKey: ["program", request_id],
       queryFn: async () => {
         const { data, error } = await supabase
-            .from("requests")
+            .from("program")
             .select("*")
-            .eq("request_id", request_id)
-            .single();
+            .eq("request_id", request_id);
         
         if (error) {
             throw error;
@@ -25,4 +24,4 @@ const useGetRequestById = (request_id: UUID) => {
     });
 }
 
-export default useGetRequestById;
+export default useGetProgramByRequestId;

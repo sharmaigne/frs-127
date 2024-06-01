@@ -27,7 +27,7 @@ const EditFacility = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="type">Facility Type</Label>
-              <Select id="type">
+              <Select>
                 <SelectTrigger>
                   <SelectValue placeholder="Select facility type" />
                 </SelectTrigger>

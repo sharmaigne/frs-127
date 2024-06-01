@@ -29,7 +29,7 @@ const CreateFacility = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="type">Facility Type</Label>
-              <Select iπd="type">
+              <Select>
                 <SelectTrigger>
                   <SelectValue placeholder="Select facility type" />
                 </SelectTrigger>

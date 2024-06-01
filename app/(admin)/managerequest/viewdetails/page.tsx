@@ -49,7 +49,7 @@ type ApiResponse = {
   riskAnalysis: RiskAnalysis[];
 };
 
-interface DetailsProps {
+type DetailsProps = {
   apiEndpoint: string;
 }
 
@@ -59,16 +59,16 @@ interface DetailsProps {
 // const supabaseKey = 'public-anon-key';
 // const supabase = createClient(supabaseUrl, supabaseKey);
 
-const Details: React.FC<DetailsProps> = ({ apiEndpoint }) => {
+const Details = () => {
   const [data, setData] = useState<ApiResponse | null>(null);
 
-  useEffect(() => {
-    // Placeholder fetch call for Supabase integration (to be replaced with actual Supabase implementation)
-    fetch(apiEndpoint)
-      .then(response => response.json())
-      .then((data: ApiResponse) => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, [apiEndpoint]);
+  // useEffect(() => {
+  //   // Placeholder fetch call for Supabase integration (to be replaced with actual Supabase implementation)
+  //   fetch(apiEndpoint)
+  //     .then(response => response.json())
+  //     .then((data: ApiResponse) => setData(data))
+  //     .catch(error => console.error('Error fetching data:', error));
+  // }, [apiEndpoint]);
 
   if (!data) {
     return <div>Loading...</div>;

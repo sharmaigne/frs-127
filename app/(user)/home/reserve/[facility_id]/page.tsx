@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import useSupabase from "@/hooks/useSupabase";
 import { useQuery } from "@tanstack/react-query";
 
-const reservePage = () => {
+const ReservePage = () => {
   const { facility_id }: { facility_id: UUID } = useParams();
   const supabase = useSupabase();
 
@@ -42,7 +42,6 @@ const reservePage = () => {
           {/* event details */}
           <div className="md:col-span-2 lg:col-span-3 rounded p-4 bg-accent/20">
             <h5 className="font-bold">Event Details</h5>
-
           </div>
         </div>
 
@@ -55,4 +54,4 @@ const reservePage = () => {
   );
 };
 
-export default reservePage;
+export default ReservePage;

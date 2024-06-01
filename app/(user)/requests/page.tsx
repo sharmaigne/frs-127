@@ -19,7 +19,7 @@ const RequestsPage = () => {
         <div className="flex flex-wrap">
           {/* GET requests that are still drafts */}
           {requests.map((request) => {
-            return <DraftRequest request={request} />;
+            return <DraftRequest request={request}  key={request.request_id}/>;
           })}
         </div>
 
@@ -29,7 +29,7 @@ const RequestsPage = () => {
         <div className="my-5">
           {/* GET requests that are pending */}
           {requests.map((request) => {
-            return <OngoingRequest request={request} />;
+            return <OngoingRequest request={request}  key={request.request_id}/>;
           })}
         </div>
 
@@ -40,7 +40,7 @@ const RequestsPage = () => {
           {/* GET requests that have been cancelled or approved
           how to check if cancelled? add status */}
           {requests.map((request) => {
-            return <PastEvent request={request} />;
+            return <PastEvent request={request} key={request.request_id}/>;
           })}
         </div>
       </div>

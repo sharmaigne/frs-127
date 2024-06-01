@@ -1,6 +1,6 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import  CardWrapper  from "./CardWrapper";
-
+import React from 'react'
 interface Program {
   timestamp_start: string;
   timestamp_end: string;
@@ -10,7 +10,7 @@ interface Program {
 interface ProgramDetailsTableProps {
   programs: Program[];
 }
-import React from 'react'
+
 
 const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps)  => {
   return (

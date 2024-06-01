@@ -20,7 +20,7 @@ const RequestDetailsCard = ({ requests }: RequestDetailsCardProps) => {
     <CardWrapper title="Request Details">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Request Name</Label>
+          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event Name</Label>
           <p className="text-gray-900 dark:text-gray-50">{requests.event_name}</p>
         </div>
         <div>
@@ -29,16 +29,16 @@ const RequestDetailsCard = ({ requests }: RequestDetailsCardProps) => {
         </div>
       </div>
       <div>
-        <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Request Description</Label>
+        <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event Description</Label>
         <p className="text-gray-900 dark:text-gray-50">{requests.event_description}</p>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Start Timestamp</Label>
+          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event Start Time</Label>
           <p className="text-gray-900 dark:text-gray-50">{requests.timestamp_start}</p>
         </div>
         <div>
-          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">End Timestamp</Label>
+          <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event End Time</Label>
           <p className="text-gray-900 dark:text-gray-50">{requests.timestamp_end}</p>
         </div>
       </div>

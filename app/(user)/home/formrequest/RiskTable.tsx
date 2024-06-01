@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const RiskTable = ({ control, register, fields, append, remove }: any) => (
+const RiskTable = ({ register, fields, append, remove }: any) => (
   <div className="overflow-x-auto">
     <table className="min-w-full bg-white ">
       <thead>

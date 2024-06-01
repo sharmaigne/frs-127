@@ -96,7 +96,6 @@ const FormRequest = () => {
       timestamp_start: data.timestamp_start,
       timestamp_end: data.timestamp_end,
       facility_id: "dd68cc55-09a6-442d-974e-917741c02c09",
-      requestor_id: "d50a2bf8-2c06-4d6e-b230-be22220b3404",
     };
 
     // mutateAsync is used instead of mutate since we're chaining multiple mutations
@@ -254,7 +253,6 @@ const FormRequest = () => {
                   />
                   <CardTitle>Risk Table</CardTitle>
                   <RiskTable
-                    control={form.control}
                     register={form.register}
                     fields={riskFields}
                     append={appendRisk}
@@ -279,7 +277,6 @@ const FormRequest = () => {
                   />
                   <CardTitle>Program Schedule</CardTitle>
                   <ProgramTable
-                    control={form.control}
                     register={form.register}
                     fields={programFields}
                     append={appendProgram}

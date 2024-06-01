@@ -12,7 +12,6 @@ import {
   flexRender,
 } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
-import { Datas } from "./types"
 import { columns } from "./columns"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"

@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const ProgramTable = ({ control, register, fields, append, remove }: any) => (
+const ProgramTable = ({ register, fields, append, remove }: any) => (
   <div className="overflow-x-auto mt-8">
     <table className="min-w-full bg-white">
       <thead>

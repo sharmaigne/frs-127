@@ -2,21 +2,21 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useSupabase from "@/hooks/useSupabase";
-import { Risk } from "@/lib/types";
+import { Program } from "@/lib/types";
 
-const useAddRisk = () => {
+const useAddPrograms = () => {
     const supabase = useSupabase();
     const queryClient = useQueryClient();
 
     return useMutation({
       onSuccess: () => {
-        queryClient.refetchQueries({ queryKey: ["risks"] });
+        queryClient.refetchQueries({ queryKey: ["programs"] });
       },
 
-      mutationFn: async (riskData: Risk["Row"]) => {
+      mutationFn: async (programData: Program["Insert"][]) => {
         const { data, error } = await supabase
-            .from("risks")
-            .insert([riskData])
+            .from("program")
+            .insert(programData)
             .select();
         
         if (error) {
@@ -28,4 +28,4 @@ const useAddRisk = () => {
     });
 }
 
-export default useAddRisk
+export default useAddPrograms

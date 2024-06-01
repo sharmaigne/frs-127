@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Datas } from "./types";
 import EditFacility from "./editFacility";
 import { Facility } from "@/lib/types";
 
@@ -58,22 +57,5 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
     accessorKey: "capacity",
     header: "Capacity",
     cell: ({ row }) => <div className="capacity">{row.getValue("capacity")}</div>,
-  },
-  {
-    id: "actions",
-    header: "Action",
-    cell: ({ row }) => {
-      // const { id, someDataForRedirect } = row.original; // Access data from the row object
-      return (
-        <div className="flex space-x-1">
-          <Button variant="outline" className="">
-            Edit
-          </Button>
-          <Button variant="default" className="bg-primary-400 hover:bg-primary-300">
-            Delete
-          </Button>
-        </div>
-      );
-    },
-  },
+  }
 ];

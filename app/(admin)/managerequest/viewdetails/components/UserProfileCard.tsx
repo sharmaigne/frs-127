@@ -2,10 +2,23 @@ import { Label } from "@/components/ui/label";
 import  CardWrapper  from "./CardWrapper";
 import React from 'react'
 import { Profile } from "@/lib/types";
+interface User {
+
+  role: string;
+  first_name: string;
+  middle_initial: string;
+  last_name: string;
+  email: string;
+  contact_number: string;
+}
+
+interface UserProfileCardProps {
+  profiles: User;
+}
 
 
 
-const UserProfileCard = ({ profiles }: { profiles: Profile["Row"] }) => {
+const UserProfileCard = ({ profiles }: UserProfileCardProps) => {
 
 
   return (

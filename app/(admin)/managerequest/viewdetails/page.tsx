@@ -21,7 +21,35 @@ const requests = {
   timestamp_end: "2023-06-03 17:00:00"
 };
 
-const risks = [
+interface Risk {
+  risk: string;
+  effect: string;
+  likelihood: string;
+  impact: string;
+  mitigating_action: string;
+  escalation_point: string;
+}
+
+
+const risks: Risk[] = [
+  {
+    risk: "injury",
+    effect: "Delay games",
+    likelihood: "Medium",
+    impact: "High",
+    mitigating_action: "Implement additional security measures",
+    escalation_point: "hmmm i dont really know"
+    
+  },
+  {
+    risk: "injury",
+    effect: "Delay games",
+    likelihood: "Medium",
+    impact: "High",
+    mitigating_action: "Implement additional security measures",
+    escalation_point: "hmmm i dont really know"
+    
+  },
   {
     risk: "injury",
     effect: "Delay games",

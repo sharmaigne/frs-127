@@ -23,13 +23,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
-import { Request } from "@/lib/types"
+import { Facility } from "@/lib/types"
 
-type DataTableProps = {
-  data: Request["Row"][]
+type FacilitiesTableProps = {
+  data: Facility["Row"][]
 }
 
-export function DataTable({ data }: DataTableProps) {
+export function FacilitiesTable({ data }: FacilitiesTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -75,9 +75,9 @@ export function DataTable({ data }: DataTableProps) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search user..."
-          value={(table.getColumn("requestor_id")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("requestor_id")?.setFilterValue(event.target.value)}
+          placeholder="Search facility..."
+          value={(table.getColumn("facility_name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("facility_name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -94,7 +94,7 @@ export function DataTable({ data }: DataTableProps) {
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.columnDef.header?.toString() ?? column.id}
+                {column.id}
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
@@ -137,7 +137,6 @@ export function DataTable({ data }: DataTableProps) {
             )}
           </TableBody>
         </Table>
-        
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
+<<<<<<< HEAD
     //  const  supabase = createClient()
     // return await updateSession(request)
     
@@ -18,6 +19,9 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     // return 
 
 
+=======
+    return await updateSession(request)
+>>>>>>> origin
 }
 
 

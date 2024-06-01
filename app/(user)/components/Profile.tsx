@@ -54,6 +54,7 @@ const Profile = () => {
   };
 
   const handleSaveChanges = async (data: any) => {
+    // can be changed to a more appropriate logic
     try {
       const response = await fetch('/api/update-profile', {
         method: 'POST',

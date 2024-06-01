@@ -1,4 +1,11 @@
 "use client";
+
+// TODO: add logic to handle file uploads
+// TODO: add logic to get only either file upload or text inputs
+// TODO: make the form easier to use (eg. date picker)
+// TODO: clean up tables
+// TODO: add drafts feature
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { z } from "zod";

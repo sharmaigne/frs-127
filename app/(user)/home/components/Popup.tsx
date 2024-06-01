@@ -41,7 +41,7 @@ const Popup = () => {
       organization: "",
       timestamp_start: "",
       timestamp_end: "",
-      files: null,
+      files: undefined,
     },
   })
 

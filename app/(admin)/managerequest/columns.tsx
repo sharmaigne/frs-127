@@ -35,7 +35,8 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   {
     accessorKey: "requestor_id",
     header: "User",
-    cell: ({ row }) => { 
+    // is in function form to use hooks
+    cell: function CellComponent({ row }) { 
       const { data: profile, error, status} = useGetProfileById(row.getValue("requestor_id"));
 
       if (status === "error") {
@@ -61,7 +62,8 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   {
     accessorKey: "facility_id",
     header: "Facility",
-    cell: ({ row }) => { 
+    // is in function form to use hooks
+    cell: function CellComponent({ row }) { 
       const { data: facility, error, status } = useGetFacilityById(row.getValue("facility_id"));
       
       if (status === "error") {

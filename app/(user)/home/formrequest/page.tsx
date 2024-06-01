@@ -1,4 +1,11 @@
 "use client";
+
+// TODO: add logic to handle file uploads
+// TODO: add logic to get only either file upload or text inputs
+// TODO: make the form easier to use (eg. date picker)
+// TODO: clean up tables
+// TODO: add drafts feature
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { z } from "zod";
@@ -13,173 +20,78 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardHeader, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
-import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React from "react";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 
-// Define the Zod schema for validation
-const formSchema = z.object({
-  event_name: z.string().min(2, { message: "Event name must be at least 2 characters." }),
-  event_description: z.string().min(5, { message: "Event description must be at least 5 characters." }),
-  organization: z.string().min(2, { message: "Organization must be at least 2 characters." }),
-  timestamp_start: z.string().nonempty({ message: "Start time is required." }),
-  timestamp_end: z.string().nonempty({ message: "End time is required." }),
-  files: typeof window !== "undefined" ? z.instanceof(FileList).optional() : z.any(),
-  table_data: z.array(
-    z.object({
-      risk: z.string().nonempty(),
-      effect: z.string().nonempty(),
-      likelihood: z.string().nonempty(),
-      impact: z.enum(["low", "medium", "high"]),
-      mitigating_action: z.enum(["low", "medium", "high"]),
-      escalation_point: z.string().nonempty(),
-      actions: z.string().nonempty(),
-    })
-  ).optional(),
-  program_schedule: z.array(
-    z.object({
-      time_start: z.string().nonempty(),
-      time_end: z.string().nonempty(),
-      program: z.string().nonempty(),
-    })
-  ).optional(),
-});
+import { requestFormSchema } from "@/lib/validators";
+import RiskTable from "./RiskTable";
+import ProgramTable from "./ProgramTable";
+
+import { Request, ActivityDesign, Program, Risk } from "@/lib/types";
+import useAddRequest from "@/hooks/mutations/useAddRequest";
+import useAddActivityDesign from "@/hooks/mutations/useAddActivityDesign";
+import useAddPrograms from "@/hooks/mutations/useAddPrograms";
+import useAddRiskAnalysis from "@/hooks/mutations/useAddRiskAnalysis";
+import useAddRisks from "@/hooks/mutations/useAddRisks";
+
+// dropdown
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import useGetFacilities from "@/hooks/queries/useGetFacilities";
+import { CommandList } from "cmdk";
 
 // Define the TypeScript type for the form data
-type FormData = z.infer<typeof formSchema>;
-
-const TableComponent = ({ control, register, fields, append, remove }: any) => (
-  <div className="overflow-x-auto">
-    <table className="min-w-full bg-white ">
-      <thead>
-        <tr>
-          <th className="px-4 py-2">Risk</th>
-          <th className="px-4 py-2">Effect</th>
-          <th className="px-4 py-2">Likelihood</th>
-          <th className="px-4 py-2">Impact</th>
-          <th className="px-4 py-2">Mitigating Action</th>
-          <th className="px-4 py-2">Escalation Point</th>
-          <th className="px-4 py-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody >
-        {fields.map((item: any, index: number) => (
-          <tr key={item.id}>
-            <td className="border px-4 py-2 border-none">
-              <Input {...register(`table_data.${index}.risk`)} defaultValue={item.risk} placeholder="Risk" />
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Input {...register(`table_data.${index}.effect`)} defaultValue={item.effect} placeholder="Effect" />
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Input {...register(`table_data.${index}.likelihood`)} defaultValue={item.likelihood} placeholder="Likelihood" />
-            </td>
-            <td className="border px-2 py-2 border-none">
-              <Select {...register(`table_data.${index}.impact`)} defaultValue={item.impact}>
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
-            </td>
-            <td className="border px-2 py-2 border-none">
-              <Select {...register(`table_data.${index}.mitigating_action`)} defaultValue={item.mitigating_action}>
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Textarea {...register(`table_data.${index}.escalation_point`)} defaultValue={item.escalation_point} placeholder="Escalation Point" className="border-none"/>
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Textarea {...register(`table_data.${index}.actions`)} defaultValue={item.actions} placeholder="Actions" className="border-none"/>
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Button type="button" onClick={() => remove(index)}>
-                Delete
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <Button type="button" onClick={() => append({ risk: "", effect: "", likelihood: "", impact: "low", mitigating_action: "low", escalation_point: "", actions: "" })}>
-      Add Row
-    </Button>
-
-  </div>
-);
-
-const ProgramTableComponent = ({ control, register, fields, append, remove }: any) => (
-  <div className="overflow-x-auto mt-8">
-    <table className="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th className="px-4 py-2">Start Time</th>
-          <th className="px-4 py-2">End Time</th>
-          <th className="px-4 py-2">Program</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        {fields.map((item: any, index: number) => (
-          <tr key={item.id}>
-            <td className="border px-4 py-2 border-none">
-              <Input type="datetime-local" {...register(`program_schedule.${index}.time_start`)} defaultValue={item.time_start} />
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Input type="datetime-local" {...register(`program_schedule.${index}.time_end`)} defaultValue={item.time_end} />
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Input {...register(`program_schedule.${index}.program`)} defaultValue={item.program} placeholder="Program" />
-            </td>
-            <td className="border px-4 py-2 border-none">
-              <Button type="button" onClick={() => remove(index)}>
-                Delete
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <Button type="button" onClick={() => append({ time_start: "", time_end: "", program: "" })}>
-      Add Row
-    </Button>
-  </div>
-);
+type FormData = z.infer<typeof requestFormSchema>;
 
 const FormRequest = () => {
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(requestFormSchema),
     defaultValues: {
+      facility_id: "",
       event_name: "",
       event_description: "",
       organization: "",
       timestamp_start: "",
       timestamp_end: "",
       files: undefined,
-      table_data: [{ risk: "", effect: "", likelihood: "", impact: "low", mitigating_action: "low", escalation_point: "", actions: "" }],
+      risks_table: [
+        {
+          risk: "",
+          effect: "",
+          likelihood: "low",
+          impact: "low",
+          mitigating_action: "",
+          escalation_point: ""
+        },
+      ],
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
     },
   });
 
   const {
-    fields: tableFields,
-    append: appendTable,
-    remove: removeTable,
+    fields: riskFields,
+    append: appendRisk,
+    remove: removeRisk,
   } = useFieldArray({
     control: form.control,
-    name: "table_data",
+    name: "risks_table",
   });
 
   const {
@@ -191,9 +103,89 @@ const FormRequest = () => {
     name: "program_schedule",
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+  let requestId: string = "";
+  let activityDesignId: string = "";
+  const addRequest = useAddRequest();
+  const addActivityDesign = useAddActivityDesign();
+  const addPrograms = useAddPrograms();
+  const addRiskAnalysis = useAddRiskAnalysis();
+  const addRisks = useAddRisks();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log("Data: ", data);
+    // create request, send to backend
+    // doesnt handle files yet
+    const requestData: Request["Insert"] = {
+      event_name: data.event_name,
+      event_description: data.event_description,
+      organization: data.organization,
+      timestamp_start: data.timestamp_start,
+      timestamp_end: data.timestamp_end,
+      facility_id: data.facility_id,
+    };
+
+    // mutateAsync is used instead of mutate since we're chaining multiple mutations
+    const requestResult = await addRequest.mutateAsync(requestData);
+    console.log("Request: ", requestResult);
+    requestId = requestResult.request_id;
+
+    // create activity design, send to backend
+    const activityDesignData: ActivityDesign["Insert"] = {
+      request_id: requestId,
+    };
+
+    const activityDesignResult = await addActivityDesign.mutateAsync(
+      activityDesignData
+    );
+    console.log("Request: ", activityDesignResult);
+    activityDesignId = activityDesignResult.activity_design_id;
+
+    // create program schedule, send to backend
+    const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
+      (program) => ({
+        activity: program.program,
+        activity_design_id: activityDesignId,
+        timestamp_end: program.time_end,
+        timestamp_start: program.time_start,
+      })
+    )!; // ! is used to tell TypeScript that the value is not null
+
+    const programScheduleResult = addPrograms.mutateAsync(programScheduleData);
+    console.log("Program: ", programScheduleResult);
+
+    // create risk analysis, send to backend
+    // for some reason, not symmetric with activity design / program schedule
+    const riskAnalysisData = {
+      request_id: requestId,
+    };
+
+    const riskAnalysisResult = addRiskAnalysis.mutateAsync(riskAnalysisData);
+    console.log("Risk Analysis: ", riskAnalysisResult);
+
+    const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
+      (risk) => ({
+        risk: risk.risk,
+        effect: risk.effect,
+        likelihood: risk.likelihood,
+        impact: risk.impact,
+        mitigating_action: risk.mitigating_action,
+        escalation_point: risk.escalation_point,
+      })
+    );
+
+    const risksResult = addRisks.mutateAsync(risksData);
+    console.log("Risks: ", risksResult);
   };
+
+  const { data: facilities = [], status, error } = useGetFacilities();
+
+  if (status === "pending") {
+    return <div>Loading facilities...</div>;
+  }
+
+  if (status === "error") {
+    return <div>Error loading facilities: {error?.message}</div>;
+  }
 
   return (
     <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-8">
@@ -202,11 +194,84 @@ const FormRequest = () => {
           <Card>
             <CardHeader>
               <CardTitle>Request Form</CardTitle>
-              <CardDescription>Fill out the form below to submit your information to admin.</CardDescription>
+              <CardDescription>
+                Fill out the form below to submit your information to admin.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
+                  {/* FACILITY DROPDOWN */}
+                  <FormField
+                    control={form.control}
+                    name="facility_id"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-full">
+                        <FormLabel>Facility</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "justify-between",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value
+                                  ? facilities.find(
+                                      (facility) =>
+                                        facility.facility_id === field.value
+                                    )?.name
+                                  : "Select facility"}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0">
+                            <Command>
+                              <CommandInput placeholder="Search facility..." />
+                              <CommandEmpty>No facility found.</CommandEmpty>
+
+                              {/* DO NOT REMOVE THIS WRAPPER. Will break the command. Is a shadcn bug.*/}
+                              <CommandList>
+                                <CommandGroup>
+                                  {facilities.map((facility) => (
+                                    <CommandItem
+                                      value={facility.name}
+                                      key={facility.facility_id}
+                                      onSelect={() => {
+                                        form.setValue(
+                                          "facility_id",
+                                          facility.facility_id
+                                        );
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          facility.facility_id === field.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {facility.name}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <FormField
                     control={form.control}
                     name="event_name"
@@ -227,7 +292,10 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Event Description</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Event description" {...field} />
+                          <Textarea
+                            placeholder="Event description"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -279,14 +347,23 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Attach Files</FormLabel>
                         <FormControl>
-                          <Input type="file" onChange={(e) => field.onChange(e.target.files)} multiple />
+                          <Input
+                            type="file"
+                            onChange={(e) => field.onChange(e.target.files)}
+                            multiple
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <CardTitle>Risk Table</CardTitle>
-                  <TableComponent control={form.control} register={form.register} fields={tableFields} append={appendTable} remove={removeTable} />
+                  <RiskTable
+                    register={form.register}
+                    fields={riskFields}
+                    append={appendRisk}
+                    remove={removeRisk}
+                  />
                   <FormField
                     control={form.control}
                     name="files"
@@ -294,14 +371,23 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Attach Risk Table File</FormLabel>
                         <FormControl>
-                          <Input type="file" onChange={(e) => field.onChange(e.target.files)} multiple />
+                          <Input
+                            type="file"
+                            onChange={(e) => field.onChange(e.target.files)}
+                            multiple
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <CardTitle>Program Schedule</CardTitle>
-                  <ProgramTableComponent control={form.control} register={form.register} fields={programFields} append={appendProgram} remove={removeProgram} />
+                  <ProgramTable
+                    register={form.register}
+                    fields={programFields}
+                    append={appendProgram}
+                    remove={removeProgram}
+                  />
                   <FormField
                     control={form.control}
                     name="files"
@@ -309,7 +395,11 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Attach Program Schedule File</FormLabel>
                         <FormControl>
-                          <Input type="file" onChange={(e) => field.onChange(e.target.files)} multiple />
+                          <Input
+                            type="file"
+                            onChange={(e) => field.onChange(e.target.files)}
+                            multiple
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

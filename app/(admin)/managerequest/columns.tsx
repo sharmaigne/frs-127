@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Request } from "@/lib/types";
-
+import { Badge } from "@/components/ui/badge";
 import useGetProfileById from "@/hooks/queries/useGetProfileById";
 import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
 import moment from "moment";
@@ -92,7 +92,11 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("status")}</div>,
+    cell: ({ row }) => <div className="capitalize">
+      <Badge className="bg-primary-300">
+      {row.getValue("status")}
+      </Badge>
+      </div>,
   },
   {
     id: "actions",

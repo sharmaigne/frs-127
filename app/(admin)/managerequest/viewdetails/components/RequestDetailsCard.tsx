@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { CardWrapper } from "./CardWrapper";
-
+import  CardWrapper  from "./CardWrapper";
+import React from 'react'
 interface Request {
   event_name: string;
   organization: string;
@@ -14,7 +14,8 @@ interface RequestDetailsCardProps {
   requests: Request;
 }
 
-export function RequestDetailsCard({ requests }: RequestDetailsCardProps) {
+
+const RequestDetailsCard = ({ requests }: RequestDetailsCardProps) => {
   return (
     <CardWrapper title="Request Details">
       <div className="grid grid-cols-2 gap-4">
@@ -48,3 +49,4 @@ export function RequestDetailsCard({ requests }: RequestDetailsCardProps) {
     </CardWrapper>
   );
 }
+export default RequestDetailsCard

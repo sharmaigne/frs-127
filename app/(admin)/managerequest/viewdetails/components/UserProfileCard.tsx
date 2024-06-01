@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
-import { CardWrapper } from "./CardWrapper";
-
+import  CardWrapper  from "./CardWrapper";
+import React from 'react'
 interface User {
 
   role: string;
@@ -15,7 +15,11 @@ interface UserProfileCardProps {
   profiles: User;
 }
 
-export function UserProfileCard({ profiles }: UserProfileCardProps) {
+
+
+const UserProfileCard = ({ profiles }: UserProfileCardProps) => {
+
+
   return (
     <CardWrapper title="User Profile">
       <div className="grid grid-cols-2 gap-4">
@@ -52,3 +56,4 @@ export function UserProfileCard({ profiles }: UserProfileCardProps) {
     </CardWrapper>
   );
 }
+export default UserProfileCard

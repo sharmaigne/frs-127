@@ -1,8 +1,8 @@
-import { UserProfileCard } from "./components/UserProfileCard";
-import { RequestDetailsCard } from "./components/RequestDetailsCard";
-import { RiskAnalysisTable } from "./components/RiskAnalysisTable";
-import { ProgramDetailsTable } from "./components/ProgramDetailsTable";
-import { CommentSection } from "./components/CommentSection";
+import UserProfileCard from "./components/UserProfileCard";
+import  RequestDetailsCard  from "./components/RequestDetailsCard";
+import  RiskAnalysisTable  from "./components/RiskAnalysisTable";
+import  ProgramDetailsTable from "./components/ProgramDetailsTable";
+import  CommentSection  from "./components/CommentSection";
 
 const profiles = {
   role: "Admin",

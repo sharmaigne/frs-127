@@ -5,8 +5,9 @@ interface CardWrapperProps {
   title: string;
   children: ReactNode;
 }
+import React from 'react'
 
-export function CardWrapper({ title, children }: CardWrapperProps) {
+const CardWrapper = ({ title, children }: CardWrapperProps)  => {
   return (
     <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader>
@@ -18,3 +19,4 @@ export function CardWrapper({ title, children }: CardWrapperProps) {
     </Card>
   );
 }
+export default CardWrapper

@@ -1,8 +1,9 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import React from 'react'
 
-export function CommentSection() {
+const CommentSection = () => {
   return (
     <div className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg p-6">
       <div className="flex items-start gap-4">
@@ -22,3 +23,4 @@ export function CommentSection() {
     </div>
   );
 }
+export default CommentSection

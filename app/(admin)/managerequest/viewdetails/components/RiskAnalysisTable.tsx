@@ -1,7 +1,7 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { CardWrapper } from "./CardWrapper";
-
+import CardWrapper  from "./CardWrapper";
+import React from 'react'
 interface Risk {
   risk: string;
   effect: string;
@@ -15,7 +15,8 @@ interface RiskAnalysisTableProps {
   risks: Risk[];
 }
 
-export function RiskAnalysisTable({ risks }: RiskAnalysisTableProps) {
+
+const RiskAnalysisTable = ({ risks }: RiskAnalysisTableProps)  => {
   return (
     <CardWrapper title="Risk Analysis">
       <Table>
@@ -48,3 +49,4 @@ export function RiskAnalysisTable({ risks }: RiskAnalysisTableProps) {
     </CardWrapper>
   );
 }
+export default RiskAnalysisTable

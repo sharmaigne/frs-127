@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
-import FacilityPopup from "./FacilityDetailsMain";
+import FacilityPopup from "./FacilityPopup";
 
 const Popup = dynamic(() => import("./Popup"), { ssr: false });
 

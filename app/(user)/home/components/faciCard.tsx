@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
+import FacilityPopup from "./FacilityDetailsMain";
 
 const Popup = dynamic(() => import("./Popup"), { ssr: false });
 
@@ -58,6 +59,8 @@ const FacilityCard = ({ facility }: { facility: any }) => {
         >
           Reserve
         </Button>
+        <FacilityPopup />
+
       </CardContent>
     </Card>
   );

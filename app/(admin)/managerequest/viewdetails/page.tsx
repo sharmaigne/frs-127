@@ -1,83 +1,15 @@
-"use client"
-import { useState, useEffect } from 'react';
-import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from '@/components/ui/table';
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Textarea } from "@/components/ui/textarea"
 
-type UserProfile = {
-  id: string;
-  role: string;
-  firstName: string;
-  middleInitial: string;
-  lastName: string;
-  email: string;
-  contactNumber: string;
-};
-
-type EventDetails = {
-  name: string;
-  description: string;
-  startTimestamp: string;
-  endTimestamp: string;
-  organization: string;
-};
-
-type RequestDetails = {
-  facilityId: string;
-  requestorId: string;
-  activityDesignId: string;
-  riskAnalysisId: string;
-  status: string;
-};
-
-type RiskAnalysis = {
-  effect: string;
-  likelihood: string;
-  impact: string;
-  mitigating_action: string;
-  escalation_point: string;
-  requestId: string;
-};
-
-type ApiResponse = {
-  user: UserProfile;
-  event: EventDetails;
-  request: RequestDetails;
-  riskAnalysis: RiskAnalysis[];
-};
-
-interface DetailsProps {
-  apiEndpoint: string;
-}
-
-// Placeholder for Supabase client initialization (to be replaced with actual implementation)
-// import { createClient } from '@supabase/supabase-js';
-// const supabaseUrl = 'https://xyzcompany.supabase.co';
-// const supabaseKey = 'public-anon-key';
-// const supabase = createClient(supabaseUrl, supabaseKey);
-
-const Details: React.FC<DetailsProps> = ({ apiEndpoint }) => {
-  const [data, setData] = useState<ApiResponse | null>(null);
-
-  useEffect(() => {
-    // Placeholder fetch call for Supabase integration (to be replaced with actual Supabase implementation)
-    fetch(apiEndpoint)
-      .then(response => response.json())
-      .then((data: ApiResponse) => setData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, [apiEndpoint]);
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-
+export default function Component() {
   return (
-    <div className="flex flex-col gap-8 p-6 md:p-10">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
+   <div key="1" className="flex flex-col gap-8 p-6 md:p-10 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+        <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300 ">
           <CardHeader>
             <CardTitle className="text-lg font-bold">User Profile</CardTitle>
           </CardHeader>
@@ -85,149 +17,160 @@ const Details: React.FC<DetailsProps> = ({ apiEndpoint }) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">User ID</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.id}</p>
+                <p className="text-gray-900 dark:text-gray-50">12345</p>
               </div>
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Role</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.role}</p>
+                <p className="text-gray-900 dark:text-gray-50">Admin</p>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">First Name</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.firstName}</p>
+                <p className="text-gray-900 dark:text-gray-50">John</p>
               </div>
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Middle Initial</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.middleInitial}</p>
+                <p className="text-gray-900 dark:text-gray-50">A</p>
               </div>
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Last Name</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.lastName}</p>
+                <p className="text-gray-900 dark:text-gray-50">Doe</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.email}</p>
+                <p className="text-gray-900 dark:text-gray-50">john.doe@example.com</p>
               </div>
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Contact Number</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.user.contactNumber}</p>
+                <p className="text-gray-900 dark:text-gray-50">+1 (555) 555-5555</p>
               </div>
             </div>
           </CardContent>
         </Card>
-
-        <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300 ">
           <CardHeader>
             <CardTitle className="text-lg font-bold">Event Details</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
             <div>
               <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event Name</Label>
-              <p className="text-gray-900 dark:text-gray-50">{data.event.name}</p>
+              <p className="text-gray-900 dark:text-gray-50">Annual Conference</p>
             </div>
             <div>
+              <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Organization</Label>
+              <p className="text-gray-900 dark:text-gray-50">Acme Inc.</p>
+            </div>
+            </div>
+            
+            <div>
               <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Event Description</Label>
-              <p className="text-gray-900 dark:text-gray-50">{data.event.description}</p>
+              <p className="text-gray-900 dark:text-gray-50">
+                The annual conference for our organization, bringing together industry leaders and experts.
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Start Timestamp</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.event.startTimestamp}</p>
+                <p className="text-gray-900 dark:text-gray-50">2023-06-01 09:00:00</p>
               </div>
               <div>
                 <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">End Timestamp</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.event.endTimestamp}</p>
+                <p className="text-gray-900 dark:text-gray-50">2023-06-03 17:00:00</p>
               </div>
             </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Organization</Label>
-              <p className="text-gray-900 dark:text-gray-50">{data.event.organization}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold">Request Details</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 overflow-auto">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Facility ID</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.request.facilityId}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Requestor ID</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.request.requestorId}</p>
-              </div>
-              <div>
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Activity Design ID</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.request.activityDesignId}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Risk Analysis ID</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.request.riskAnalysisId}</p>
-              </div>
-              <div>
-                <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</Label>
-                <p className="text-gray-900 dark:text-gray-50">{data.request.status}</p>
-              </div>
-            </div>
+           
             <div className="flex justify-end gap-2">
-              <Button size="sm" variant="outline">
-                {/* <DownloadIcon className="h-4 w-4 mr-2" /> */}
-                Venue Request PDF
-              </Button>
               <Button size="sm" variant="outline">
                 {/* <DownloadIcon className="h-4 w-4 mr-2" /> */}
                 Activity Design PDF
               </Button>
+              <Button size="sm" variant="outline">
+                {/* <DownloadIcon className="h-4 w-4 mr-2" /> */}
+                Venue Request PDF
+              </Button>
             </div>
           </CardContent>
         </Card>
+        
       </div>
+     <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold">Risk Analysis</CardTitle>
+          </CardHeader>
+          <CardContent className="overflow-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>TIN</TableHead>
+                  <TableHead>Effect</TableHead>
+                  <TableHead>Likelihood</TableHead>
+                  <TableHead>Impact</TableHead>
+                  <TableHead>Mitigating Action</TableHead>
+                  <TableHead>Escalation Point</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>987654321</TableCell>
+                  <TableCell>Moderate</TableCell>
+                  <TableCell>Unlikely</TableCell>
+                  <TableCell>Moderate</TableCell>
+                  <TableCell>Implement additional security measures</TableCell>
+                  <TableCell>Security Manager</TableCell>
 
+                </TableRow>
+              </TableBody>
+            </Table>
+            <div className="flex justify-end">
+              <Button size="sm" variant="outline">
+                {/* <DownloadIcon className="h-4 w-4 mr-2" /> */}
+                Risk Analysis PDF
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       <Card className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300">
         <CardHeader>
-          <CardTitle className="text-lg font-bold">Risk Analysis</CardTitle>
+          <CardTitle className="text-lg font-bold">Request Details</CardTitle>
         </CardHeader>
-        <CardContent className="overflow-auto">
+        <CardContent className="grid gap-4 overflow-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Effect</TableHead>
-                <TableHead>Likelihood</TableHead>
-                <TableHead>Impact</TableHead>
-                <TableHead>Mitigating Action</TableHead>
-                <TableHead>Escalation Point</TableHead>
-                <TableHead>Risk ID</TableHead>
-                <TableHead>Request ID</TableHead>
+                <TableHead>Start Time</TableHead>
+                <TableHead>End Time</TableHead>
+                <TableHead>Activity</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.riskAnalysis.map((risk, index) => (
-                <TableRow key={index}>
-                  <TableCell>{risk.effect}</TableCell>
-                  <TableCell>{risk.likelihood}</TableCell>
-                  <TableCell>{risk.impact}</TableCell>
-                  <TableCell>{risk.mitigating_action}</TableCell>
-                  <TableCell>{risk.escalation_point}</TableCell>
-                  <TableCell>{risk.requestId}</TableCell>
-                </TableRow>
-              ))}
+              <TableRow>
+                <TableCell>09:00:00</TableCell>
+                <TableCell>17:00:00</TableCell>
+                <TableCell>Annual Conference</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </CardContent>
       </Card>
+      <div className="bg-white dark:bg-gray-950 shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg p-6">
+        <div className="flex items-start gap-4">
+          <Avatar className="w-10 h-10 border">
+            <img alt="@shadcn" src="/placeholder.svg" />
+            <AvatarFallback>AC</AvatarFallback>
+          </Avatar>
+          <div className="flex-1 grid gap-2">
+            <Textarea className="resize-none" placeholder="Leave a comment..." />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline">Deny</Button>
+              <Button>Accept</Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  );
-};
-
-export default Details;
+  )
+}

@@ -25,11 +25,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 import { Facility } from "@/lib/types"
 
-type DataTableProps = {
+type FacilitiesTableProps = {
   data: Facility["Row"][]
 }
 
-export function DataTable({ data }: DataTableProps) {
+export function FacilitiesTable({ data }: FacilitiesTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})

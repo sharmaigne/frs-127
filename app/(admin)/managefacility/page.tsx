@@ -1,12 +1,12 @@
 "use client"
 import React from "react"
-import { DataTable } from "./datatable"
+import { FacilitiesTable } from "./facilitiesTable"
 import { Button } from "@/components/ui/button"
 import CreateFacility from "./createFacility"
 
 import useGetFacilities from "@/hooks/queries/useGetFacilities"
 
-export default function DataTableExperiment() {
+export default function manageFacilities() {
 
   const { data, error, status } = useGetFacilities();
 
@@ -25,7 +25,7 @@ export default function DataTableExperiment() {
       <h1 className="text-2xl font-bold">Manage Facilities</h1>
       <CreateFacility />
         </div>
-      <DataTable data={data} />
+      <FacilitiesTable data={data} />
     </div>
   )
 }

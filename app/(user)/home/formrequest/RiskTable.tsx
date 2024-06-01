@@ -108,7 +108,6 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
           impact: "low",
           mitigating_action: "",
           escalation_point: "",
-          actions: "",
         })
       }
     >

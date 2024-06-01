@@ -32,6 +32,24 @@ import useAddPrograms from "@/hooks/mutations/useAddPrograms";
 import useAddRiskAnalysis from "@/hooks/mutations/useAddRiskAnalysis";
 import useAddRisks from "@/hooks/mutations/useAddRisks";
 
+// dropdown
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import useGetFacilities from "@/hooks/queries/useGetFacilities";
+import { CommandList } from "cmdk";
+
 // Define the TypeScript type for the form data
 type FormData = z.infer<typeof requestFormSchema>;
 
@@ -39,6 +57,7 @@ const FormRequest = () => {
   const form = useForm<FormData>({
     resolver: zodResolver(requestFormSchema),
     defaultValues: {
+      facility_id: "",
       event_name: "",
       event_description: "",
       organization: "",
@@ -52,8 +71,7 @@ const FormRequest = () => {
           likelihood: "low",
           impact: "low",
           mitigating_action: "",
-          escalation_point: "",
-          actions: "",
+          escalation_point: ""
         },
       ],
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
@@ -87,15 +105,16 @@ const FormRequest = () => {
   const addRisks = useAddRisks();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log("Data: ", data);
     // create request, send to backend
-    // doesnt handle files and facility_id yet
+    // doesnt handle files yet
     const requestData: Request["Insert"] = {
       event_name: data.event_name,
       event_description: data.event_description,
       organization: data.organization,
       timestamp_start: data.timestamp_start,
       timestamp_end: data.timestamp_end,
-      facility_id: "dd68cc55-09a6-442d-974e-917741c02c09",
+      facility_id: data.facility_id,
     };
 
     // mutateAsync is used instead of mutate since we're chaining multiple mutations
@@ -108,10 +127,12 @@ const FormRequest = () => {
       request_id: requestId,
     };
 
-    const activityDesignResult = await addActivityDesign.mutateAsync(activityDesignData);
+    const activityDesignResult = await addActivityDesign.mutateAsync(
+      activityDesignData
+    );
     console.log("Request: ", activityDesignResult);
     activityDesignId = activityDesignResult.activity_design_id;
-    
+
     // create program schedule, send to backend
     const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
       (program) => ({
@@ -141,13 +162,23 @@ const FormRequest = () => {
         likelihood: risk.likelihood,
         impact: risk.impact,
         mitigating_action: risk.mitigating_action,
-        escalation_point: risk.escalation_point
+        escalation_point: risk.escalation_point,
       })
     );
 
     const risksResult = addRisks.mutateAsync(risksData);
     console.log("Risks: ", risksResult);
   };
+
+  const { data: facilities = [], status, error } = useGetFacilities();
+
+  if (status === "pending") {
+    return <div>Loading facilities...</div>;
+  }
+
+  if (status === "error") {
+    return <div>Error loading facilities: {error?.message}</div>;
+  }
 
   return (
     <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-8">
@@ -166,6 +197,74 @@ const FormRequest = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8"
                 >
+                  {/* FACILITY DROPDOWN */}
+                  <FormField
+                    control={form.control}
+                    name="facility_id"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-full">
+                        <FormLabel>Facility</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "justify-between",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value
+                                  ? facilities.find(
+                                      (facility) =>
+                                        facility.facility_id === field.value
+                                    )?.name
+                                  : "Select facility"}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0">
+                            <Command>
+                              <CommandInput placeholder="Search facility..." />
+                              <CommandEmpty>No facility found.</CommandEmpty>
+
+                              {/* DO NOT REMOVE THIS WRAPPER. Will break the command. Is a shadcn bug.*/}
+                              <CommandList>
+                                <CommandGroup>
+                                  {facilities.map((facility) => (
+                                    <CommandItem
+                                      value={facility.name}
+                                      key={facility.facility_id}
+                                      onSelect={() => {
+                                        form.setValue(
+                                          "facility_id",
+                                          facility.facility_id
+                                        );
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          facility.facility_id === field.value
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                        )}
+                                      />
+                                      {facility.name}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                   <FormField
                     control={form.control}
                     name="event_name"

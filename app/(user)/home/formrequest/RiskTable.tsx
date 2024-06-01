@@ -20,7 +20,6 @@ const RiskTable = ({ control, register, fields, append, remove }: any) => (
           <th className="px-4 py-2">Impact</th>
           <th className="px-4 py-2">Mitigating Action</th>
           <th className="px-4 py-2">Escalation Point</th>
-          <th className="px-4 py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -86,15 +85,6 @@ const RiskTable = ({ control, register, fields, append, remove }: any) => (
                 {...register(`risks_table.${index}.escalation_point`)}
                 defaultValue={item.escalation_point}
                 placeholder="Escalation Point"
-                className="border-none"
-              />
-            </td>
-
-            <td className="border px-4 py-2 border-none">
-              <Textarea
-                {...register(`risks_table.${index}.actions`)}
-                defaultValue={item.actions}
-                placeholder="Actions"
                 className="border-none"
               />
             </td>

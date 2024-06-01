@@ -69,7 +69,7 @@ const FacilityCard: React.FC<Facility> = ({
       <p>{description}</p>
     </div>
     <div className="flex justify-end">
-      <Button className="mt-4" variant="primary" href={reserveLink}>
+      <Button className="mt-4" variant="default" href={reserveLink}>
         Reserve Now
       </Button>
     </div>
@@ -103,7 +103,7 @@ const SimilarFacilityCard: React.FC<SimilarFacility> = ({
       <p className="text-gray-500 dark:text-gray-400">{address}</p>
       <p className="text-gray-500 dark:text-gray-400">Capacity: {capacity}</p>
       <div className="flex justify-end mt-4">
-        <Button variant="primary" href={reserveLink}>
+        <Button variant="default" href={reserveLink}>
           Reserve Now
         </Button>
       </div>

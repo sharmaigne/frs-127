@@ -102,7 +102,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   },
   {
     accessorKey: "timestamp_start",
-    header: "Date & Time",
+    header: "Date & Time Start",
     cell: ({ row }) => (
       <div>{moment(row.getValue("timestamp_start")).format(dateFormat)} </div>
     ),

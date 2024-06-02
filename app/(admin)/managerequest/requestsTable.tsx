@@ -124,12 +124,12 @@ export function RequestsTable({ data }: RequestsTableProps) {
       </div>
 
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
+        <Table className="rounded-lg">
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-[#8B0000] hover:bg-primary rounded-2xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-white font-extrabold text-base">
                     {header.isPlaceholder
                       ? null
                       : flexRender(

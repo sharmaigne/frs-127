@@ -106,6 +106,7 @@ const ManageUsers = () => {
           placeholder="Search users..."
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
+          className="w-1/2 md:w-1/3"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

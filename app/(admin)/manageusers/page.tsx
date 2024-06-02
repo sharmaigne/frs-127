@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 enum user_roles {
   superadmin = "Superadmin",
   osa = "OSA - Director",
-  soas = "OSA -SOAS",
+  soas = "OSA - SOAS",
   facility_manager = "Facility Manager",
   student_user = "Student User",
   non_student_user = "Non Student User"
@@ -109,9 +109,10 @@ const ManageUsers = () => {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant={selectedRole === "all" ? "default" : "outline"}>
+            <Button variant={selectedRole === "all" ? "default" : "default"}>
               {selectedRole === "all" ? "All" : selectedRole} <ChevronDownIcon className="h-4 w-4" />
             </Button>
+            {/* dropdown beside search for role filter */}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuRadioGroup value={selectedRole} onValueChange={handleRoleFilter}>
@@ -134,7 +135,7 @@ const ManageUsers = () => {
                 <thead>
                   <tr className="bg-[#8B0000] text-white">
                     <th className="px-4 py-3 text-left cursor-pointer" onClick={() => handleSort("name")}>
-                      User Name {sortBy === "name" && <span className="ml-1">{sortOrder === "asc" ? "▲" : "▼"}</span>}
+                      User {sortBy === "name" && <span className="ml-1">{sortOrder === "asc" ? "▲" : "▼"}</span>}
                     </th>
                     <th className="px-4 py-3 text-left cursor-pointer" onClick={() => handleSort("email")}>
                       Email {sortBy === "email" && <span className="ml-1">{sortOrder === "asc" ? "▲" : "▼"}</span>}
@@ -157,9 +158,10 @@ const ManageUsers = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
+                            {/* dropdown in table */}
                             <DropdownMenuRadioGroup value={profiles.role} onValueChange={(newRole) => handleRoleChange(profiles.id, newRole as user_roles)}>
                               <DropdownMenuRadioItem value={user_roles.superadmin}>Superadmin</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value={user_roles.osa}>OSA- Director</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.osa}>OSA - Director</DropdownMenuRadioItem>
                               <DropdownMenuRadioItem value={user_roles.soas}>OSA - SOAS</DropdownMenuRadioItem>
                               <DropdownMenuRadioItem value={user_roles.facility_manager}>Facility Manager</DropdownMenuRadioItem>
                               <DropdownMenuRadioItem value={user_roles.student_user}>Student User</DropdownMenuRadioItem>

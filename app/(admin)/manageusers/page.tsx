@@ -1,41 +1,49 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
+enum user_roles {
+  superadmin = "Superadmin",
+  osa = "OSA - Director",
+  soas = "OSA -SOAS",
+  facility_manager = "Facility Manager",
+  student_user = "Student User",
+  non_student_user = "Non Student User"
+}
+
 interface Profile {
   id: number;
   name: string;
   email: string;
-  role: string;
+  role: user_roles;
 }
 
 const initialUsers: Profile[] = [
-  { id: 1, name: "johndoe", email: "johndoe@example.com", role: "superadmin" },
-  { id: 2, name: "janesmith", email: "janesmith@example.com", role: "OSA - Director" },
-  { id: 3, name: "bobwilson", email: "bobwilson@example.com", role: "OSA - SOAS" },
-  { id: 4, name: "sarahjones", email: "sarahjones@example.com", role: "facility manager" },
-  { id: 5, name: "mikebrown", email: "mikebrown@example.com", role: "student user" },
-  { id: 6, name: "emilywilliams", email: "emilywilliams@example.com", role: "non student user" },
+  { id: 1, name: "johndoe", email: "johndoe@example.com", role: user_roles.superadmin },
+  { id: 2, name: "janesmith", email: "janesmith@example.com", role: user_roles.osa },
+  { id: 3, name: "bobwilson", email: "bobwilson@example.com", role: user_roles.soas },
+  { id: 4, name: "sarahjones", email: "sarahjones@example.com", role: user_roles.facility_manager },
+  { id: 5, name: "mikebrown", email: "mikebrown@example.com", role: user_roles.student_user },
+  { id: 6, name: "emilywilliams", email: "emilywilliams@example.com", role: user_roles.non_student_user }
 ];
 
-
 const ManageUsers = () => {
-  const [profiles, setUsers] = useState<Profile[]>(initialUsers);
-  const [updatedUsers, setUpdatedUsers] = useState<Profile[]>(profiles);
+  const [profiles, setProfiles] = useState<Profile[]>(initialUsers);
+  const [updatedProfiles, setUpdatedProfiles] = useState<Profile[]>(profiles);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortBy, setSortBy] = useState<keyof Profile>("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedRole, setSelectedRole] = useState<string>("all");
 
-  // Handles role change for a user and sends an email notification 
-  const handleRoleChange = (userId: number, newRole: string) => {
-    setUpdatedUsers(prevUsers =>
-      prevUsers.map(profiles => (profiles.id === userId ? { ...profiles, role: newRole } : profiles))
+  // Handles role change for a user and sends an email notification
+  const handleRoleChange = (userId: number, newRole: user_roles) => {
+    setUpdatedProfiles(prevProfiles =>
+      prevProfiles.map(profiles => (profiles.id === userId ? { ...profiles, role: newRole } : profiles))
     );
-    const profiles = updatedUsers.find(u => u.id === userId);
+    const profiles = updatedProfiles.find(u => u.id === userId);
     if (profiles) {
       sendRoleUpdateEmail(profiles.email, profiles.name, newRole);
     }
@@ -43,11 +51,11 @@ const ManageUsers = () => {
 
   // Placeholder for saving changes
   const handleSaveChanges = () => {
-    console.log("Saving changes:", updatedUsers);
+    console.log("Saving changes:", updatedProfiles);
   };
 
   // Placeholder for sending role update email
-  const sendRoleUpdateEmail = (email: string, name: string, newRole: string) => {
+  const sendRoleUpdateEmail = (email: string, name: string, newRole: user_roles) => {
     console.log(`Sending email to ${email} about role update for ${name} to ${newRole}`);
   };
 
@@ -67,7 +75,7 @@ const ManageUsers = () => {
   };
 
   // Filters and sorts users based on search term, selected role, and sorting preferences
-  const filteredUsers = updatedUsers
+  const filteredProfiles = updatedProfiles
     .filter(profiles => {
       if (selectedRole === "all") {
         return profiles.name.toLowerCase().includes(searchTerm.toLowerCase()) || profiles.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -108,12 +116,12 @@ const ManageUsers = () => {
           <DropdownMenuContent align="end">
             <DropdownMenuRadioGroup value={selectedRole} onValueChange={handleRoleFilter}>
               <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="superadmin">Superadmin</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="OSA - Director">OSA - Director</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="OSA - SOAS">OSA - SOAS</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="facility manager">Facility Manager</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="student user">Student User</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="non student user">Non Student User</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.superadmin}>Superadmin</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.osa}>OSA - Director</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.soas}>OSA - SOAS</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.facility_manager}>Facility Manager</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.student_user}>Student User</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value={user_roles.non_student_user}>Non Student User</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -137,7 +145,7 @@ const ManageUsers = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredUsers.map(profiles => (
+                  {filteredProfiles.map(profiles => (
                     <tr key={profiles.id} className="border-b border-gray-200 dark:border-gray-800">
                       <td className="px-4 py-3">{profiles.name}</td>
                       <td className="px-4 py-3">{profiles.email}</td>
@@ -149,13 +157,13 @@ const ManageUsers = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuRadioGroup value={profiles.role} onValueChange={(newRole) => handleRoleChange(profiles.id, newRole)}>
-                              <DropdownMenuRadioItem value="superadmin">Superadmin</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="OSA - Director">OSA - Director</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="OSA - SOAS">OSA - SOAS</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="facility manager">Facility Manager</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="student user">Student User</DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="non student user">Non Student User</DropdownMenuRadioItem>
+                            <DropdownMenuRadioGroup value={profiles.role} onValueChange={(newRole) => handleRoleChange(profiles.id, newRole as user_roles)}>
+                              <DropdownMenuRadioItem value={user_roles.superadmin}>Superadmin</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.osa}>OSA- Director</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.soas}>OSA - SOAS</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.facility_manager}>Facility Manager</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.student_user}>Student User</DropdownMenuRadioItem>
+                              <DropdownMenuRadioItem value={user_roles.non_student_user}>Non Student User</DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -175,7 +183,7 @@ const ManageUsers = () => {
       </div>
     </div>
   );
-}
+};
 
 // SVG component for Chevron Down Icon
 function ChevronDownIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -185,4 +193,5 @@ function ChevronDownIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-export default ManageUsers
+
+export default ManageUsers;

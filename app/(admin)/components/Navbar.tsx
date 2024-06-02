@@ -11,6 +11,7 @@ const Navbar = () => {
       <div className="flex">
         <NavbarRoute text="Manage Requests" href={{ pathname: "/managerequest" }} />
         <NavbarRoute text="Manage Facilities" href={{ pathname: "/managefacility" }} />
+        <NavbarRoute text="Manage Users" href={{ pathname: "/manageusers" }} />
       </div>
 
       {/* RIGHT SIDE: filter, notifs, profile */}

@@ -34,13 +34,13 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
 
   {
     accessorKey: "picture",
-    header: "picture",
+    header: "Image",
     cell: ({ row }) => <div>{row.getValue("picture") }
     </div>,
   },
   {
     accessorKey: "description",
-    header: "description",
+    header: "Description",
     cell: ({ row }) => <div>{row.getValue("description")}</div>,
   },
   {

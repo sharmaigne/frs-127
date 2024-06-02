@@ -1,25 +1,39 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogFooter,
+  DialogContent,
+  Dialog,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import {
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+  SelectContent,
+  Select,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
-import React from 'react'
-
-
+import React from "react";
 
 const CreateFacility = () => {
   return (
-    <Dialog defaultOpen>
+    <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">Add Facility</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Add New Facility</DialogTitle>
-          <DialogDescription>Fill out the form to add a new facility to the system.</DialogDescription>
+          <DialogDescription>
+            Fill out the form to add a new facility to the system.
+          </DialogDescription>
         </DialogHeader>
         <form className="grid gap-4 py-4">
           <div className="grid grid-cols-2 gap-4">
@@ -44,7 +58,10 @@ const CreateFacility = () => {
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Textarea id="description" placeholder="Enter facility description" />
+            <Textarea
+              id="description"
+              placeholder="Enter facility description"
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -66,6 +83,6 @@ const CreateFacility = () => {
         </form>
       </DialogContent>
     </Dialog>
-  )
-}
-export default CreateFacility
+  );
+};
+export default CreateFacility;

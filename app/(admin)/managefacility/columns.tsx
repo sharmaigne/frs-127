@@ -27,9 +27,9 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "facility_name",
+    accessorKey: "name",
     header: "facility",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("facility_name")} <div></div> {row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="font-bold"> {row.getValue("name")} <div></div> {row.getValue("email")}</div>,
   },
 
   {

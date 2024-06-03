@@ -12,9 +12,9 @@ import React from 'react'
 
 const CreateFacility = () => {
   return (
-    <Dialog defaultOpen>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Facility</Button>
+        <Button variant="outline" className="bg-secondary-600  hover:bg-secondary-500 text-white">Add Facility</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>

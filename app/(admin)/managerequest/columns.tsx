@@ -32,6 +32,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
           table.toggleAllPageRowsSelected(!!value)
         }
         aria-label="Select all"
+        className="invisible"
       />
     ),
     cell: ({ row }) => (
@@ -39,6 +40,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        className="invisible"
       />
     ),
     enableSorting: false,
@@ -125,7 +127,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+    header: "",
     cell: ({ row }) => {
       console.log(row); 
       // const { id, someDataForRedirect } = row.original; // Access data from the row object

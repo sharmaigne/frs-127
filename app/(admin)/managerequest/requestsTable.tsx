@@ -124,7 +124,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
       </div>
 
       <div className="rounded-md border">
-        <Table className="rounded-lg">
+        <Table className="">
           <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="bg-[#8B0000] hover:bg-primary rounded-2xl">
@@ -174,10 +174,10 @@ export function RequestsTable({ data }: RequestsTableProps) {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          There are {""}
+          {table.getFilteredRowModel().rows.length} user(s) waiting for approval.
         </div>
-        <Button
+        {/* <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
@@ -192,7 +192,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
           disabled={!table.getCanNextPage()}
         >
           Next
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

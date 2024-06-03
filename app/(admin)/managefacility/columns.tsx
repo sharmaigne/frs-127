@@ -14,6 +14,7 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
         onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        className="invisible"
       />
     ),
     cell: ({ row }) => (
@@ -21,6 +22,7 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        className="invisible"
       />
     ),
     enableSorting: false,

@@ -237,7 +237,10 @@ const FormRequest = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8"
                 >
-                  {/* FACILITY DROPDOWN */}
+                 
+
+                <div className="grid grid-cols-3 gap-4">
+                     {/* FACILITY DROPDOWN */}
                   <FormField
                     control={form.control}
                     name="facility_id"
@@ -304,8 +307,6 @@ const FormRequest = () => {
                       </FormItem>
                     )}
                   />
-
-                  <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="event_name"
@@ -455,6 +456,7 @@ const FormRequest = () => {
                   />
                   <div className="flex space-x-4 justify-center py-8">
                   <Button className="bg-primary-400 hover:bg-primary font-bold" type="submit" onClick={() => {
+                    // toast not working for some reason
                       toast({
                         title: "You have successfully Submitted the Form :)",
                         description: "Please wait patiently for Admin Feedback.",

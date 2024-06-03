@@ -180,11 +180,7 @@ const ManageUsers = () => {
         </div>
       </div>
       <div className="mt-6 flex justify-end">
-<<<<<<< HEAD
-        <Button onClick={handleSaveChanges} className="text-white hover:bg-[#8B0000]/90">
-=======
         <Button onClick={handleSaveChanges} className="text-white hover:bg-secondary/90 ">
->>>>>>> FE-feature/adminpage
           Save Changes
         </Button>
       </div>
@@ -201,8 +197,4 @@ function ChevronDownIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-<<<<<<< HEAD
 export default ManageUsers;
-=======
-export default ManageUsers;
->>>>>>> FE-feature/adminpage

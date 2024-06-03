@@ -3,11 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
-<<<<<<< HEAD
 import { createClient } from '@supabase/supabase-js';
-=======
 import FacilityPopup from "./FacilityPopup";
->>>>>>> FE-feature/adminpage
 
 const Popup = dynamic(() => import("./Popup"), { ssr: false });
 

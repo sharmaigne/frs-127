@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 const RiskTable = ({ register, fields, append, remove }: any) => (
   <div className="overflow-x-auto">
     <table className="min-w-full bg-white ">
-      <thead>
+      <thead className="bg-primary text-white">
         <tr>
           <th className="px-4 py-2">Risk</th>
           <th className="px-4 py-2">Effect</th>
@@ -20,19 +20,20 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
           <th className="px-4 py-2">Impact</th>
           <th className="px-4 py-2">Mitigating Action</th>
           <th className="px-4 py-2">Escalation Point</th>
+          <th className="px-4 py-2"></th>
         </tr>
       </thead>
       <tbody>
         {fields.map((item: any, index: number) => (
           <tr key={item.id}>
-            <td className="border px-4 py-2 border-none">
+            <td className="border px-4 py-2 border-none bg-accent-50">
               <Input
                 {...register(`risks_table.${index}.risk`)}
                 defaultValue={item.risk}
                 placeholder="Risk"
               />
             </td>
-            <td className="border px-4 py-2 border-none">
+            <td className="border px-4 py-2 border-none bg-accent-50">
               <Input
                 {...register(`risks_table.${index}.effect`)}
                 defaultValue={item.effect}
@@ -40,7 +41,7 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               />
             </td>
 
-            <td className="border px-2 py-2 border-none">
+            <td className="border px-2 py-2 border-none bg-accent-50">
               <Select
                 {...register(`risks_table.${index}.likelihood`)}
                 defaultValue={item.likelihood}
@@ -56,7 +57,7 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               </Select>
             </td>
 
-            <td className="border px-2 py-2 border-none">
+            <td className="border px-2 py-2 border-none bg-accent-50">
               <Select
                 {...register(`risks_table.${index}.impact`)}
                 defaultValue={item.impact}
@@ -72,15 +73,15 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               </Select>
             </td>
 
-            <td className="border px-4 py-2 border-none">
-              <Input
+            <td className="border px-4 py-2 border-none bg-accent-50">
+              <Textarea
                 {...register(`risks_table.${index}.mitigating_action`)}
                 defaultValue={item.mitigating_action}
                 placeholder="Mitigating Action"
               />
             </td>
 
-            <td className="border px-4 py-2 border-none">
+            <td className="border px-4 py-2 border-none  bg-accent-50">
               <Textarea
                 {...register(`risks_table.${index}.escalation_point`)}
                 defaultValue={item.escalation_point}
@@ -89,9 +90,9 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               />
             </td>
 
-            <td className="border px-4 py-2 border-none">
-              <Button type="button" onClick={() => remove(index)}>
-                Delete
+            <td className="border px-4 py-2 border-none bg-accent-50 ">
+              <Button className="text-base" type="button" onClick={() => remove(index)}>
+                Delete 
               </Button>
             </td>
           </tr>
@@ -99,6 +100,7 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
       </tbody>
     </table>
     <Button
+      className="mt-4"
       type="button"
       onClick={() =>
         append({

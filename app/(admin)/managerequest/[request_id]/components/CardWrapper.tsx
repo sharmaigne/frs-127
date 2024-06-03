@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-
+import React from 'react'
 interface CardWrapperProps {
   title: string;
   children: ReactNode;
 }
-import React from 'react'
+
 
 const CardWrapper = ({ title, children }: CardWrapperProps)  => {
   return (

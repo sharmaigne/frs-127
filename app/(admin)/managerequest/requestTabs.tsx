@@ -42,23 +42,23 @@ const RequestTabs = () => {
   );
 
   return (
-    <Tabs className="w-full" defaultValue="pending">
-      <TabsList className="flex w-full justify-center border-b h-15">
+    <Tabs className="w-full " defaultValue="pending">
+      <TabsList className="flex w-full justify-center border-b h-15 bg-accent text-black ">
         <TabsTrigger className="py-2 px-4 font-medium" value="pending">
           Pending Requests
-          <Badge className="ml-2 rounded-full bg-red-700 px-2 text-xs font-medium ">
+          <Badge className="ml-2 rounded-full bg-red-700 px-2 text-xs font-semibold hover:bg-primary-400">
             {pendingRequests.length}
           </Badge>
         </TabsTrigger>
         <TabsTrigger className="py-2 px-4 font-medium" value="ongoing">
           Ongoing Requests
-          <Badge className="ml-2 rounded-full bg-red-700 px-2 text-xs font-medium ">
+          <Badge className="ml-2 rounded-full bg-primary-400 px-2 text-xs font-semibold hover:bg-primary-300">
             {ongoingRequests.length}
           </Badge>
         </TabsTrigger>
         <TabsTrigger className="py-2 px-4 font-medium" value="finished">
           Finished Requests
-          <Badge className="ml-2 rounded-full bg-red-700 px-2 text-xs font-medium ">
+          <Badge className="ml-2 rounded-full bg-black px-2 text-xs  hover:bg-grey font-semibold ">
             {finishedRequests.length}
           </Badge>
         </TabsTrigger>

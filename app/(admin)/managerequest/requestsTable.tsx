@@ -195,10 +195,5 @@ export function RequestsTable({ data }: RequestsTableProps) {
         </Button>
       </div>
     </div>
-<<<<<<< HEAD:app/(admin)/managerequest/components/datatable.tsx
-  )
-}
-=======
   );
 }
->>>>>>> origin:app/(admin)/managerequest/requestsTable.tsx

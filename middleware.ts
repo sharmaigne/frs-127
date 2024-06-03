@@ -5,23 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-<<<<<<< HEAD
-    //  const  supabase = createClient()
-    // return await updateSession(request)
-    
-    // const {data, error} = await supabase.auth.getUser()
-
-    // if (error || !data?.user) {
-    //     // Redirect to login page if there's no user
-    //     redirect('/login')
-    // }
-
-    // return 
-
-
-=======
     return await updateSession(request)
->>>>>>> origin
 }
 
 

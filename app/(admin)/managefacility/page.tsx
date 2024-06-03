@@ -26,10 +26,5 @@ export default function ManageFacilities() {
       </div>
       <FacilitiesTable data={data} />
     </div>
-<<<<<<< HEAD
-  )
-}
-=======
   );
 }
->>>>>>> origin

@@ -20,6 +20,7 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
           <th className="px-4 py-2">Impact</th>
           <th className="px-4 py-2">Mitigating Action</th>
           <th className="px-4 py-2">Escalation Point</th>
+          <th className="px-4 py-2"></th>
         </tr>
       </thead>
       <tbody>
@@ -89,9 +90,9 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               />
             </td>
 
-            <td className="border px-4 py-2 border-none">
-              <Button type="button" onClick={() => remove(index)}>
-                Delete
+            <td className="border px-4 py-2 border-none bg-accent-50 ">
+              <Button className="text-base" type="button" onClick={() => remove(index)}>
+                Delete 
               </Button>
             </td>
           </tr>

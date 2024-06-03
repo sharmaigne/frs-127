@@ -9,6 +9,7 @@ const ProgramTable = ({ register, fields, append, remove }: any) => (
           <th className="px-4 py-2">Start Time</th>
           <th className="px-4 py-2">End Time</th>
           <th className="px-4 py-2">Program</th>
+          <th className="px-4 py-2"></th>
 
         </tr>
       </thead>
@@ -24,7 +25,7 @@ const ProgramTable = ({ register, fields, append, remove }: any) => (
             <td className="border px-4 py-2 border-none bg-accent-50">
               <Input {...register(`program_schedule.${index}.program`)} defaultValue={item.program} placeholder="Program" />
             </td>
-            <td className="border px-4 py-2 border-none ">
+            <td className="border px-4 py-2 border-none bg-accent-50 content-end">
               <Button className="" type="button" onClick={() => remove(index)}>
                 Delete
               </Button>

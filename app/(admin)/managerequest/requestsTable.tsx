@@ -125,7 +125,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
 
       <div className="rounded-md border">
         <Table className="">
-          <TableHeader >
+          <TableHeader className="bg-primary" >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="bg-[#8B0000] hover:bg-primary rounded-2xl">
                 {headerGroup.headers.map((header) => (

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 const ProgramTable = ({ register, fields, append, remove }: any) => (
   <div className="overflow-x-auto mt-8">
     <table className="min-w-full bg-white">
-      <thead className="bg-primary text-white">
+      <thead className="bg-primary-500 text-white">
         <tr>
           <th className="px-4 py-2">Start Time</th>
           <th className="px-4 py-2">End Time</th>
@@ -26,7 +26,7 @@ const ProgramTable = ({ register, fields, append, remove }: any) => (
               <Input {...register(`program_schedule.${index}.program`)} defaultValue={item.program} placeholder="Program" />
             </td>
             <td className="border px-4 py-2 border-none bg-accent-50 content-end">
-              <Button className="" type="button" onClick={() => remove(index)}>
+              <Button className="bg-primary-500" type="button" onClick={() => remove(index)}>
                 Delete
               </Button>
             </td>
@@ -34,7 +34,7 @@ const ProgramTable = ({ register, fields, append, remove }: any) => (
         ))}
       </tbody>
     </table>
-    <Button className="mt-4"  type="button" onClick={() => append({ time_start: "", time_end: "", program: "" })}>
+    <Button className="mt-4 bg-primary-500"  type="button" onClick={() => append({ time_start: "", time_end: "", program: "" })}>
       Add Row
     </Button>
   </div>

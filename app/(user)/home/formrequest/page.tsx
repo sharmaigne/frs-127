@@ -221,12 +221,12 @@ const FormRequest = () => {
   }
 
   return (
-    <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-16">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div className="col-span-1 md:col-span-2 lg:col-span-3">
-          <Card>
+    <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-16 ">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 ">
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 ">
+          <Card className="bg-text-50 text-text">
             <CardHeader>
-              <CardTitle className="text-primary">Request Form</CardTitle>
+              <CardTitle className="text-primary font-bold text-3xl">Request Form</CardTitle>
               <CardDescription>
                 Fill out the form below to submit your information to admin.
               </CardDescription>
@@ -397,7 +397,7 @@ const FormRequest = () => {
                     )}
                   />
                   <CardHeader className="pt-8 pl-0 pb-0">
-                    <CardTitle className=" text-primary">Risk Table</CardTitle>
+                    <CardTitle className="text-primary font-bold text-3xl">Risk Table</CardTitle>
                     <CardDescription>
                       Fill out the risk table below.
                     </CardDescription>
@@ -426,7 +426,7 @@ const FormRequest = () => {
                     )}
                   />
                   <CardHeader className=" pt-8 pl-0 pb-0">
-                    <CardTitle className="text-primary">Program Schedule</CardTitle>
+                    <CardTitle className="text-primary font-bold text-3xl">Program Schedule</CardTitle>
                     <CardDescription>
                       Fill out the program schedule below.
                     </CardDescription>

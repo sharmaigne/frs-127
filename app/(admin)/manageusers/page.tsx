@@ -180,7 +180,7 @@ const ManageUsers = () => {
         </div>
       </div>
       <div className="mt-6 flex justify-end">
-        <Button onClick={handleSaveChanges} className="text-white hover:bg-[#8B0000]/90">
+        <Button onClick={handleSaveChanges} className="text-white hover:bg-secondary/90 ">
           Save Changes
         </Button>
       </div>

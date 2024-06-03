@@ -83,7 +83,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
   // }
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="flex items-center py-4">
         <Input
           placeholder="Search user..."
@@ -146,6 +146,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  className="text-sm"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

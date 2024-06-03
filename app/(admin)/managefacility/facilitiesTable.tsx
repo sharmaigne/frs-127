@@ -72,8 +72,8 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
   
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-full  ">
+      <div className="flex items-center py-2">
         <Input
           placeholder="Search facility..."
           value={(table.getColumn("facility_name")?.getFilterValue() as string) ?? ""}
@@ -120,7 +120,7 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} >
+                <TableRow className="text-base" key={row.id} data-state={row.getIsSelected() && "selected"} >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -1,0 +1,262 @@
+[33mcommit fc205b2489cf8ffa2e867769ae0850eef184e7fe[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mBE-feature/user-home/bucket[m[33m)[m
+Merge: 4bc295e4 a6b15aa7
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Wed Jun 5 00:32:44 2024 +0800
+
+     final formrequest w/o bucket
+
+[33mcommit 4bc295e435bee0f75ce1bc25aa24af4d19d0674c[m[33m ([m[1;31morigin/BE-feature/user-home/bucket[m[33m)[m
+Merge: 808cba25 11100b80
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Wed Jun 5 00:07:03 2024 +0800
+
+    finalization of merging features
+
+[33mcommit a6b15aa769459bd8eb3707ccd04f4d0ad4d4d488[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdev[m[33m)[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 23:55:43 2024 +0800
+
+    fix: login with google
+
+[33mcommit 11100b8020d5bdc646a22aeb66a8c0f2868276e8[m
+Merge: 568e8ec2 cf060275
+Author: sharmaigne <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 22:42:39 2024 +0800
+
+    Merge pull request #11 from sharmaigne/FE-feature/adminpage
+    
+    Fe feature/adminpage
+
+[33mcommit cf060275414eafd77d2af8d73c7663a491a0ba68[m[33m ([m[1;31morigin/FE-feature/adminpage[m[33m, [m[1;32mFE-feature/adminpage[m[33m)[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 22:38:27 2024 +0800
+
+    refactor: move footer to top level components folder
+
+[33mcommit fa57356b14ac3038ad278db2718fbf74e8818fc1[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 22:30:37 2024 +0800
+
+    fix: proper redirect from facicard to formrequest
+
+[33mcommit dadc6824b4185905429213a5be4b1bb470f26ca6[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 22:14:17 2024 +0800
+
+    refactor: remove unnecessary variant
+
+[33mcommit 8bc220f1853c0abfd127a629761c82f09770fc0f[m
+Merge: 698dc000 568e8ec2
+Author: sharmaigne <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 21:34:58 2024 +0800
+
+    Merge branch 'dev' into FE-feature/adminpage
+
+[33mcommit 698dc00042ac5275487b967136a07fa2f1eedd0d[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Tue Jun 4 21:09:34 2024 +0800
+
+    DRAFT: king folder and hero changes
+
+[33mcommit 568e8ec2523605e3017b6c3570947ff1b77282fe[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 17:37:52 2024 +0800
+
+    feat: integrate add facility
+
+[33mcommit e9f6c53bf691489224ba51fc794a3be1f5d15491[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 17:33:55 2024 +0800
+
+    fix: addProfile should be done server side
+
+[33mcommit 4c6f49d2150a82f91dc36577d53b595faabeba5e[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Tue Jun 4 16:53:02 2024 +0800
+
+    feat: fix confirm email for signup
+
+[33mcommit ebc8b199c21042ab4105be437ad17520d0748e30[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Tue Jun 4 00:13:05 2024 +0800
+
+    edit: formrequest design
+
+[33mcommit 808cba2519c0e068df41bbb38ccf4bd4896411a9[m
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Tue Jun 4 00:10:29 2024 +0800
+
+    new
+
+[33mcommit b6830403e416bebef971ee2cf09ac199827e3fb5[m
+Merge: d4d8ac44 2d4452ab
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Tue Jun 4 00:03:08 2024 +0800
+
+    new
+
+[33mcommit d4d8ac4463f31343aba5cae5c669bae72b2c50f2[m
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Tue Jun 4 00:01:57 2024 +0800
+
+    new
+
+[33mcommit 2d4452abe0a68114267c072cc316750e6ccc581a[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Mon Jun 3 23:58:27 2024 +0800
+
+    edit: form table design
+
+[33mcommit 6088d305d140887fc06a519fbff10d38ca36973c[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Mon Jun 3 23:42:25 2024 +0800
+
+    design changes
+
+[33mcommit 83034ce18703495610b9b3df907609c471279b8f[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Mon Jun 3 20:28:01 2024 +0800
+
+    edit: formrequest and managefaci design
+
+[33mcommit 3198bc45eb238ee83bddffc1493852617a2a11c9[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Mon Jun 3 19:10:26 2024 +0800
+
+    changed: form design
+
+[33mcommit 47aee45d446ca25aa6f87b150dbcb137b0fbc12c[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Mon Jun 3 19:03:37 2024 +0800
+
+    feat: added shadcn components (toast and skeleton). added footer and drafts for formrequest
+
+[33mcommit 8537cb45ae58bb0a016b8afc08b86310ec316bdc[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sun Jun 2 19:14:37 2024 +0800
+
+    feat: added managefacility and managerequests
+
+[33mcommit 374c45c9ebdb58a95167f2b5b3089f3cacaeb084[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sun Jun 2 16:56:39 2024 +0800
+
+    feat: added manageusers
+
+[33mcommit def0cdaf9cbb93d7e3380151516873541bfbd693[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sun Jun 2 16:43:27 2024 +0800
+
+    edited: manageuser
+
+[33mcommit d033b98f5d197b129de03b312d260f85c42141ce[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sun Jun 2 16:24:37 2024 +0800
+
+    feat: added manageusers
+
+[33mcommit 97a3206858b86936ebfece9bd9fffd3d92342ad3[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Sun Jun 2 13:56:59 2024 +0800
+
+    feat: change headers to match casing
+
+[33mcommit 75c3985dd9bdd650143375418f0df6989a3015e6[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Sun Jun 2 13:55:24 2024 +0800
+
+    fix: show facility name
+
+[33mcommit edce6010e1a3efe676f36125193f42bf5c1ecebc[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 23:28:58 2024 +0800
+
+    comments
+
+[33mcommit b0b259c6f6073aac349c782712c818d4a1edd4f1[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 23:22:27 2024 +0800
+
+    feat: added profile options to admin
+
+[33mcommit 8b60b821ac2a7169d38033279a57802613ff10e9[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 23:15:24 2024 +0800
+
+    changed to FacilityPopup
+
+[33mcommit 01dc482dbe7c6b6288427468bd68c38b13604d50[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 23:12:55 2024 +0800
+
+    feat: added facility details popup
+
+[33mcommit 59e293ecb5fa2dece063ce653ee91ef6d8c6f65b[m
+Merge: b1d5a636 607e75ea
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 23:12:19 2024 +0800
+
+    feat: added profile logout/edit details and facility details popup
+
+[33mcommit 033c58f8b409ae77ea61efef032e343c0410a0fd[m
+Merge: f0c4ab14 607e75ea
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Sat Jun 1 17:32:25 2024 +0800
+
+    new
+
+[33mcommit f0c4ab14c688adca1e03b79d1a63bd006d2eac7c[m
+Author: EmTampz <mmtampogao@gmail.com>
+Date:   Sat Jun 1 17:26:35 2024 +0800
+
+     new
+
+[33mcommit 607e75eac032111d8d08e344f58d51400cf2eec5[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Sat Jun 1 17:22:16 2024 +0800
+
+    feat: hook up the view details link
+
+[33mcommit b1d5a63647fd0adcd598f4286eaef0e43cc3d5e0[m
+Merge: e294d44d b19d98eb
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 17:20:03 2024 +0800
+
+    new
+
+[33mcommit e294d44dc7ffc83dbea87229c63e39b6aff7912b[m
+Merge: f4fbd211 385b0110
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 17:16:41 2024 +0800
+
+    Merge branch 'FE-feature/adminpage' of https://github.com/sharmaigne/frs-127 into FE-feature/adminpage
+
+[33mcommit f4fbd2111c8959b129a6965535f7ff6a43bfc097[m
+Author: PhillipHufana <pjhufs@gmail.com>
+Date:   Sat Jun 1 17:12:22 2024 +0800
+
+    new
+
+[33mcommit 4fa0711b95fc139ffaac3e7d68cd52c4d2f01c6c[m
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Sat Jun 1 16:12:57 2024 +0800
+
+    feat: convert viewDetails into a slug page + integrate
+
+[33mcommit b19d98eb2792ea323398c10143a24240beea3716[m
+Merge: b326cac7 385b0110
+Author: sharmaigne <sharmaignemabano@gmail.com>
+Date:   Sat Jun 1 15:10:55 2024 +0800
+
+    Merge pull request #10 from sharmaigne/FE-feature/adminpage
+    
+    Fe feature/adminpage
+
+[33mcommit 385b0110c87adc2756ad4045cd0bbbde068fecb1[m
+Merge: a8a4ac95 b326cac7
+Author: Sharmaigne Angelie Mabano <sharmaignemabano@gmail.com>
+Date:   Sat Jun 1 15:03:12 2024 +0800
+
+    Merge branch 'dev' of https://github.com/sharmaigne/frs-127 into FE-feature/adminpage
+
+[33mcommit 8c63c281235ae6c4b90a13b6daa31255da1ba52e[m[33m ([

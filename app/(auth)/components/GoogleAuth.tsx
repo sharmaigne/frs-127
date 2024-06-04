@@ -1,12 +1,12 @@
-import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
 import GoogleIcon from "@/public/icons/google";
+import { createClient } from "@/utils/supabase/client";
 
 const GoogleAuth = () => {
   const data_client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const handleLoginWithGoogle = () => {
+  const handleLoginWithGoogle = async () => {
     const supabase = createClient();
-    supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: "http://localhost:3000/callback",
@@ -16,6 +16,7 @@ const GoogleAuth = () => {
         },
       },
     });
+    console.log(error && data);
   };
 
   return (

@@ -13,11 +13,12 @@ const useAddFacility = () => {
         queryClient.refetchQueries({ queryKey: ["facilities"] });
       },
 
-      mutationFn: async (facilityData: Facility["Row"]) => {
+      mutationFn: async (facilityData: Facility["Insert"]) => {
         const { data, error } = await supabase
             .from("facilities")
-            .insert([facilityData])
-            .select();
+            .insert(facilityData)
+            .select()
+            .single();
         
         if (error) {
             throw error;

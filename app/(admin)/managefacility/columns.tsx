@@ -29,7 +29,7 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
   {
     accessorKey: "name",
     header: "facility",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("name")} <div></div> {row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="font-bold"> {row.getValue("name")}</div>,
   },
 
   {

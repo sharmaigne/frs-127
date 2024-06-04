@@ -1,6 +1,15 @@
 import { z } from "zod";
 
-// Define the Zod schema for validation
+// TODO: add facility manager & master facility
+export const createFacilitySchema = z.object({
+  name: z.string().min(2, { message: "Facility name must be at least 2 characters." }),
+  facility_type: z.enum(["hall", "classroom", "court", "field"]),
+  description: z.string().min(5, { message: "Facility description must be at least 5 characters." }),
+  location: z.string().min(5, { message: "Facility location must be at least 5 characters." }),
+  capacity: z.number().int().min(1, { message: "Facility capacity must be at least 1." }),
+  image_url: z.string().url().optional(),
+});
+
 export const requestFormSchema = z.object({
     facility_id: z.string().min(1, { message: "Facility is required." }),
     event_name: z

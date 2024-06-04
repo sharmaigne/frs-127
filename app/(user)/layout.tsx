@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "UP Reserve Hub",
   description: "The official reservation system of UP Mindanao",

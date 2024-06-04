@@ -15,7 +15,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           alt={facility.name}
           className="rounded-lg overflow-hidden bg-cover"
           height="400"
-          src={"/images/atrium.jpg"}
+          src={"/images/atrium.jpg"} // TODO: add placeholder image
           style={{
             aspectRatio: "600/400",
             objectFit: "cover",

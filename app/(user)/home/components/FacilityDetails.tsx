@@ -15,18 +15,18 @@ const FacilityDetails = ({ facility }: { facility: Facility["Row"] }) => {
   if (status === "error") return <p>Error: {error.message}</p>;
   return (
     <>
-      <div className="sm:max-w-[1000px] max-h-[90vh] overflow-auto">
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="w-full">
+        <div className="flex gap-8 items-center">
           <div>
             <img
-              src={facility.image_url || "/placeholder.svg"}
+              src={facility.image_url || "/images/placeholder.png"}
               alt="Facility Image"
-              width={800}
-              height={600}
-              className="w-full rounded-lg object-cover"
+              className={`w-full rounded-lg object-cover ${
+                facility.image_url ? "" : "bg-gray-200"
+              }`}
             />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 w-[50%] mt-4">
             <div>
               <h1 className="text-3xl font-bold">{facility.name}</h1>
               <p className="text-gray-500 dark:text-gray-400">
@@ -63,7 +63,7 @@ const FacilityDetails = ({ facility }: { facility: Facility["Row"] }) => {
               <p>{facility.description}</p>
             </div>
             <div className="flex justify-end">
-              <Button className="mt-4" asChild>
+              <Button className="mt-4 mr-6" asChild>
                 <Link href={`/home/formrequest/${facility.facility_id}`}>
                   Reserve Now
                 </Link>

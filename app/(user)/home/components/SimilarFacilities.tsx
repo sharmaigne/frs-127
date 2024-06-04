@@ -28,7 +28,7 @@ const SimilarFacilities: React.FC<SimilarFacilitiesProps> = ({
             >
               <Link href="#" className="block" prefetch={false}>
                 <img
-                  src={facility.image_url || "/placeholder.svg"}
+                  src={facility.image_url || "/images/placeholder.png"}
                   alt="Facility Image"
                   width={400}
                   height={300}
@@ -54,7 +54,11 @@ const SimilarFacilities: React.FC<SimilarFacilitiesProps> = ({
                   </p>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <Button asChild><Link href={`home/formrequest/${facility.facility_id}`}>Reserve Now</Link></Button>
+                  <Button asChild>
+                    <Link href={`home/formrequest/${facility.facility_id}`}>
+                      Reserve Now
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>

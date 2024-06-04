@@ -151,6 +151,9 @@ const FormRequest = () => {
       timestamp_start: data.timestamp_start,
       timestamp_end: data.timestamp_end,
       facility_id: data.facility_id,
+
+      // for testing: submit userid
+      requestor_id: "3e800cbe-875c-4b6b-997e-14e593e7cb43",
     };
 
     // mutateAsync is used instead of mutate since the next requests depend on the request_id

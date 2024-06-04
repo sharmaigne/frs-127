@@ -362,6 +362,7 @@ export type Database = {
         Row: {
           activity_design_id: string | null
           confirmation_ticket_id: string | null
+          date_requested: string | null
           endorsement_ticket_id: string | null
           event_description: string | null
           event_name: string
@@ -378,6 +379,7 @@ export type Database = {
         Insert: {
           activity_design_id?: string | null
           confirmation_ticket_id?: string | null
+          date_requested?: string | null
           endorsement_ticket_id?: string | null
           event_description?: string | null
           event_name: string
@@ -394,6 +396,7 @@ export type Database = {
         Update: {
           activity_design_id?: string | null
           confirmation_ticket_id?: string | null
+          date_requested?: string | null
           endorsement_ticket_id?: string | null
           event_description?: string | null
           event_name?: string

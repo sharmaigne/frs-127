@@ -1,22 +1,18 @@
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Facility } from "@/lib/types";
+import useGetProfileById from "@/hooks/queries/useGetProfileById";
+import { UUID } from "crypto";
+import Link from "next/link";
 // need desc and images for facility sa lib/types. please update.
-// pls change facility manager info to proper
 
-interface FacilityDetailsProps {
-  facility: {
-    name: string;
-    location: string;
-    capacity: string;
-    type: string;
-    description: string;
-    image_url: string;
-    facility_manager: string;
-    facility_manager_email: string;
-  };
-}
-
-const FacilityDetails = ({ facility }: FacilityDetailsProps) => {
+const FacilityDetails = ({ facility }: { facility: Facility["Row"] }) => {
+  const {
+    data: manager,
+    error,
+    status,
+  } = useGetProfileById(facility.facility_manager_id as UUID);
+  if (status === "pending") return <p>Loading...</p>;
+  if (status === "error") return <p>Error: {error.message}</p>;
   return (
     <>
       <div className="sm:max-w-[1000px] max-h-[90vh] overflow-auto">
@@ -52,13 +48,13 @@ const FacilityDetails = ({ facility }: FacilityDetailsProps) => {
                   <p className="text-gray-500 dark:text-gray-400">
                     Facility Manager
                   </p>
-                  <p>{facility.facility_manager}</p>
+                  <p>{`${manager.first_name} ${manager.middle_initial} ${manager.last_name}`}</p>
                 </div>
                 <div>
                   <p className="text-gray-500 dark:text-gray-400">
                     Facility Manager Email
                   </p>
-                  <p>{facility.facility_manager_email}</p>
+                  <Link href={`mailto:${manager.email}`}>{manager.email}</Link>
                 </div>
               </div>
             </div>

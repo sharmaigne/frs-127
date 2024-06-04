@@ -63,7 +63,11 @@ const FacilityDetails = ({ facility }: { facility: Facility["Row"] }) => {
               <p>{facility.description}</p>
             </div>
             <div className="flex justify-end">
-              <Button className="mt-4">Reserve Now</Button>
+              <Button className="mt-4" asChild>
+                <Link href={`/home/formrequest/${facility.facility_id}`}>
+                  Reserve Now
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

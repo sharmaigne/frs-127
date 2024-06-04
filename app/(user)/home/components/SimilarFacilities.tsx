@@ -3,16 +3,10 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface Facility {
-  name: string;
-  location: string;
-  capacity: string;
-  image_url: string;
-}
+import { Facility } from "@/lib/types";
 
 interface SimilarFacilitiesProps {
-  facilities: Facility[];
+  facilities: Facility["Row"][];
 }
 
 const SimilarFacilities: React.FC<SimilarFacilitiesProps> = ({

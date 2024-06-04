@@ -6,12 +6,10 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { LoginFields, SignupFields} from '@/app/(auth)/_api/types'
 
-export const login = async (data: string) => {
+export const login = async (data: LoginFields) => {
   console.log("logging in...")
   const supabase = createClient()
-
-  const dataObject = JSON.parse(data) as LoginFields
-  const { error } = await supabase.auth.signInWithPassword(dataObject)
+  const { error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
     console.error(error)

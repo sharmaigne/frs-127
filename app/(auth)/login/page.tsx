@@ -30,8 +30,8 @@ const LoginPage = () => {
   });
 
   const handleLogin = (data: LoginFields) => {
-    console.log(data);
-    login(JSON.stringify(data));
+    console.log(JSON.stringify(data));
+    login(data);
   }
 
   return (

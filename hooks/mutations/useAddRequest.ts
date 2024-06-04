@@ -11,7 +11,7 @@ const useAddRequest = () => {
       mutationFn: async (requestData: Request["Insert"]) => {
         const { data, error } = await supabase
             .from("requests")
-            .insert([requestData])
+            .insert(requestData)
             .select()
             .single();
         

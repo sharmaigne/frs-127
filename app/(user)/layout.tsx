@@ -6,11 +6,13 @@ export const metadata: Metadata = {
   description: "The official reservation system of UP Mindanao",
 };
 
-export default function RootLayout({
+export default function UserLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
+
   return (
     <div className="min-h-[100dvh] flex flex-col">
       <Navbar />

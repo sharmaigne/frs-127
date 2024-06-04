@@ -1,18 +1,14 @@
 "use client";
 
+// top 3 similar facilities based on capacity
+
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface Facility {
-  name: string;
-  location: string;
-  capacity: string;
-  image_url: string;
-}
+import { Facility } from "@/lib/types";
 
 interface SimilarFacilitiesProps {
-  facilities: Facility[];
+  facilities: Facility["Row"][];
 }
 
 const SimilarFacilities: React.FC<SimilarFacilitiesProps> = ({
@@ -32,32 +28,37 @@ const SimilarFacilities: React.FC<SimilarFacilitiesProps> = ({
             >
               <Link href="#" className="block" prefetch={false}>
                 <img
-                  src={facility.image_url || "/placeholder.svg"}
+                  src={facility.image_url || "/images/placeholder.png"}
                   alt="Facility Image"
                   width={400}
                   height={300}
                   className="w-full h-48 object-cover"
                 />
               </Link>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">
-                  <Link
-                    href="#"
-                    className="hover:text-primary"
-                    prefetch={false}
-                  >
-                    {facility.name}
-                  </Link>
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  {facility.location}
-                </p>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Capacity: {facility.capacity}
-                </p>
+              <div className="p-4 flex flex-col h-[200px] justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold">
+                    <Link
+                      href="#"
+                      className="hover:text-primary"
+                      prefetch={false}
+                    >
+                      {facility.name}
+                    </Link>
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    {facility.location}
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    Capacity: {facility.capacity}
+                  </p>
+                </div>
                 <div className="flex justify-end mt-4">
-                  {/* add formrequest link here */}
-                  <Button>Reserve Now</Button>
+                  <Button asChild>
+                    <Link href={`home/formrequest/${facility.facility_id}`}>
+                      Reserve Now
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>

@@ -60,6 +60,8 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { redirect, useParams } from "next/navigation";
 
+import { handleFileUpload_Form5} from "./clientActions";
+
 // Define the TypeScript type for the form data
 type FormData = z.infer<typeof requestFormSchema>;
 
@@ -90,6 +92,14 @@ const FormRequest = () => {
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
     },
   });
+
+  //FILEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, uploadHandler: (file: File) => Promise<void>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      await uploadHandler(file);
+    }
+  };
 
   const {
     fields: riskFields,
@@ -381,9 +391,11 @@ const FormRequest = () => {
                         <FormLabel>Optional: Attach Request File</FormLabel>
                         <FormControl>
                           <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
+                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                           id="form5"
+                           type="file"
+                        
+                           onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -412,9 +424,11 @@ const FormRequest = () => {
                         <FormLabel>Optional: Attach Risk Table File</FormLabel>
                         <FormControl>
                           <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
+                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                           id="form5"
+                           type="file"
+                        
+                           onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
                           />
                         </FormControl>
                         <FormMessage />
@@ -445,9 +459,11 @@ const FormRequest = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            id="form5"
                             type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
+                         
+                            onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
                           />
                         </FormControl>
                         <FormMessage />

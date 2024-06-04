@@ -72,8 +72,8 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
   
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-full  ">
+      <div className="flex items-center py-2">
         <Input
           placeholder="Search facility..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -104,11 +104,11 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
 
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-[#8B0000] hover:bg-primary rounded-2xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-white font-extrabold text-base">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
@@ -120,7 +120,7 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow className="text-base" key={row.id} data-state={row.getIsSelected() && "selected"} >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -142,12 +142,12 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        {/* <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
           Previous
         </Button>
         <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
           Next
-        </Button>
+        </Button> */}
       </div>
     </div>
   )

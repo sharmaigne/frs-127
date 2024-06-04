@@ -32,6 +32,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
           table.toggleAllPageRowsSelected(!!value)
         }
         aria-label="Select all"
+        className="invisible"
       />
     ),
     cell: ({ row }) => (
@@ -39,6 +40,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        className="invisible"
       />
     ),
     enableSorting: false,
@@ -102,7 +104,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   },
   {
     accessorKey: "timestamp_start",
-    header: "Date & Time",
+    header: "Date & Time Start",
     cell: ({ row }) => (
       <div>{moment(row.getValue("timestamp_start")).format(dateFormat)} </div>
     ),
@@ -125,28 +127,22 @@ export const columns: ColumnDef<Request["Row"]>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+    header: "",
     cell: ({ row }) => {
-      console.log(row); 
+      console.log(row);
       // const { id, someDataForRedirect } = row.original; // Access data from the row object
       return (
         <div className="flex space-x-1">
-          <Button
-            variant="default"
-            className="bg-secondary-400 hover:bg-secondary-300"
-          >
+          <Button className="bg-secondary-400 hover:bg-secondary-300">
             Endorse
           </Button>
-          <Button
-            variant="default"
-            className="bg-primary-400 hover:bg-primary-300"
-          >
+          <Button className="bg-primary-400 hover:bg-primary-300">
             Reject
           </Button>
           <Button variant="link" asChild>
-              <Link href={`/managerequest/${row.getValue("request_id")}`}>
-                View Details
-              </Link>
+            <Link href={`/managerequest/${row.getValue("request_id")}`}>
+              View Details
+            </Link>
           </Button>
         </div>
       );

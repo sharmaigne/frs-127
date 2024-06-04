@@ -5,7 +5,7 @@ import { Program } from "@/lib/types";
 interface ProgramDetailsTableProps {
   programs: Program["Row"][];
 }
-import React from 'react'
+
 
 const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps)  => {
   return (

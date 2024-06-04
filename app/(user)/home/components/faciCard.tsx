@@ -1,5 +1,6 @@
-"use client"
-import React, { useEffect, useState } from "react";
+"use client";
+import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
@@ -43,6 +44,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
     setShowPopup(true);
   };
 
+const FacilityCard = ({ facility }: { facility: any }) => {
   return (
     <Card>
       <CardContent className="p-4 space-y-4">
@@ -69,16 +71,10 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           </p>
         </div>
 
-        {showPopup && <Popup />}
-        <Button
-          className="bg-white hover:bg-gray-100 dark:bg-gray-950 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-50"
-          variant="outline"
-          onClick={handleOpenPopup}
-        >
-          Reserve
-        </Button>
-        <FacilityPopup />
-
+        <div className="flex gap-3 justify-end">
+          <FacilityPopup />
+          <Button asChild><Link href={`/home/formrequest/${facility.facility_id}`}>Reserve</Link></Button>
+        </div>
       </CardContent>
     </Card>
   );

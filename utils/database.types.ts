@@ -160,18 +160,22 @@ export type Database = {
         Row: {
           admin_id: string
           capacity: number | null
+          description: string | null
           facility_id: string
           facility_manager_id: string | null
+          image_url: string | null
           location: string | null
           master_facility_id: string | null
           name: string
           type: Database["public"]["Enums"]["facility_type"] | null
         }
         Insert: {
-          admin_id: string
+          admin_id?: string
           capacity?: number | null
+          description?: string | null
           facility_id?: string
           facility_manager_id?: string | null
+          image_url?: string | null
           location?: string | null
           master_facility_id?: string | null
           name: string
@@ -180,8 +184,10 @@ export type Database = {
         Update: {
           admin_id?: string
           capacity?: number | null
+          description?: string | null
           facility_id?: string
           facility_manager_id?: string | null
+          image_url?: string | null
           location?: string | null
           master_facility_id?: string | null
           name?: string
@@ -272,7 +278,7 @@ export type Database = {
           last_name?: string | null
           middle_initial?: string | null
           role?: Database["public"]["Enums"]["user_roles"] | null
-          user_id: string
+          user_id?: string
         }
         Update: {
           contact_number?: string | null
@@ -296,29 +302,29 @@ export type Database = {
       program: {
         Row: {
           activity: string | null
-          activity_design_id: string
+          request_id: string
           timestamp_end: string | null
           timestamp_start: string
         }
         Insert: {
           activity?: string | null
-          activity_design_id: string
+          request_id: string
           timestamp_end?: string | null
           timestamp_start: string
         }
         Update: {
           activity?: string | null
-          activity_design_id?: string
+          request_id?: string
           timestamp_end?: string | null
           timestamp_start?: string
         }
         Relationships: [
           {
-            foreignKeyName: "program_activity_design_id_fkey"
-            columns: ["activity_design_id"]
+            foreignKeyName: "program_request_id_fkey"
+            columns: ["request_id"]
             isOneToOne: false
-            referencedRelation: "activity_design"
-            referencedColumns: ["activity_design_id"]
+            referencedRelation: "requests"
+            referencedColumns: ["request_id"]
           },
         ]
       }
@@ -354,7 +360,6 @@ export type Database = {
       }
       requests: {
         Row: {
-          request_id: string
           activity_design_id: string | null
           confirmation_ticket_id: string | null
           endorsement_ticket_id: string | null
@@ -362,6 +367,7 @@ export type Database = {
           event_name: string
           facility_id: string
           organization: string | null
+          request_id: string
           requestor_id: string
           risk_analysis_id: string | null
           status: Database["public"]["Enums"]["status"] | null

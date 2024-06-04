@@ -29,14 +29,14 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "facility_name",
-    header: "Facility",
-    cell: ({ row }) => <div className="font-bold"> {row.getValue("facility_name")} <div></div> {row.getValue("email")}</div>,
+    accessorKey: "name",
+    header: "facility",
+    cell: ({ row }) => <div className="font-bold"> {row.getValue("name")}</div>,
   },
 
   {
     accessorKey: "picture",
-    header: "Picture",
+    header: "Image",
     cell: ({ row }) => <div>{row.getValue("picture") }
     </div>,
   },

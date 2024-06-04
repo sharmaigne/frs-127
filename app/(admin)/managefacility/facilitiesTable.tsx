@@ -76,8 +76,8 @@ export function FacilitiesTable({ data }: FacilitiesTableProps) {
       <div className="flex items-center py-2">
         <Input
           placeholder="Search facility..."
-          value={(table.getColumn("facility_name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("facility_name")?.setFilterValue(event.target.value)}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

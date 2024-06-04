@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "setupTests.ts" // Add this line
-  ],
+, ".next/config/supabaseClient.ts"  ],
   "exclude": ["node_modules"]
 }

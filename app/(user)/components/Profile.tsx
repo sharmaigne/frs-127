@@ -89,7 +89,7 @@ const Profile = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" sideOffset={8} className="w-56">
           <DropdownMenuItem>
-            <Link href="#" prefetch={false}>
+            <Link href={{ pathname: "/login" }} >
               Log Out
             </Link>
           </DropdownMenuItem>

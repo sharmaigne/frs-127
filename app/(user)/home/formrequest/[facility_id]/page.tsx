@@ -1,5 +1,4 @@
 "use client";
-
 // TODO: add logic to handle file uploads
 // TODO: add logic to get only either file upload or text inputs
 // TODO: make the form easier to use (eg. date picker)
@@ -29,8 +28,8 @@ import {
 } from "@/components/ui/card";
 
 import { requestFormSchema } from "@/lib/validators";
-import RiskTable from "./RiskTable";
-import ProgramTable from "./ProgramTable";
+import RiskTable from "../RiskTable";
+import ProgramTable from "../ProgramTable";
 
 import { Request, ActivityDesign, Program, Risk } from "@/lib/types";
 import useAddRequest from "@/hooks/mutations/useAddRequest";
@@ -56,18 +55,22 @@ import {
 } from "@/components/ui/popover";
 import useGetFacilities from "@/hooks/queries/useGetFacilities";
 import { CommandList } from "cmdk";
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+
+import { redirect, useParams } from "next/navigation";
 
 // Define the TypeScript type for the form data
 type FormData = z.infer<typeof requestFormSchema>;
 
 const FormRequest = () => {
-  const { toast } = useToast()
+  const { facility_id } = useParams();
+
+  const { toast } = useToast();
   const form = useForm<FormData>({
     resolver: zodResolver(requestFormSchema),
     defaultValues: {
-      facility_id: "",
+      facility_id: facility_id as string,
       event_name: "",
       event_description: "",
       organization: "",
@@ -116,7 +119,7 @@ const FormRequest = () => {
   // Function to save the form data to local storage
   const saveDraft = () => {
     const formData = form.getValues();
-    localStorage.setItem('formData', JSON.stringify(formData));
+    localStorage.setItem("formData", JSON.stringify(formData));
     toast({
       title: "Draft saved",
       description: "Your draft has been saved successfully.",
@@ -125,7 +128,7 @@ const FormRequest = () => {
 
   // Function to load the form data from local storage
   const loadDraft = () => {
-    const savedFormData = localStorage.getItem('formData');
+    const savedFormData = localStorage.getItem("formData");
     if (savedFormData) {
       form.reset(JSON.parse(savedFormData));
       toast({
@@ -207,13 +210,19 @@ const FormRequest = () => {
     return <div>Error loading facilities: {error?.message}</div>;
   }
 
+  if (!facilities.find((facility) => facility.facility_id === facility_id)) {
+    redirect("/home/formrequest");
+  }
+
   return (
     <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-16 ">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 ">
         <div className="col-span-1 md:col-span-2 lg:col-span-3 ">
           <Card className="bg-text-50 text-text">
             <CardHeader>
-              <CardTitle className="text-primary font-bold text-3xl">Request Form</CardTitle>
+              <CardTitle className="text-primary font-bold text-3xl">
+                Request Form
+              </CardTitle>
               <CardDescription>
                 Fill out the form below to submit your information to admin.
               </CardDescription>
@@ -224,76 +233,74 @@ const FormRequest = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8"
                 >
-                 
-
-                <div className="grid grid-cols-3 gap-4">
-                     {/* FACILITY DROPDOWN */}
-                  <FormField
-                    control={form.control}
-                    name="facility_id"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col w-full">
-                        <FormLabel>Facility</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                role="combobox"
-                                className={cn(
-                                  "justify-between",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value
-                                  ? facilities.find(
-                                      (facility) =>
-                                        facility.facility_id === field.value
-                                    )?.name
-                                  : "Select facility"}
-                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-full p-0">
-                            <Command>
-                              <CommandInput placeholder="Search facility..." />
-                              <CommandEmpty>No facility found.</CommandEmpty>
-
-                              {/* DO NOT REMOVE THIS WRAPPER. Will break the command. Is a shadcn bug.*/}
-                              <CommandList>
-                                <CommandGroup>
-                                  {facilities.map((facility) => (
-                                    <CommandItem
-                                      value={facility.name}
-                                      key={facility.facility_id}
-                                      onSelect={() => {
-                                        form.setValue(
-                                          "facility_id",
-                                          facility.facility_id
-                                        );
-                                      }}
-                                    >
-                                      <Check
-                                        className={cn(
-                                          "mr-2 h-4 w-4",
+                  <div className="grid grid-cols-3 gap-4">
+                    {/* FACILITY DROPDOWN */}
+                    <FormField
+                      control={form.control}
+                      name="facility_id"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col w-full">
+                          <FormLabel>Facility</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  className={cn(
+                                    "justify-between",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value
+                                    ? facilities.find(
+                                        (facility) =>
                                           facility.facility_id === field.value
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                        )}
-                                      />
-                                      {facility.name}
-                                    </CommandItem>
-                                  ))}
-                                </CommandGroup>
-                              </CommandList>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                                      )?.name
+                                    : "Select facility"}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full p-0">
+                              <Command>
+                                <CommandInput placeholder="Search facility..." />
+                                <CommandEmpty>No facility found.</CommandEmpty>
+
+                                {/* DO NOT REMOVE THIS WRAPPER. Will break the command. Is a shadcn bug.*/}
+                                <CommandList>
+                                  <CommandGroup>
+                                    {facilities.map((facility) => (
+                                      <CommandItem
+                                        value={facility.name}
+                                        key={facility.facility_id}
+                                        onSelect={() => {
+                                          form.setValue(
+                                            "facility_id",
+                                            facility.facility_id
+                                          );
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            facility.facility_id === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {facility.name}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     <FormField
                       control={form.control}
                       name="event_name"
@@ -307,7 +314,7 @@ const FormRequest = () => {
                         </FormItem>
                       )}
                     />
-                  <FormField
+                    <FormField
                       control={form.control}
                       name="organization"
                       render={({ field }) => (
@@ -384,7 +391,9 @@ const FormRequest = () => {
                     )}
                   />
                   <CardHeader className="pt-8 pl-0 pb-0">
-                    <CardTitle className="text-primary font-bold text-3xl">Risk Table</CardTitle>
+                    <CardTitle className="text-primary font-bold text-3xl">
+                      Risk Table
+                    </CardTitle>
                     <CardDescription>
                       Fill out the risk table below.
                     </CardDescription>
@@ -413,7 +422,9 @@ const FormRequest = () => {
                     )}
                   />
                   <CardHeader className=" pt-8 pl-0 pb-0">
-                    <CardTitle className="text-primary font-bold text-3xl">Program Schedule</CardTitle>
+                    <CardTitle className="text-primary font-bold text-3xl">
+                      Program Schedule
+                    </CardTitle>
                     <CardDescription>
                       Fill out the program schedule below.
                     </CardDescription>
@@ -429,7 +440,9 @@ const FormRequest = () => {
                     name="files"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Optional: Attach Program Schedule File</FormLabel>
+                        <FormLabel>
+                          Optional: Attach Program Schedule File
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="file"
@@ -442,19 +455,29 @@ const FormRequest = () => {
                     )}
                   />
                   <div className="flex space-x-4 justify-center py-8">
-                  <Button className="bg-primary-400 hover:bg-primary font-bold" type="submit" onClick={() => {
-                    // toast not working for some reason
-                      toast({
-                        title: "You have successfully Submitted the Form :)",
-                        description: "Please wait patiently for Admin Feedback.",
-                        action: <ToastAction altText="Undo">Undo</ToastAction>,
-                      })
-                    }}>
+                    <Button
+                      className="bg-primary-400 hover:bg-primary font-bold"
+                      type="submit"
+                      onClick={() => {
+                        // toast not working for some reason
+                        toast({
+                          title: "You have successfully Submitted the Form :)",
+                          description:
+                            "Please wait patiently for Admin Feedback.",
+                          action: (
+                            <ToastAction altText="Undo">Undo</ToastAction>
+                          ),
+                        });
+                      }}
+                    >
                       Submit
                     </Button>
-                    <Button type="button" variant="outline" onClick={saveDraft}>Save Draft</Button>
-                    <Button type="button" variant="outline" onClick={loadDraft}>Load Draft</Button>
-                    
+                    <Button type="button" variant="outline" onClick={saveDraft}>
+                      Save Draft
+                    </Button>
+                    <Button type="button" variant="outline" onClick={loadDraft}>
+                      Load Draft
+                    </Button>
                   </div>
                 </form>
               </Form>

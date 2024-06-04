@@ -81,7 +81,7 @@ const FormRequest = () => {
           likelihood: "low",
           impact: "low",
           mitigating_action: "",
-          escalation_point: "",
+          escalation_point: ""
         },
       ],
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
@@ -107,6 +107,7 @@ const FormRequest = () => {
   });
 
   let requestId: string = "";
+  let activityDesignId: string = "";
   const addRequest = useAddRequest();
   const addActivityDesign = useAddActivityDesign();
   const addPrograms = useAddPrograms();
@@ -153,7 +154,7 @@ const FormRequest = () => {
       facility_id: data.facility_id,
     };
 
-    // mutateAsync is used instead of mutate since the next requests depend on the request_id
+    // mutateAsync is used instead of mutate since we're chaining multiple mutations
     const requestResult = await addRequest.mutateAsync(requestData);
     console.log("Request: ", requestResult);
     requestId = requestResult.request_id;
@@ -162,18 +163,25 @@ const FormRequest = () => {
     const activityDesignData: ActivityDesign["Insert"] = {
       request_id: requestId,
     };
-    addActivityDesign.mutate(activityDesignData);
+
+    const activityDesignResult = await addActivityDesign.mutateAsync(
+      activityDesignData
+    );
+    console.log("Request: ", activityDesignResult);
+    activityDesignId = activityDesignResult.activity_design_id;
 
     // create program schedule, send to backend
     const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
       (program) => ({
         activity: program.program,
-        request_id: requestId,
+        activity_design_id: activityDesignId,
         timestamp_end: program.time_end,
         timestamp_start: program.time_start,
       })
     )!; // ! is used to tell TypeScript that the value is not null
-    addPrograms.mutate(programScheduleData);
+
+    const programScheduleResult = addPrograms.mutateAsync(programScheduleData);
+    console.log("Program: ", programScheduleResult);
 
     // create risk analysis, send to backend
     // for some reason, not symmetric with activity design / program schedule
@@ -181,7 +189,8 @@ const FormRequest = () => {
       request_id: requestId,
     };
 
-    addRiskAnalysis.mutate(riskAnalysisData);
+    const riskAnalysisResult = addRiskAnalysis.mutateAsync(riskAnalysisData);
+    console.log("Risk Analysis: ", riskAnalysisResult);
 
     const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
       (risk) => ({
@@ -194,7 +203,11 @@ const FormRequest = () => {
       })
     );
 
-    addRisks.mutate(risksData);
+    const risksResult = addRisks.mutateAsync(risksData);
+    console.log("Risks: ", risksResult);
+
+    // Clear the local storage draft after successful submission
+    localStorage.removeItem('formData');
   };
 
   const { data: facilities = [], status, error } = useGetFacilities();

@@ -59,6 +59,10 @@ import {
 import { ChevronsUpDown } from "lucide-react";
 import { Check } from "lucide-react";
 
+import getFacilityImageById from "@/hooks/buckets/retrieve/getFacilityImageById";
+import { useRef, useEffect } from "react";
+import useUpdateFacility from "@/hooks/mutations/useUpdateFacility";
+
 type FormData = z.input<typeof createFacilitySchema>;
 
 const CreateFacility = () => {
@@ -80,6 +84,19 @@ const CreateFacility = () => {
   );
 
   const { mutateAsync } = useAddFacility();
+  const { mutate: mutateUpdateFacility } = useUpdateFacility();
+
+  const requestResultRef = useRef<Facility["Insert"]>()
+  const publicUrlRef = useRef<string | null>(null);
+  const getImage = async (facility_id: string) => {
+    const data = await getFacilityImageById(facility_id);
+    publicUrlRef.current = data.publicUrl;
+  };
+
+  useEffect(() => {
+    getImage(requestResultRef.current?.facility_id || "");
+  }, [requestResultRef.current]);
+
 
   const onSubmit = async (data: FormData) => {
     const facility: Facility["Insert"] = {
@@ -89,18 +106,24 @@ const CreateFacility = () => {
       location: data.location,
       capacity: data.capacity,
       facility_manager_id: data.facility_manager,
+      // image_url: "exists", // TODO: should be added after image upload
     };
 
-    const requestResult = await mutateAsync(facility);
+    requestResultRef.current = await mutateAsync(facility);
 
-    // TODO: handle image upload
-    if (event) {
+    // handle image upload
+    if (event && requestResultRef.current) {
       console.log("Uploading image...");
-      uploadFacilityImage(event, requestResult.facility_id);
+      await uploadFacilityImage(event, requestResultRef.current.facility_id!);
     }
 
-    // close dialog and alert user (success or error)
+    // add image url to facility
+    mutateUpdateFacility(
+      {facilityData: { image_url: publicUrlRef.current },
+      facility_id: requestResultRef.current.facility_id!}
+    );
 
+    // close dialog and alert user (success or error)
     setOpen(false);
     form.reset();
   };

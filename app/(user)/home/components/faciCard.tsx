@@ -7,16 +7,9 @@ import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import FacilityPopup from "./FacilityPopup";
 import getFacilityImageById from "@/hooks/buckets/retrieve/getFacilityImageById";
+import { Facility } from "@/lib/types";
 
-const FacilityCard = ({ facility }: { facility: any }) => {
-  const [publicUrl, setPublicUrl] = useState<string | null>(null);
-  const getImage = async () => {
-    const data = await getFacilityImageById(facility.facility_id);
-    setPublicUrl(data.publicUrl);
-  };
-  useEffect(() => {
-    getImage();
-  }, []);
+const FacilityCard = ({ facility }: { facility: Facility["Row"] }) => {
 
   return (
     <Card>
@@ -25,7 +18,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           alt={facility.name}
           className="rounded-lg overflow-hidden bg-cover"
           height="400"
-          src={publicUrl || "/images/atrium.jpg"} // TODO: add placeholder image
+          src={facility.image_url || "/images/placeholder.png"} // TODO: add placeholder image
           style={{
             aspectRatio: "600/400",
             objectFit: "cover",

@@ -38,6 +38,7 @@ import useAddFacility from "@/hooks/mutations/useAddFacility";
 import { Facility } from "@/lib/types";
 
 import { useState } from "react";
+import { handleFileUpload_Form5} from "./clientActions";
 
 type FormData = z.input<typeof createFacilitySchema>;
 
@@ -53,6 +54,15 @@ const CreateFacility = () => {
       image_url: null,
     },
   });
+
+    //FILEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, uploadHandler: (file: File) => Promise<void>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        await uploadHandler(file);
+      }
+    };
+    
   const [open, setOpen] = useState(false);
 
   const { mutate } = useAddFacility();
@@ -193,18 +203,26 @@ const CreateFacility = () => {
             </div>
 
             <FormField
-              control={form.control}
-              name="image_url"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel>Upload Picture</FormLabel>
-                  <FormControl>
-                    <Input type="file" {...field} value={field.value ?? ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    control={form.control}
+                    name="files"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          upload Picture
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            id="form5"
+                            type="file"
+                         
+                            onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
             <DialogFooter>
               <Button type="submit">Save Facility</Button>
             </DialogFooter>

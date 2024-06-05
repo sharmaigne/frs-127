@@ -59,9 +59,9 @@ const HomePage = () => {
                 <TabsContent
                   key={value}
                   value={value}
-                  className="flex justify-center w-full m-4 mx-8"
+                  className="flex justify-center m-4 mx-8"
                 >
-                  <div className="flex flex-wrap gap-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {tab.map((facility) => (
                       <div className="">
                         <FacilityCard

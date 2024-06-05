@@ -31,7 +31,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
         </div>
 
         <div className="flex gap-3 justify-end">
-          <FacilityPopup facility={facility}/>
+          <FacilityPopup facility={facility} />
           <Button asChild>
             <Link href={`/home/formrequest/${facility.facility_id}`}>
               Reserve

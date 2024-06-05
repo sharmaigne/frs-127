@@ -29,6 +29,9 @@ import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";
 import useSupabase from "@/hooks/useSupabase";
 import { redirect } from "next/navigation";
+import { Toast } from "@/components/ui/toast";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const ProfileSchema = z.object({
   first_name: z.string().nonempty({ message: "First name is required" }),

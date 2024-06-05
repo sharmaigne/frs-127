@@ -43,7 +43,7 @@ const RiskAnalysisTable = ({ risks }: RiskAnalysisTableProps) => {
         </TableBody>
       </Table>
       <div className="flex justify-end">
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="outline" className="hover:bg-secondary-500/20">
           Risk Analysis PDF
         </Button>
       </div>

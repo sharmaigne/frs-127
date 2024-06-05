@@ -39,10 +39,6 @@ import useAddFacility from "@/hooks/mutations/useAddFacility";
 import useGetProfilesByRole from "@/hooks/queries/useGetProfilesByRole";
 import { Facility } from "@/lib/types";
 
-<<<<<<< HEAD
-import { useState } from "react";
-import { handleFileUpload_Form5} from "./clientActions";
-=======
 import { useState, ChangeEvent } from "react";
 import uploadFacilityImage from "@/hooks/buckets/upload/uploadFacilityImage";
 
@@ -66,7 +62,6 @@ import { Check } from "lucide-react";
 import getFacilityImageById from "@/hooks/buckets/retrieve/getFacilityImageById";
 import { useRef, useEffect } from "react";
 import useUpdateFacility from "@/hooks/mutations/useUpdateFacility";
->>>>>>> c322938214e515229b134e793157ed127fc4bf94
 
 type FormData = z.input<typeof createFacilitySchema>;
 
@@ -83,15 +78,6 @@ const CreateFacility = () => {
       facility_manager: "",
     },
   });
-
-    //FILEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, uploadHandler: (file: File) => Promise<void>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        await uploadHandler(file);
-      }
-    };
-    
   const [open, setOpen] = useState(false);
   const [event, setEvent] = useState<ChangeEvent<HTMLInputElement> | null>(
     null
@@ -260,28 +246,6 @@ const CreateFacility = () => {
 
             {/* FACILITY MANAGERS DROPDOWN */}
             <FormField
-<<<<<<< HEAD
-                    control={form.control}
-                    name="files"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          upload Picture
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            id="form5"
-                            type="file"
-                         
-                            onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-=======
               control={form.control}
               name="facility_manager"
               render={({ field }) => (
@@ -374,7 +338,6 @@ const CreateFacility = () => {
             <Label>Upload Picture</Label>
             <Input type="file" onChange={(event) => setEvent(event)} />
 
->>>>>>> c322938214e515229b134e793157ed127fc4bf94
             <DialogFooter>
               <Button type="submit">Save Facility</Button>
             </DialogFooter>

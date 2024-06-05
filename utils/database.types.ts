@@ -362,6 +362,7 @@ export type Database = {
         Row: {
           activity_design_id: string | null
           confirmation_ticket_id: string | null
+          date_requested: string | null
           endorsement_ticket_id: string | null
           event_description: string | null
           event_name: string
@@ -378,6 +379,7 @@ export type Database = {
         Insert: {
           activity_design_id?: string | null
           confirmation_ticket_id?: string | null
+          date_requested?: string | null
           endorsement_ticket_id?: string | null
           event_description?: string | null
           event_name: string
@@ -394,6 +396,7 @@ export type Database = {
         Update: {
           activity_design_id?: string | null
           confirmation_ticket_id?: string | null
+          date_requested?: string | null
           endorsement_ticket_id?: string | null
           event_description?: string | null
           event_name?: string
@@ -532,7 +535,7 @@ export type Database = {
     Enums: {
       facility_type: "hall" | "classroom" | "court" | "field"
       levels: "low" | "medium" | "high"
-      status: "Accepted" | "Withdrawn" | "Pending" | "Denied"
+      status: "Accepted" | "Withdrawn" | "Pending" | "Denied" | "Draft"
       ticket_status: "approved" | "pending" | "rejected" | "changes_requested"
       user_roles:
         | "superadmin"

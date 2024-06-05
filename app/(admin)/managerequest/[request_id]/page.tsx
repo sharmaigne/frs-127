@@ -11,11 +11,11 @@ import useGetProfileById from "@/hooks/queries/useGetProfileById";
 import useGetRisksByRequestId from "@/hooks/queries/useGetRisksByRequestId";
 import useGetProgramByRequestId from "@/hooks/queries/useGetProgramByRequestId";
 
-import UserProfileCard from "./components/UserProfileCard";
-import RequestDetailsCard from "./components/RequestDetailsCard";
-import RiskAnalysisTable from "./components/RiskAnalysisTable";
-import ProgramDetailsTable from "./components/ProgramDetailsTable";
-import CommentSection from "./components/CommentSection";
+import UserProfileCard from "@/components/requestdetails/UserProfileCard";
+import RequestDetailsCard from "@/components/requestdetails/RequestDetailsCard";
+import RiskAnalysisTable from "@/components/requestdetails/RiskAnalysisTable";
+import ProgramDetailsTable from "@/components/requestdetails/ProgramDetailsTable";
+import CommentSection from "@/components/requestdetails/CommentSection";
 
 export default function Page() {
   const { request_id }: { request_id: UUID } = useParams();

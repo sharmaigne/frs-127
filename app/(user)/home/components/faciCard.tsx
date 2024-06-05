@@ -15,7 +15,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           alt={facility.name}
           className="rounded-lg overflow-hidden bg-cover"
           height="400"
-          src={"/images/atrium.jpg"}
+          src={"/images/atrium.jpg"} // TODO: add placeholder image
           style={{
             aspectRatio: "600/400",
             objectFit: "cover",
@@ -31,8 +31,12 @@ const FacilityCard = ({ facility }: { facility: any }) => {
         </div>
 
         <div className="flex gap-3 justify-end">
-          <FacilityPopup />
-          <Button asChild><Link href={`/home/formrequest/${facility.facility_id}`}>Reserve</Link></Button>
+          <FacilityPopup facility={facility} />
+          <Button asChild>
+            <Link href={`/home/formrequest/${facility.facility_id}`}>
+              Reserve
+            </Link>
+          </Button>
         </div>
       </CardContent>
     </Card>

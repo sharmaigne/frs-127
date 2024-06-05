@@ -31,6 +31,7 @@ const HomePage = () => {
   const fields = facilities.filter((facility) => facility.type === "field");
 
   const tabs = [
+    { tab: facilities, value: "all" },
     { tab: halls, value: "halls" },
     { tab: classrooms, value: "classrooms" },
     { tab: courts, value: "gymnasium" },
@@ -44,8 +45,9 @@ const HomePage = () => {
 
       <section>
         <div>
-          <Tabs defaultValue="halls">
+          <Tabs defaultValue="all">
             <TabsList className="flex border-b gap-2 rounded-none sticky top-[60px] border-gray-200 dark:border-gray-800 bg-accent text-darker">
+              <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="halls">Halls</TabsTrigger>
               <TabsTrigger value="classrooms">Classrooms</TabsTrigger>
               <TabsTrigger value="gymnasium">Gymnasium Courts</TabsTrigger>
@@ -59,9 +61,14 @@ const HomePage = () => {
                   value={value}
                   className="flex justify-center w-full m-4 mx-8"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="flex flex-wrap gap-4">
                     {tab.map((facility) => (
-                      <FacilityCard facility={facility} key={facility.facility_id} />
+                      <div className="">
+                        <FacilityCard
+                          facility={facility}
+                          key={facility.facility_id}
+                        />
+                      </div>
                     ))}
                   </div>
                 </TabsContent>

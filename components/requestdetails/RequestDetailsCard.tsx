@@ -54,7 +54,7 @@ const RequestDetailsCard = ({ request }: RequestDetailsCardProps) => {
             Event Ends On
           </Label>
           <p className="text-gray-900 dark:text-gray-50">
-            {moment(request.timestamp_start).format(dateFormat)}
+            {moment(request.timestamp_end).format(dateFormat)}
           </p>
         </div>
       </div>

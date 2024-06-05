@@ -59,6 +59,8 @@ import { CommandList } from "cmdk";
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
+import { handleFileUpload_Form5} from "./clientActions";
+
 // Define the TypeScript type for the form data
 type FormData = z.infer<typeof requestFormSchema>;
 
@@ -81,12 +83,19 @@ const FormRequest = () => {
           likelihood: "low",
           impact: "low",
           mitigating_action: "",
-          escalation_point: "",
+          escalation_point: ""
         },
       ],
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
     },
   });
+  //FILEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, uploadHandler: (file: File) => Promise<void>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      await uploadHandler(file);
+    }
+  };
 
   const {
     fields: riskFields,
@@ -107,6 +116,7 @@ const FormRequest = () => {
   });
 
   let requestId: string = "";
+  let activityDesignId: string = "";
   const addRequest = useAddRequest();
   const addActivityDesign = useAddActivityDesign();
   const addPrograms = useAddPrograms();
@@ -151,12 +161,9 @@ const FormRequest = () => {
       timestamp_start: data.timestamp_start,
       timestamp_end: data.timestamp_end,
       facility_id: data.facility_id,
-
-      // for testing: submit userid
-      requestor_id: "3e800cbe-875c-4b6b-997e-14e593e7cb43",
     };
 
-    // mutateAsync is used instead of mutate since the next requests depend on the request_id
+    // mutateAsync is used instead of mutate since we're chaining multiple mutations
     const requestResult = await addRequest.mutateAsync(requestData);
     console.log("Request: ", requestResult);
     requestId = requestResult.request_id;
@@ -165,18 +172,25 @@ const FormRequest = () => {
     const activityDesignData: ActivityDesign["Insert"] = {
       request_id: requestId,
     };
-    addActivityDesign.mutate(activityDesignData);
+
+    const activityDesignResult = await addActivityDesign.mutateAsync(
+      activityDesignData
+    );
+    console.log("Request: ", activityDesignResult);
+    activityDesignId = activityDesignResult.activity_design_id;
 
     // create program schedule, send to backend
     const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
       (program) => ({
         activity: program.program,
-        request_id: requestId,
+        activity_design_id: activityDesignId,
         timestamp_end: program.time_end,
         timestamp_start: program.time_start,
       })
     )!; // ! is used to tell TypeScript that the value is not null
-    addPrograms.mutate(programScheduleData);
+
+    const programScheduleResult = addPrograms.mutateAsync(programScheduleData);
+    console.log("Program: ", programScheduleResult);
 
     // create risk analysis, send to backend
     // for some reason, not symmetric with activity design / program schedule
@@ -184,7 +198,8 @@ const FormRequest = () => {
       request_id: requestId,
     };
 
-    addRiskAnalysis.mutate(riskAnalysisData);
+    const riskAnalysisResult = addRiskAnalysis.mutateAsync(riskAnalysisData);
+    console.log("Risk Analysis: ", riskAnalysisResult);
 
     const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
       (risk) => ({
@@ -197,7 +212,11 @@ const FormRequest = () => {
       })
     );
 
-    addRisks.mutate(risksData);
+    const risksResult = addRisks.mutateAsync(risksData);
+    console.log("Risks: ", risksResult);
+
+    // Clear the local storage draft after successful submission
+    localStorage.removeItem('formData');
   };
 
   const { data: facilities = [], status, error } = useGetFacilities();
@@ -376,11 +395,13 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Optional: Attach Request File</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
+                        <Input
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      id="form5"
+                      type="file"
+                   
+                      onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
+                    />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -405,11 +426,13 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Optional: Attach Risk Table File</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
+                        <Input
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      id="form5"
+                      type="file"
+                   
+                      onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
+                    />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -434,11 +457,13 @@ const FormRequest = () => {
                       <FormItem>
                         <FormLabel>Optional: Attach Program Schedule File</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
+                        <Input
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      id="form5"
+                      type="file"
+                   
+                      onChange={(event) => handleFileChange(event, handleFileUpload_Form5)}
+                    />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

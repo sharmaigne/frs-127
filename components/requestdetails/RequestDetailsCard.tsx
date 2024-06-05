@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import CardWrapper from "./CardWrapper";
 import React from "react";
 import { Request } from "@/lib/types";
+import moment from "moment";
 
 interface RequestDetailsCardProps {
   request: Request["Row"];
 }
 
 const RequestDetailsCard = ({ request }: RequestDetailsCardProps) => {
+  const dateFormat = "LLLL";
+
   return (
     <CardWrapper title="Request Details">
       <div className="grid grid-cols-2 gap-4">
@@ -40,18 +43,18 @@ const RequestDetailsCard = ({ request }: RequestDetailsCardProps) => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            Start Timestamp
+            Event Starts On
           </Label>
           <p className="text-gray-900 dark:text-gray-50">
-            {request.timestamp_start}
+            {moment(request.timestamp_start).format(dateFormat)}
           </p>
         </div>
         <div>
           <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            End Timestamp
+            Event Ends On
           </Label>
           <p className="text-gray-900 dark:text-gray-50">
-            {request.timestamp_end}
+            {moment(request.timestamp_start).format(dateFormat)}
           </p>
         </div>
       </div>

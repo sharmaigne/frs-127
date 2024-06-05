@@ -37,6 +37,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useAddFacility from "@/hooks/mutations/useAddFacility";
 import { Facility } from "@/lib/types";
 
+import { useState } from "react";
+
 type FormData = z.input<typeof createFacilitySchema>;
 
 const CreateFacility = () => {
@@ -48,16 +50,40 @@ const CreateFacility = () => {
       description: "",
       location: "",
       capacity: 0,
-      image_url: "",
+      image_url: null,
     },
   });
+  const [open, setOpen] = useState(false);
 
   const { mutate } = useAddFacility();
 
+  const onSubmit = async (data: FormData) => {
+    const facility: Facility["Insert"] = {
+      name: data.name,
+      type: data.facility_type,
+      description: data.description,
+      location: data.location,
+      capacity: data.capacity,
+    };
+
+    mutate(facility);
+
+    // TODO: handle image upload
+
+    // close dialog and alert user (success or error)
+
+    setOpen(false);
+    form.reset();
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="bg-secondary-600  hover:bg-secondary-500 text-white">Add Facility</Button>
+        <Button
+          variant="outline"
+          className="bg-secondary-600  hover:bg-secondary-500 text-white"
+        >
+          Add Facility
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
@@ -68,7 +94,10 @@ const CreateFacility = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form className="grid gap-4 py-4" onSubmit={form.handleSubmit((data) => {mutate(data)})}>
+          <form
+            className="grid gap-4 py-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -91,7 +120,7 @@ const CreateFacility = () => {
                   <FormItem className="space-y-2">
                     <FormLabel>Facility Type</FormLabel>
                     <FormControl>
-                      <Select {...field}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select facility type" />
                         </SelectTrigger>
@@ -99,9 +128,7 @@ const CreateFacility = () => {
                           <SelectItem value="hall">Hall</SelectItem>
                           <SelectItem value="classroom">Classroom</SelectItem>
                           <SelectItem value="court">Court</SelectItem>
-                          <SelectItem value="field">
-                            Open Fields
-                          </SelectItem>
+                          <SelectItem value="field">Open Fields</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -154,6 +181,9 @@ const CreateFacility = () => {
                         type="number"
                         placeholder="Enter facility capacity"
                         {...field}
+                        onChange={(e) => {
+                          field.onChange(+e.target.value);
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -169,7 +199,7 @@ const CreateFacility = () => {
                 <FormItem className="space-y-2">
                   <FormLabel>Upload Picture</FormLabel>
                   <FormControl>
-                    <Input type="file" {...field} />
+                    <Input type="file" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

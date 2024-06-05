@@ -1,5 +1,5 @@
 'use client'
-import { supabase } from "./supabaseCLient";
+import { supabase } from "../../hooks/buckets/supabaseClient";
 
 //!!!!!!!!!!!!!!!!!!!!! NOTE - THIS FILE UPLOAD HANDLE ONLY UPLOADS ON Form_5 !!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!! OVERRIDE THE CODE OR CREATE ANOTHER HANDLE FILE UPLOAD THAT SPECIFICALLY CATERS TO YOUR SPECIFIC BUCKET FOLDERS(s)!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -20,6 +20,7 @@ import {
   Select,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 import { z } from "zod";
 import {
@@ -35,10 +36,37 @@ import { createFacilitySchema } from "@/lib/validators";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAddFacility from "@/hooks/mutations/useAddFacility";
+import useGetProfilesByRole from "@/hooks/queries/useGetProfilesByRole";
 import { Facility } from "@/lib/types";
 
+<<<<<<< HEAD
 import { useState } from "react";
 import { handleFileUpload_Form5} from "./clientActions";
+=======
+import { useState, ChangeEvent } from "react";
+import uploadFacilityImage from "@/hooks/buckets/upload/uploadFacilityImage";
+
+import { cn } from "@/lib/utils";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandInput,
+  CommandEmpty,
+  CommandList,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+import { ChevronsUpDown } from "lucide-react";
+import { Check } from "lucide-react";
+
+import getFacilityImageById from "@/hooks/buckets/retrieve/getFacilityImageById";
+import { useRef, useEffect } from "react";
+import useUpdateFacility from "@/hooks/mutations/useUpdateFacility";
+>>>>>>> c322938214e515229b134e793157ed127fc4bf94
 
 type FormData = z.input<typeof createFacilitySchema>;
 
@@ -52,6 +80,7 @@ const CreateFacility = () => {
       location: "",
       capacity: 0,
       image_url: null,
+      facility_manager: "",
     },
   });
 
@@ -64,8 +93,24 @@ const CreateFacility = () => {
     };
     
   const [open, setOpen] = useState(false);
+  const [event, setEvent] = useState<ChangeEvent<HTMLInputElement> | null>(
+    null
+  );
 
-  const { mutate } = useAddFacility();
+  const { mutateAsync } = useAddFacility();
+  const { mutate: mutateUpdateFacility } = useUpdateFacility();
+
+  const requestResultRef = useRef<Facility["Insert"]>()
+  const publicUrlRef = useRef<string | null>(null);
+  const getImage = async (facility_id: string) => {
+    const data = await getFacilityImageById(facility_id);
+    publicUrlRef.current = data.publicUrl;
+  };
+
+  useEffect(() => {
+    getImage(requestResultRef.current?.facility_id || "");
+  }, [requestResultRef.current]);
+
 
   const onSubmit = async (data: FormData) => {
     const facility: Facility["Insert"] = {
@@ -74,17 +119,43 @@ const CreateFacility = () => {
       description: data.description,
       location: data.location,
       capacity: data.capacity,
+      facility_manager_id: data.facility_manager,
+      // image_url: "exists", // TODO: should be added after image upload
     };
 
-    mutate(facility);
+    requestResultRef.current = await mutateAsync(facility);
 
-    // TODO: handle image upload
+    // handle image upload
+    if (event && requestResultRef.current) {
+      console.log("Uploading image...");
+      await uploadFacilityImage(event, requestResultRef.current.facility_id!);
+    }
+
+    // add image url to facility
+    mutateUpdateFacility(
+      {facilityData: { image_url: publicUrlRef.current },
+      facility_id: requestResultRef.current.facility_id!}
+    );
 
     // close dialog and alert user (success or error)
-
     setOpen(false);
     form.reset();
   };
+
+  // get facility managers
+  const {
+    data: facilityManagers,
+    error,
+    status,
+  } = useGetProfilesByRole("facility manager");
+
+  if (status === "pending") {
+    return <p>Loading...</p>;
+  }
+  if (status === "error") {
+    return <p>Error: {error.message}</p>;
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -130,7 +201,10 @@ const CreateFacility = () => {
                   <FormItem className="space-y-2">
                     <FormLabel>Facility Type</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Select facility type" />
                         </SelectTrigger>
@@ -148,23 +222,6 @@ const CreateFacility = () => {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Enter facility description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -179,7 +236,6 @@ const CreateFacility = () => {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="capacity"
@@ -202,7 +258,9 @@ const CreateFacility = () => {
               />
             </div>
 
+            {/* FACILITY MANAGERS DROPDOWN */}
             <FormField
+<<<<<<< HEAD
                     control={form.control}
                     name="files"
                     render={({ field }) => (
@@ -223,6 +281,100 @@ const CreateFacility = () => {
                       </FormItem>
                     )}
                   />
+=======
+              control={form.control}
+              name="facility_manager"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full">
+                  <FormLabel>Facility Manager</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {/* god this is ugly, rewrite this */}
+                          {field.value
+                            ? facilityManagers.find(
+                                (facility_manager) =>
+                                  facility_manager.user_id === field.value
+                              )?.last_name +
+                              ", " +
+                              facilityManagers.find(
+                                (facility_manager) =>
+                                  facility_manager.user_id === field.value
+                              )?.first_name
+                            : "Select manager"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0">
+                      <Command>
+                        <CommandInput placeholder="Search manager..." />
+                        <CommandEmpty>No manager found.</CommandEmpty>
+
+                        {/* DO NOT REMOVE THIS WRAPPER. Will break the command. Is a shadcn bug.*/}
+                        <CommandList>
+                          <CommandGroup>
+                            {facilityManagers.map((facility_manager) => (
+                              <CommandItem
+                                value={`${facility_manager.last_name}, ${facility_manager.first_name}`}
+                                key={facility_manager.user_id}
+                                onSelect={() => {
+                                  form.setValue(
+                                    "facility_manager",
+                                    facility_manager.user_id
+                                  );
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    facility_manager.user_id === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {`${facility_manager.last_name}, ${facility_manager.first_name}`}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter facility description"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Label>Upload Picture</Label>
+            <Input type="file" onChange={(event) => setEvent(event)} />
+
+>>>>>>> c322938214e515229b134e793157ed127fc4bf94
             <DialogFooter>
               <Button type="submit">Save Facility</Button>
             </DialogFooter>

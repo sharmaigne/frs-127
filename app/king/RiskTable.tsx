@@ -77,7 +77,6 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               <Textarea
                 {...register(`risks_table.${index}.mitigating_action`)}
                 defaultValue={item.mitigating_action}
-                placeholder="Mitigating Action"
               />
             </td>
 
@@ -85,14 +84,17 @@ const RiskTable = ({ register, fields, append, remove }: any) => (
               <Textarea
                 {...register(`risks_table.${index}.escalation_point`)}
                 defaultValue={item.escalation_point}
-                placeholder="Escalation Point"
                 className="border-none"
               />
             </td>
 
             <td className="border px-4 py-2 border-none bg-accent-50 ">
-              <Button className="text-base bg-primary-500 " type="button" onClick={() => remove(index)}>
-                Delete 
+              <Button
+                className="text-base bg-primary-500 "
+                type="button"
+                onClick={() => remove(index)}
+              >
+                Delete
               </Button>
             </td>
           </tr>

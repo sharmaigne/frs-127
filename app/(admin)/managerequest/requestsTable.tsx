@@ -96,9 +96,9 @@ export function RequestsTable({ data }: RequestsTableProps) {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            {/* <Button variant="outline" className="ml-auto">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
+            </Button> */}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table

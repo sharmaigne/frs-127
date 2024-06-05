@@ -115,7 +115,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
       <div>{moment(row.getValue("timestamp_start")).format(dateFormat)} </div>
     ),
 
-    size: 200,
+    size: 250,
   },
   {
     accessorKey: "timestamp_end",
@@ -124,7 +124,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
       <div>{moment(row.getValue("timestamp_end")).format(dateFormat)}</div>
     ),
 
-    size: 200,
+    size: 250,
   },
   {
     accessorKey: "status",

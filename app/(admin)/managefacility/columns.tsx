@@ -5,6 +5,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import EditFacility from "./editFacility";
 import { Facility } from "@/lib/types";
+import DeleteFacility from "./deleteFacility";
+
 
 export const columns: ColumnDef<Facility["Row"]>[] = [
   {
@@ -30,7 +32,7 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
   },
   {
     accessorKey: "name",
-    header: "facility",
+    header: "Facility",
     cell: ({ row }) => <div className="font-bold"> {row.getValue("name")}</div>,
   },
 
@@ -71,12 +73,10 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
       //ADD LOGIC FOR EDIT AND DELETE BUTTONS
       return (
         <div className="flex space-x-1">
-          <Button className="" variant="outline">
-            Edit
-          </Button>
-          <Button className="bg-primary-400 hover:bg-primary-300">
-            Delete
-          </Button>
+         
+            <EditFacility />
+         
+          <DeleteFacility />
 
         </div>
       );

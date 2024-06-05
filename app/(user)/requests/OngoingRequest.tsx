@@ -3,16 +3,30 @@ import ProgressIcon from "./ProgressIcon";
 import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
 import { UUID } from "crypto";
 import DateLine from "./Date";
+import { useState } from "react";
+import ViewDetailsDialog from "./ViewDetailsDialog";
 
 const OngoingRequest = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
-      const {data, status } = useGetFacilityById(request.facility_id as UUID);
-      if (status === "pending" || status === "error") return "Facility Name";
-      return data.name;
+    const { data, status } = useGetFacilityById(request.facility_id as UUID);
+    if (status === "pending" || status === "error") return "Facility Name";
+    return data.name;
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const handleViewDetails = () => {
+    setOpen((prev) => !prev);
+    console.log(`state: ${open}`);
   };
 
   return (
-    <div className="hover:bg-dark/10 p-4 rounded-lg">
+    <div className="hover:bg-dark/10 p-4 rounded-lg cursor-pointer">
+      <ViewDetailsDialog
+        open={open}
+        handleOpen={handleViewDetails}
+        request={request}
+      />
       <div
         key={request.request_id}
         className="border-l-2 pl-4 pb-4 border-l-darker flex-col items-center"
@@ -43,19 +57,22 @@ const OngoingRequest = ({ request }: { request: Request["Row"] }) => {
           <div className="col-span-1 flex-col">
             <ProgressIcon status="pending" />
             <p className="font-bold mt-2 col-span-1 text-center">
-              Forms sent to <br />SOAS
+              Forms sent to <br />
+              SOAS
             </p>
           </div>
           <div className="col-span-1 flex-col">
             <ProgressIcon status="rejected" />
             <p className="font-bold mt-2 col-span-1 text-center">
-              Approved by <br />SOAS
+              Approved by <br />
+              SOAS
             </p>
           </div>
           <div className="col-span-1 flex-col">
             <ProgressIcon status="" />
             <p className="font-bold mt-2 col-span-1 text-center">
-              Approved by <br />OSA
+              Approved by <br />
+              OSA
             </p>
           </div>
         </div>

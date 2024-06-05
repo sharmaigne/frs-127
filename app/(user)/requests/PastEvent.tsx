@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import Icon from "@/components/Icon";
 import archiveIcon from "@/public/icons/archive.svg";
 import repeatIcon from "@/public/icons/repeat.svg";
+import { useState } from "react";
+import ViewDetailsDialog from "./ViewDetailsDialog";
 
 import DateLine from "./Date";
 
@@ -15,8 +17,21 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
     if (status === "pending" || status === "error") return "Facility Name";
     return data.name;
   };
+
+  const [open, setOpen] = useState(false);
+
+  const handleViewDetails = () => {
+    setOpen((prev) => !prev);
+    console.log(`state: ${open}`);
+  };
+
   return (
     <div className="hover:bg-dark/10 p-4 rounded-lg">
+      <ViewDetailsDialog
+        open={open}
+        handleOpen={handleViewDetails}
+        request={request}
+      />
       <div
         key={request.request_id}
         className="border-l-2 pl-4 pb-4 border-l-darker flex items-center justify-between"
@@ -35,7 +50,7 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
         <div className="flex gap-3 items-center">
           <Icon src={archiveIcon.src} alt="archive" className="w-7 h-7" />
           <Icon src={repeatIcon.src} alt="reuse data" className="w-7 h-7" />
-          <Button>VIEW DETAILS</Button>
+          <Button onClick={handleViewDetails}>VIEW DETAILS</Button>
         </div>
       </div>
     </div>

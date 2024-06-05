@@ -1,15 +1,21 @@
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import CardWrapper  from "./CardWrapper";
-import React from 'react'
+import CardWrapper from "./CardWrapper";
+import React from "react";
 import { Risk } from "@/lib/types";
 
 interface RiskAnalysisTableProps {
   risks: Risk["Row"][];
 }
 
-
-const RiskAnalysisTable = ({ risks }: RiskAnalysisTableProps)  => {
+const RiskAnalysisTable = ({ risks }: RiskAnalysisTableProps) => {
   return (
     <CardWrapper title="Risk Analysis">
       <Table>
@@ -37,9 +43,11 @@ const RiskAnalysisTable = ({ risks }: RiskAnalysisTableProps)  => {
         </TableBody>
       </Table>
       <div className="flex justify-end">
-        <Button size="sm" variant="outline">Risk Analysis PDF</Button>
+        <Button size="sm" variant="outline">
+          Risk Analysis PDF
+        </Button>
       </div>
     </CardWrapper>
   );
-}
-export default RiskAnalysisTable
+};
+export default RiskAnalysisTable;

@@ -535,7 +535,7 @@ export type Database = {
     Enums: {
       facility_type: "hall" | "classroom" | "court" | "field"
       levels: "low" | "medium" | "high"
-      status: "Accepted" | "Withdrawn" | "Pending" | "Denied"
+      status: "Accepted" | "Withdrawn" | "Pending" | "Denied" | "Draft"
       ticket_status: "approved" | "pending" | "rejected" | "changes_requested"
       user_roles:
         | "superadmin"

@@ -10,12 +10,17 @@ import DateLine from "./Date";
 import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
 import { UUID } from "crypto";
 
+import { useState } from "react";
+import ViewDetailsDialog from "./ViewDetailsDialog";
+
 const DraftRequest = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
     const {data, status } = useGetFacilityById(request.facility_id as UUID);
     if (status === "pending" || status === "error") return "Facility Name";
     return data.name;
   };
+
+  const [open, setOpen] = useState(false);
 
   const greenCircle = (
     <span className="rounded-full w-3 h-3 border border-darker bg-secondary-500" />
@@ -27,8 +32,17 @@ const DraftRequest = ({ request }: { request: Request["Row"] }) => {
     <span className="rounded-full w-3 h-3 border border-darker bg-text-200" />
   );
 
+  // TODO: fix bug with handling open state
+  const handleViewDetails = () => {
+    setOpen((prev) => !prev);
+    console.log(`state: ${open}`)
+  };
+
   return (
-    <div className="rounded-lg p-4 hover:bg-dark/10 min-w-[50%]">
+    <div className="rounded-lg p-4 hover:bg-dark/10 min-w-[50%] cursor-pointer" onClick={handleViewDetails}>
+
+      <ViewDetailsDialog open={open} handleOpen={handleViewDetails} request={request} />
+
       <div className="border-l-2 border-darker px-4 py-2">
         <h5 className="font-bold">{getFacilityName()}</h5>
         <DateLine

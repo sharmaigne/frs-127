@@ -7,15 +7,14 @@ import archiveIcon from "@/public/icons/archive.svg";
 import repeatIcon from "@/public/icons/repeat.svg";
 
 import DateLine from "./Date";
+import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
+import { UUID } from "crypto";
 
 const DraftRequest = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
-    // TODO: change into actual query
-    const facilityName = testFacilities.filter((facility) => {
-      return facility.facility_id === request.facility_id;
-    })[0]?.name;
-
-    return facilityName ? facilityName : "Facility Name";
+    const {data, status } = useGetFacilityById(request.facility_id as UUID);
+    if (status === "pending" || status === "error") return "Facility Name";
+    return data.name;
   };
 
   const greenCircle = (

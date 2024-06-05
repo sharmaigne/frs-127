@@ -1,4 +1,5 @@
-import { testFacilities } from "../testRequests";
+import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
+import { UUID } from "crypto";
 import { Facility, Request } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
@@ -10,14 +11,10 @@ import DateLine from "./Date";
 
 const PastEvent = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
-    // TODO: change into actual query
-    const facilityName = testFacilities.filter((facility) => {
-      return facility.facility_id === request.facility_id;
-    })[0]?.name;
-
-    return facilityName ? facilityName : "Facility Name";
+    const { data, status } = useGetFacilityById(request.facility_id as UUID);
+    if (status === "pending" || status === "error") return "Facility Name";
+    return data.name;
   };
-
   return (
     <div className="hover:bg-dark/10 p-4 rounded-lg">
       <div

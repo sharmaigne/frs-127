@@ -38,8 +38,7 @@ const ProfileSchema = z.object({
 });
 
 const Profile = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  
   const form = useForm({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -50,10 +49,6 @@ const Profile = () => {
       contact_number: "",
     },
   });
-
-  const handleEditProfileClick = () => {
-    setIsDialogOpen(true);
-  };
 
   const handleSaveChanges = async (data: any) => {
     // can be changed to a more appropriate logic
@@ -74,7 +69,7 @@ const Profile = () => {
       // Handle error
     }
   };
-
+  
   const supabase = useSupabase();
   const handleLogOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -83,6 +78,11 @@ const Profile = () => {
       console.error("Error logging out:", error.message);
       return;
     }
+  };
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const handleEditProfileClick = () => {
+    setIsDialogOpen(true);
   };
 
   return (

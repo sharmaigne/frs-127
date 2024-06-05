@@ -28,6 +28,8 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";
 import useSupabase from "@/hooks/useSupabase";
+import { useToast } from "@/components/ui/use-toast"
+
 
 const ProfileSchema = z.object({
   first_name: z.string().nonempty({ message: "First name is required" }),
@@ -74,6 +76,7 @@ const Profile = () => {
       // Handle error
     }
   };
+  const { toast } = useToast()
 
   const supabase = useSupabase();
   const handleLogOut = async () => {
@@ -178,9 +181,16 @@ const Profile = () => {
               />
             </div>
             <DialogFooter>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button type="submit" disabled={form.formState.isSubmitting}
+                onClick={() => {
+                toast({
+                  title: "Successfully updated profile!",
+                  
+                })
+              }}>
                 Save Changes
               </Button>
+              
             </DialogFooter>
           </form>
         </DialogContent>

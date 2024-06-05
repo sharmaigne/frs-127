@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lato, Libre_Franklin } from "next/font/google";
 import "./globals.css";
 import ReactQueryClientProvider from "@/components/ReactQueryClientProvider";
-
+import { Toaster } from "@/components/ui/toaster";
 const lato = Lato({
   weight: ["100", "300", "400", "700", "900"],
   variable: "--lato",
@@ -29,6 +29,7 @@ const RootLayout = async ({
       <html lang="en">
         <body className={`${lato.className} ${libre_franklin.className}`}>
           {children}
+          <Toaster />
         </body>
       </html>
     </ReactQueryClientProvider>

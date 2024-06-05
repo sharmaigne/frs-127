@@ -8,6 +8,7 @@ export const createFacilitySchema = z.object({
   location: z.string().min(5, { message: "Facility location must be at least 5 characters." }),
   capacity: z.number().min(1, { message: "Facility capacity must be at least 1." }),
   image_url: z.string().url().nullable(),
+  facility_manager: z.string().min(1, { message: "Facility manager is required." }),
 });
 
 export const requestFormSchema = z.object({

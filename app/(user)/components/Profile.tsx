@@ -28,8 +28,7 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";
 import useSupabase from "@/hooks/useSupabase";
-import { useToast } from "@/components/ui/use-toast"
-
+import { redirect } from "next/navigation";
 
 const ProfileSchema = z.object({
   first_name: z.string().nonempty({ message: "First name is required" }),
@@ -40,8 +39,6 @@ const ProfileSchema = z.object({
 });
 
 const Profile = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const form = useForm({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -52,10 +49,6 @@ const Profile = () => {
       contact_number: "",
     },
   });
-
-  const handleEditProfileClick = () => {
-    setIsDialogOpen(true);
-  };
 
   const handleSaveChanges = async (data: any) => {
     // can be changed to a more appropriate logic
@@ -86,6 +79,13 @@ const Profile = () => {
       console.error("Error logging out:", error.message);
       return;
     }
+
+    // redirect("/login");
+  };
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const handleEditProfileClick = () => {
+    setIsDialogOpen(true);
   };
 
   return (

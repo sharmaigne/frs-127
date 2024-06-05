@@ -1,6 +1,7 @@
 import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
 import { UUID } from "crypto";
 import { Facility, Request } from "@/lib/types";
+import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/Icon";
@@ -25,6 +26,13 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
     console.log(`state: ${open}`);
   };
 
+  const badgeColor =
+    request.status === "Accepted"
+      ? "bg-secondary-500"
+      : request.status === "Denied"
+      ? "bg-primary-500"
+      : "bg-accent-500";
+
   return (
     <div className="hover:bg-dark/10 p-4 rounded-lg">
       <ViewDetailsDialog
@@ -37,7 +45,12 @@ const PastEvent = ({ request }: { request: Request["Row"] }) => {
         className="border-l-2 pl-4 pb-4 border-l-darker flex items-center justify-between"
       >
         <div>
-          <h5 className="font-bold">{request.event_name}</h5>
+          <div className={`flex gap-4 items-center`}>
+            <h5 className="font-bold">{request.event_name}</h5>
+            <Badge className={`h-fit ${badgeColor}`}>
+              <span>{request.status}</span>
+            </Badge>
+          </div>
           <div className="flex-col pl-3">
             <p className="text-primary">{getFacilityName()}</p>
             <DateLine

@@ -20,11 +20,9 @@ const useGetSimilarFacilities = (facility: Facility["Row"]) => {
             console.error(error);
             throw error;
         }
-        console.log('Fetched facilities:', data);
 
         // get most similar facilities based on capacity
         const similarFacilities = data.sort((a, b) => Math.abs(a.capacity! - facility.capacity!) - Math.abs(b.capacity! - facility.capacity!)).slice(0, 3);
-        console.log(similarFacilities);
         return similarFacilities;
         }
     }

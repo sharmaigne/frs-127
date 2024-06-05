@@ -27,12 +27,27 @@ const RequestsPage = () => {
     getSession();
   }, []);
 
-  const { data: requests = [], error, status } = useGetRequestsByUserId(
-    session?.user.id as UUID
-  );
+  const {
+    data: requests = [],
+    error,
+    status,
+  } = useGetRequestsByUserId(session?.user.id as UUID);
 
   if (status === "pending") return <p>Loading...</p>;
   if (status === "error") return <p>Error: {error.message}</p>;
+
+  const draftRequests = requests.filter(
+    (request) => request.status === "Draft"
+  );
+  const ongoingRequests = requests.filter(
+    (request) => request.status === "Pending"
+  );
+  const pastRequests = requests.filter(
+    (request) =>
+      request.status === "Accepted" ||
+      request.status === "Denied" ||
+      request.status === "Withdrawn"
+  );
 
   return (
     <div className="flex justify-center">
@@ -41,8 +56,7 @@ const RequestsPage = () => {
           <h2 className="font-bold">Drafts</h2>
         </div>
         <div className="flex flex-wrap">
-          {/* GET requests that are still drafts */}
-          {requests.map((request) => {
+          {draftRequests.map((request) => {
             return <DraftRequest request={request} key={request.request_id} />;
           })}
         </div>
@@ -50,8 +64,7 @@ const RequestsPage = () => {
           <h2 className="font-bold">Ongoing</h2>
         </div>
         <div className="my-5">
-          {/* GET requests that are pending */}
-          {requests.map((request) => {
+          {ongoingRequests.map((request) => {
             return (
               <OngoingRequest request={request} key={request.request_id} />
             );
@@ -61,9 +74,7 @@ const RequestsPage = () => {
           <h2 className="font-bold">Past Events</h2>
         </div>
         <div className="my-5">
-          {/* GET requests that have been cancelled or approved
-          how to check if cancelled? add status */}
-          {requests.map((request) => {
+          {pastRequests.map((request) => {
             return <PastEvent request={request} key={request.request_id} />;
           })}
         </div>

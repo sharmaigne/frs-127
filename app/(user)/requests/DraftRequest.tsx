@@ -32,8 +32,7 @@ const DraftRequest = ({ request }: { request: Request["Row"] }) => {
 
   const [open, setOpen] = useState(false);
 
-  // TODO: fix bug with handling open state
-  // This should probably open as a form instead of a view details dialog
+  // TODO: This should probably open as a form instead of a view details dialog
   const handleViewDetails = () => {
     setOpen((prev) => !prev);
     console.log(`state: ${open}`);

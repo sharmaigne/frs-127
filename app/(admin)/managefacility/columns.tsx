@@ -59,5 +59,28 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
     accessorKey: "capacity",
     header: "Capacity",
     cell: ({ row }) => <div className="capacity">{row.getValue("capacity")}</div>,
-  }
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => {
+
+      console.log(row);
+      // const { id, someDataForRedirect } = row.original; // Access data from the row object
+
+      //ADD LOGIC FOR EDIT AND DELETE BUTTONS
+      return (
+        <div className="flex space-x-1">
+          <Button className="" variant="outline">
+            Edit
+          </Button>
+          <Button className="bg-primary-400 hover:bg-primary-300">
+            Delete
+          </Button>
+
+        </div>
+      );
+    },
+    size: 250,
+  },
 ];

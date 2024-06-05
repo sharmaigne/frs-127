@@ -1,13 +1,23 @@
 "use client";
-import React from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CardContent, Card } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 import FacilityPopup from "./FacilityPopup";
+import getFacilityImageById from "@/hooks/buckets/retrieve/getFacilityImageById";
 
 const FacilityCard = ({ facility }: { facility: any }) => {
+  const [publicUrl, setPublicUrl] = useState<string | null>(null);
+  const getImage = async () => {
+    const data = await getFacilityImageById(facility.facility_id);
+    setPublicUrl(data.publicUrl);
+  };
+  useEffect(() => {
+    getImage();
+  }, []);
+
   return (
     <Card>
       <CardContent className="p-4 space-y-4">
@@ -15,7 +25,7 @@ const FacilityCard = ({ facility }: { facility: any }) => {
           alt={facility.name}
           className="rounded-lg overflow-hidden bg-cover"
           height="400"
-          src={"/images/atrium.jpg"} // TODO: add placeholder image
+          src={publicUrl || "/images/atrium.jpg"} // TODO: add placeholder image
           style={{
             aspectRatio: "600/400",
             objectFit: "cover",

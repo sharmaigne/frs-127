@@ -1,5 +1,5 @@
 "use client"
-import { supabase } from "@/app/king/supabaseCLient";
+import { supabase } from "@/hooks/buckets/supabaseClient";
 import { ChangeEvent } from "react";
 // Handle file upload event
 const uploadFacilityImage = async (event: ChangeEvent<HTMLInputElement>, facility_id: string) => {

@@ -20,6 +20,7 @@ import {
   Select,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 import { z } from "zod";
 import {
@@ -87,6 +88,7 @@ const CreateFacility = () => {
       description: data.description,
       location: data.location,
       capacity: data.capacity,
+      facility_manager_id: data.facility_manager,
     };
 
     const requestResult = await mutateAsync(facility);
@@ -310,24 +312,8 @@ const CreateFacility = () => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="image_url"
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel>Upload Picture</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      {...field}
-                      value={field.value ?? ""}
-                      onChange={(event) => setEvent(event)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Label>Upload Picture</Label>
+            <Input type="file" onChange={(event) => setEvent(event)} />
 
             <DialogFooter>
               <Button type="submit">Save Facility</Button>

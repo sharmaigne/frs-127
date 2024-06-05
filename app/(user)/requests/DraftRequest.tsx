@@ -7,15 +7,17 @@ import archiveIcon from "@/public/icons/archive.svg";
 import repeatIcon from "@/public/icons/repeat.svg";
 
 import DateLine from "./Date";
+import useGetFacilityById from "@/hooks/queries/useGetFacilityById";
+import { UUID } from "crypto";
+
+import { useState } from "react";
+import ViewDetailsDialog from "./ViewDetailsDialog";
 
 const DraftRequest = ({ request }: { request: Request["Row"] }) => {
   const getFacilityName = () => {
-    // TODO: change into actual query
-    const facilityName = testFacilities.filter((facility) => {
-      return facility.facility_id === request.facility_id;
-    })[0]?.name;
-
-    return facilityName ? facilityName : "Facility Name";
+    const { data, status } = useGetFacilityById(request.facility_id as UUID);
+    if (status === "pending" || status === "error") return "Facility Name";
+    return data.name;
   };
 
   const greenCircle = (
@@ -27,9 +29,27 @@ const DraftRequest = ({ request }: { request: Request["Row"] }) => {
   const defaultCircle = (
     <span className="rounded-full w-3 h-3 border border-darker bg-text-200" />
   );
+  
+  const [open, setOpen] = useState(false);
+
+  // TODO: fix bug with handling open state
+  // This should probably open as a form instead of a view details dialog
+  const handleViewDetails = () => {
+    setOpen((prev) => !prev);
+    console.log(`state: ${open}`);
+  };
 
   return (
-    <div className="rounded-lg p-4 hover:bg-dark/10 min-w-[50%]">
+    <div
+      className="rounded-lg p-4 hover:bg-dark/10 min-w-[50%] cursor-pointer"
+      onClick={handleViewDetails}
+    >
+      <ViewDetailsDialog
+        open={open}
+        handleOpen={handleViewDetails}
+        request={request}
+      />
+
       <div className="border-l-2 border-darker px-4 py-2">
         <h5 className="font-bold">{getFacilityName()}</h5>
         <DateLine

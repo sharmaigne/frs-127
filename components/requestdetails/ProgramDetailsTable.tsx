@@ -1,13 +1,19 @@
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import  CardWrapper  from "./CardWrapper";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import CardWrapper from "./CardWrapper";
 import { Program } from "@/lib/types";
 
 interface ProgramDetailsTableProps {
   programs: Program["Row"][];
 }
 
-
-const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps)  => {
+const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps) => {
   return (
     <CardWrapper title="Program Details">
       <Table>
@@ -30,5 +36,5 @@ const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps)  => {
       </Table>
     </CardWrapper>
   );
-}
-export default ProgramDetailsTable
+};
+export default ProgramDetailsTable;

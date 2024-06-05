@@ -6,8 +6,8 @@ export const createFacilitySchema = z.object({
   facility_type: z.enum(["hall", "classroom", "court", "field"]),
   description: z.string().min(5, { message: "Facility description must be at least 5 characters." }),
   location: z.string().min(5, { message: "Facility location must be at least 5 characters." }),
-  capacity: z.number().int().min(1, { message: "Facility capacity must be at least 1." }),
-  image_url: z.string().url().optional(),
+  capacity: z.number().min(1, { message: "Facility capacity must be at least 1." }),
+  image_url: z.string().url().nullable(),
 });
 
 export const requestFormSchema = z.object({

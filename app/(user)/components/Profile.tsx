@@ -28,6 +28,7 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 import accountCircle from "@/public/icons/account_circle.svg";
 import useSupabase from "@/hooks/useSupabase";
+import { redirect } from "next/navigation";
 
 const ProfileSchema = z.object({
   first_name: z.string().nonempty({ message: "First name is required" }),
@@ -38,7 +39,6 @@ const ProfileSchema = z.object({
 });
 
 const Profile = () => {
-  
   const form = useForm({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -69,7 +69,7 @@ const Profile = () => {
       // Handle error
     }
   };
-  
+
   const supabase = useSupabase();
   const handleLogOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -78,6 +78,8 @@ const Profile = () => {
       console.error("Error logging out:", error.message);
       return;
     }
+
+    // redirect("/login");
   };
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);

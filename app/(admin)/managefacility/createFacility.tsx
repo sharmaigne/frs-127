@@ -37,7 +37,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useAddFacility from "@/hooks/mutations/useAddFacility";
 import { Facility } from "@/lib/types";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
+import uploadFacilityImage from "@/hooks/buckets/upload/uploadFacilityImage";
 
 type FormData = z.input<typeof createFacilitySchema>;
 
@@ -54,8 +55,9 @@ const CreateFacility = () => {
     },
   });
   const [open, setOpen] = useState(false);
+  const [event, setEvent] = useState<ChangeEvent<HTMLInputElement> | null>(null);
 
-  const { mutate } = useAddFacility();
+  const { mutateAsync } = useAddFacility();
 
   const onSubmit = async (data: FormData) => {
     const facility: Facility["Insert"] = {
@@ -66,9 +68,13 @@ const CreateFacility = () => {
       capacity: data.capacity,
     };
 
-    mutate(facility);
+    const requestResult = await mutateAsync(facility);
 
     // TODO: handle image upload
+    if (event) {
+      console.log("Uploading image...");
+      uploadFacilityImage(event, requestResult.facility_id);
+    }
 
     // close dialog and alert user (success or error)
 
@@ -120,7 +126,10 @@ const CreateFacility = () => {
                   <FormItem className="space-y-2">
                     <FormLabel>Facility Type</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Select facility type" />
                         </SelectTrigger>
@@ -199,7 +208,12 @@ const CreateFacility = () => {
                 <FormItem className="space-y-2">
                   <FormLabel>Upload Picture</FormLabel>
                   <FormControl>
-                    <Input type="file" {...field} value={field.value ?? ""} />
+                    <Input
+                      type="file"
+                      {...field}
+                      value={field.value ?? ""}
+                      onChange={(event) => setEvent(event)}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -10,9 +10,9 @@ import React from 'react'
 
 const EditFacility = () => {
   return (
-    <Dialog defaultOpen>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Facility</Button>
+        <Button variant="outline">Edit Facility</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>

@@ -309,14 +309,14 @@ const ManageUsers = () => {
           </div>
         </div>
       </div>
-      <div className="mt-6 flex justify-end">
+      {/* <div className="mt-6 flex justify-end">
         <Button
           onClick={handleSaveChanges}
           className="text-white hover:bg-secondary/90 "
         >
           Save Changes
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

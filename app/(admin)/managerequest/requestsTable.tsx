@@ -178,7 +178,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
           There are {""}
           {table.getFilteredRowModel().rows.length} user(s) waiting for approval.
         </div>
-        {/* <Button
+        <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
@@ -193,7 +193,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
           disabled={!table.getCanNextPage()}
         >
           Next
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

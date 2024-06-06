@@ -45,6 +45,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+    size: 50,
   },
   {
     accessorKey: "requestor_id",
@@ -72,12 +73,14 @@ export const columns: ColumnDef<Request["Row"]>[] = [
         </div>
       );
     }, // not id, fetch by id
+    size: 200,
   },
 
   {
     accessorKey: "organization",
     header: "Organization",
     cell: ({ row }) => <div>{row.getValue("organization")}</div>,
+    size: 150,
   },
   {
     accessorKey: "facility_id",
@@ -101,6 +104,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
 
       return <div className="font-bold">{facility.name}</div>;
     },
+    size: 150,
   },
   {
     accessorKey: "timestamp_start",
@@ -108,6 +112,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
     cell: ({ row }) => (
       <div>{moment(row.getValue("timestamp_start")).format(dateFormat)} </div>
     ),
+    size: 250,
   },
   {
     accessorKey: "timestamp_end",
@@ -115,6 +120,7 @@ export const columns: ColumnDef<Request["Row"]>[] = [
     cell: ({ row }) => (
       <div>{moment(row.getValue("timestamp_end")).format(dateFormat)}</div>
     ),
+    size: 250,
   },
   {
     accessorKey: "status",
@@ -124,21 +130,27 @@ export const columns: ColumnDef<Request["Row"]>[] = [
         <Badge className="bg-primary-300">{row.getValue("status")}</Badge>
       </div>
     ),
+    size: 50,
   },
   {
     id: "actions",
     header: "",
     cell: ({ row }) => {
+      const status = row.getValue("status");
       console.log(row);
       // const { id, someDataForRedirect } = row.original; // Access data from the row object
       return (
         <div className="flex space-x-1">
-          <Button className="bg-secondary-400 hover:bg-secondary-300">
-            Endorse
-          </Button>
-          <Button className="bg-primary-400 hover:bg-primary-300">
-            Reject
-          </Button>
+          {status === "Pending" && (
+            <>
+              <Button className="bg-secondary-400 hover:bg-secondary-300">
+                Endorse
+              </Button>
+              <Button className="bg-primary-400 hover:bg-primary-300">
+                Reject
+              </Button>
+            </>
+          )}
           <Button variant="link" asChild>
             <Link href={`/managerequest/${row.getValue("request_id")}`}>
               View Details

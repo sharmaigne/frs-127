@@ -42,7 +42,7 @@ const RequestTabs = () => {
   );
 
   return (
-    <Tabs className="w-full " defaultValue="pending">
+    <Tabs className="w-full sticky" defaultValue="pending">
       <TabsList className="flex w-full justify-center border-b h-15 bg-accent text-black ">
         <TabsTrigger className="py-2 px-4 font-medium" value="pending">
           Pending Requests

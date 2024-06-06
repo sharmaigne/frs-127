@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -10,6 +10,8 @@ import {
   DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Profile } from "@/lib/types";
+import useGetProfiles from "@/hooks/queries/useGetProfiles";
 
 enum user_roles {
   superadmin = "Superadmin",
@@ -20,71 +22,42 @@ enum user_roles {
   non_student_user = "Non Student User",
 }
 
-interface Profile {
-  id: number;
-  name: string;
-  email: string;
-  role: user_roles;
-}
-
-const initialUsers: Profile[] = [
-  {
-    id: 1,
-    name: "johndoe",
-    email: "johndoe@example.com",
-    role: user_roles.superadmin,
-  },
-  {
-    id: 2,
-    name: "janesmith",
-    email: "janesmith@example.com",
-    role: user_roles.osa,
-  },
-  {
-    id: 3,
-    name: "bobwilson",
-    email: "bobwilson@example.com",
-    role: user_roles.soas,
-  },
-  {
-    id: 4,
-    name: "sarahjones",
-    email: "sarahjones@example.com",
-    role: user_roles.facility_manager,
-  },
-  {
-    id: 5,
-    name: "mikebrown",
-    email: "mikebrown@example.com",
-    role: user_roles.student_user,
-  },
-  {
-    id: 6,
-    name: "emilywilliams",
-    email: "emilywilliams@example.com",
-    role: user_roles.non_student_user,
-  },
-];
-
 const ManageUsers = () => {
-  const [profiles, setProfiles] = useState<Profile[]>(initialUsers);
-  const [updatedProfiles, setUpdatedProfiles] = useState<Profile[]>(profiles);
+  const [updatedProfiles, setUpdatedProfiles] = useState<Profile["Row"][]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [sortBy, setSortBy] = useState<keyof Profile>("name");
+  const [sortBy, setSortBy] = useState<keyof Profile["Row"]>("last_name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [selectedRole, setSelectedRole] = useState<string>("all");
-
+  
+  const { data: profiles, error, status } = useGetProfiles();
+  
+  useEffect(() => {
+    if (status === "success") {
+      setUpdatedProfiles(profiles);
+    }
+  }, [profiles, status]);
+  
+  if (status === "error") {
+    console.error(error);
+    return <div>Error loading profiles</div>;
+  }
+  if (status === "pending") {
+    return <div>Loading...</div>;
+  }
   // Handles role change for a user and sends an email notification
-  const handleRoleChange = (userId: number, newRole: user_roles) => {
+  const handleRoleChange = (
+    userId: string,
+    newRole: Profile["Row"]["role"]
+  ) => {
     setUpdatedProfiles((prevProfiles) =>
-      prevProfiles.map((profiles) =>
-        profiles.id === userId ? { ...profiles, role: newRole } : profiles
+      prevProfiles.map((profile) =>
+        profile.user_id === userId ? { ...profile, role: newRole } : profile
       )
     );
-    const profiles = updatedProfiles.find((u) => u.id === userId);
-    if (profiles) {
-      sendRoleUpdateEmail(profiles.email, profiles.name, newRole);
-    }
+    const profile = updatedProfiles.find((u) => u.user_id === userId);
+    // if (profile) {
+    //   sendRoleUpdateEmail(profile.email, profile.last_name!, newRole);
+    // }
   };
 
   // Placeholder for saving changes
@@ -104,7 +77,7 @@ const ManageUsers = () => {
   };
 
   // Handles sorting by a field
-  const handleSort = (field: keyof Profile) => {
+  const handleSort = (field: keyof Profile["Row"]) => {
     if (sortBy === field) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
@@ -120,29 +93,30 @@ const ManageUsers = () => {
 
   // Filters and sorts users based on search term, selected role, and sorting preferences
   const filteredProfiles = updatedProfiles
-    .filter((profiles) => {
+    .filter((profile) => {
+      const full_name = `${profile.last_name}, ${profile.first_name}`;
       if (selectedRole === "all") {
         return (
-          profiles.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          profiles.email.toLowerCase().includes(searchTerm.toLowerCase())
+          full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          profile.email.toLowerCase().includes(searchTerm.toLowerCase())
         );
       } else {
         return (
-          profiles.role === selectedRole &&
-          (profiles.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            profiles.email.toLowerCase().includes(searchTerm.toLowerCase()))
+          profile.role === selectedRole &&
+          (full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            profile.email.toLowerCase().includes(searchTerm.toLowerCase()))
         );
       }
     })
     .sort((a, b) => {
       if (sortOrder === "asc") {
         if (typeof a[sortBy] === "string" && typeof b[sortBy] === "string") {
-          return a[sortBy].localeCompare(b[sortBy]);
+          return a[sortBy]?.localeCompare(b[sortBy]!) || 0;
         }
         return 0;
       } else {
         if (typeof a[sortBy] === "string" && typeof b[sortBy] === "string") {
-          return b[sortBy].localeCompare(a[sortBy]);
+          return b[sortBy]?.localeCompare(a[sortBy]!) || 0;
         }
         return 0;
       }
@@ -176,29 +150,29 @@ const ManageUsers = () => {
               onValueChange={handleRoleFilter}
             >
               <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.superadmin}>
+              <DropdownMenuRadioItem value={"superadmin"}>
                 Superadmin
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.osa}>
+              <DropdownMenuRadioItem value={"osa"}>
                 OSA - Director
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.soas}>
+              <DropdownMenuRadioItem value={"soas"}>
                 OSA - SOAS
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.facility_manager}>
+              <DropdownMenuRadioItem value={"facility manager"}>
                 Facility Manager
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.student_user}>
+              <DropdownMenuRadioItem value={"student user"}>
                 Student User
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value={user_roles.non_student_user}>
+              <DropdownMenuRadioItem value={"non student user"}>
                 Non Student User
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-x-auto">
+      <div className="">
         <div className="border-t-4 border-[#8B0000] rounded-lg overflow-hidden">
           <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg">
             <div className="overflow-x-auto">
@@ -207,10 +181,10 @@ const ManageUsers = () => {
                   <tr className="bg-[#8B0000] text-white">
                     <th
                       className="px-4 py-3 text-left cursor-pointer"
-                      onClick={() => handleSort("name")}
+                      onClick={() => handleSort("last_name")}
                     >
                       User{" "}
-                      {sortBy === "name" && (
+                      {sortBy === "last_name" && (
                         <span className="ml-1">
                           {sortOrder === "asc" ? "▲" : "▼"}
                         </span>
@@ -241,13 +215,13 @@ const ManageUsers = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredProfiles.map((profiles) => (
+                  {filteredProfiles.map((profile) => (
                     <tr
-                      key={profiles.id}
+                      key={profile.user_id}
                       className="border-b border-gray-200 dark:border-gray-800"
                     >
-                      <td className="px-4 py-3">{profiles.name}</td>
-                      <td className="px-4 py-3">{profiles.email}</td>
+                      <td className="px-4 py-3">{`${profile.last_name}, ${profile.first_name}`}</td>
+                      <td className="px-4 py-3">{profile.email}</td>
                       <td className="px-4 py-3">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -256,45 +230,34 @@ const ManageUsers = () => {
                               size="sm"
                               className="text-black w-48 flex justify-between"
                             >
-                              {profiles.role}{" "}
+                              {profile.role}{" "}
                               <ChevronDownIcon className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             {/* dropdown in table */}
                             <DropdownMenuRadioGroup
-                              value={profiles.role}
+                              value={profile.role!}
                               onValueChange={(newRole) =>
-                                handleRoleChange(
-                                  profiles.id,
-                                  newRole as user_roles
-                                )
+                                handleRoleChange(profile.user_id, newRole as Profile["Row"]["role"])
                               }
                             >
-                              <DropdownMenuRadioItem
-                                value={user_roles.superadmin}
-                              >
+                              <DropdownMenuRadioItem value={"superadmin"}>
                                 Superadmin
                               </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value={user_roles.osa}>
+                              <DropdownMenuRadioItem value={"osa"}>
                                 OSA - Director
                               </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value={user_roles.soas}>
+                              <DropdownMenuRadioItem value={"soas"}>
                                 OSA - SOAS
                               </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem
-                                value={user_roles.facility_manager}
-                              >
+                              <DropdownMenuRadioItem value={"facility_manager"}>
                                 Facility Manager
                               </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem
-                                value={user_roles.student_user}
-                              >
+                              <DropdownMenuRadioItem value={"student user"}>
                                 Student User
                               </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem
-                                value={user_roles.non_student_user}
-                              >
+                              <DropdownMenuRadioItem value={"non student user"}>
                                 Non Student User
                               </DropdownMenuRadioItem>
                             </DropdownMenuRadioGroup>

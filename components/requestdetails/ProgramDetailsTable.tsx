@@ -9,6 +9,8 @@ import {
 import CardWrapper from "./CardWrapper";
 import { Program } from "@/lib/types";
 import moment from "moment";
+import { Button } from "@/components/ui/button";
+
 interface ProgramDetailsTableProps {
   programs: Program["Row"][];
 }
@@ -36,6 +38,15 @@ const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps) =>
           ))}
         </TableBody>
       </Table>
+      <div className="flex justify-end">
+        <Button
+          size="sm"
+          variant="outline"
+          className="w-fit hover:bg-secondary-500/20"
+        >
+          Activity Design PDF
+        </Button>
+      </div>
     </CardWrapper>
   );
 };

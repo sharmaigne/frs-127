@@ -59,10 +59,7 @@ const RequestDetailsCard = ({ request }: RequestDetailsCardProps) => {
         </div>
       </div>
       <div className="flex justify-end gap-2">
-        <Button size="sm" variant="outline">
-          Activity Design PDF
-        </Button>
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="outline" className="hover:bg-secondary-500/20">
           Venue Request PDF
         </Button>
       </div>

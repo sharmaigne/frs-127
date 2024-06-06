@@ -35,9 +35,9 @@ const Hero = () => {
           <h4 className="italic text-accent-200 drop-shadow-lg mb-12 text-3xl">
             Build communities. Make Memories.
           </h4>
-          <div className="flex border-b-2 font-bold border-accent drop-shadow-lg w-full max-w-md">
-            <Input className="border-none font-bold bg-transparent italic text-white placeholder-white text-xl w-full" placeholder="Search a facility..."/>
-          </div>
+          {/* <div className="flex border-b-2 font-bold border-accent drop-shadow-lg w-full max-w-md"> */}
+            {/* <Input className="border-none font-bold bg-transparent italic text-white placeholder-white text-xl w-full " placeholder="Search a facility..."/> */}
+          {/* </div> */}
         </div>
       </div>
     </div>

@@ -225,7 +225,7 @@ const FormRequest = () => {
         getRiskAnalysisByRequestId(requestId).publicUrl;
     }
 
-    mutateRequest({ requestData: requestData, request_id: requestId });
+    mutateRequest({ requestData: pdfUrls, request_id: requestId });
 
     // success toast
     toast({

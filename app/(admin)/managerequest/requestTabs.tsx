@@ -29,9 +29,10 @@ const RequestTabs = () => {
     return <div>Loading...</div>;
   }
 
+  // for facility manager
   const pendingRequests = requests.filter(
     (request) =>
-      request.endorsement_ticket_id === null && request.status !== "Withdrawn"
+      request.endorsement_ticket_id === null && request.status !== "Withdrawn"  && request.status !== "Draft"
   );
   const ongoingRequests = requests.filter(
     (request) =>

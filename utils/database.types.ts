@@ -94,6 +94,7 @@ export type Database = {
           date_edited: string | null
           endorsement_ticket_id: string
           endorser: string | null
+          request_id: string | null
           status: Database["public"]["Enums"]["ticket_status"] | null
         }
         Insert: {
@@ -101,6 +102,7 @@ export type Database = {
           date_edited?: string | null
           endorsement_ticket_id?: string
           endorser?: string | null
+          request_id?: string | null
           status?: Database["public"]["Enums"]["ticket_status"] | null
         }
         Update: {
@@ -108,22 +110,23 @@ export type Database = {
           date_edited?: string | null
           endorsement_ticket_id?: string
           endorser?: string | null
+          request_id?: string | null
           status?: Database["public"]["Enums"]["ticket_status"] | null
         }
         Relationships: [
-          {
-            foreignKeyName: "endorsement_ticket_endorsement_ticket_id_fkey"
-            columns: ["endorsement_ticket_id"]
-            isOneToOne: true
-            referencedRelation: "requests"
-            referencedColumns: ["request_id"]
-          },
           {
             foreignKeyName: "endorsement_ticket_endorser_fkey"
             columns: ["endorser"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "endorsement_ticket_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "requests"
+            referencedColumns: ["request_id"]
           },
         ]
       }

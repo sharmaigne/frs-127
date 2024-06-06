@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import CardWrapper from "./CardWrapper";
 import React from "react";
 import { Profile } from "@/lib/types";
+import Link from "next/link";
 
 interface UserProfileCardProps {
   profile: Profile["Row"];
@@ -47,7 +48,9 @@ const UserProfileCard = ({ profile }: UserProfileCardProps) => {
           <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">
             Email
           </Label>
-          <p className="text-gray-900 dark:text-gray-50">{profile.email}</p>
+          <p>
+            <Link href={`mailto:${profile.email}`} className="underline italic text-primary-500">{profile.email}</Link>
+          </p>
         </div>
         <div>
           <Label className="text-sm font-medium text-gray-500 dark:text-gray-400">

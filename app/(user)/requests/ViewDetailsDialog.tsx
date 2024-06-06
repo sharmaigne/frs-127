@@ -16,6 +16,7 @@ import RequestDetailsCard from "@/components/requestdetails/RequestDetailsCard";
 import RiskAnalysisTable from "@/components/requestdetails/RiskAnalysisTable";
 import ProgramDetailsTable from "@/components/requestdetails/ProgramDetailsTable";
 import { UUID } from "crypto";
+import { Button } from "@/components/ui/button";
 
 const ViewDetailsDialog = ({
   request,
@@ -60,6 +61,15 @@ const ViewDetailsDialog = ({
             </div>
             <RiskAnalysisTable risks={risks!} />
             <ProgramDetailsTable programs={program!} />
+            <div className="flex justify-end">
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-fit hover:bg-secondary-500/20"
+              >
+                Activity Design PDF
+              </Button>
+            </div>
           </div>
         </div>
       </DialogContent>

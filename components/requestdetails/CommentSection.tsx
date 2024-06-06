@@ -16,11 +16,6 @@ const CommentSection = () => {
             className="resize-none"
             placeholder="Leave a suggestion for the user..."
           />
-          <div className="flex justify-end gap-2">
-            {/* add functionality, i dont know how to connect or where to connect this haha */}
-            <Button variant="outline">Reject</Button>
-            <Button>Endorse</Button>
-          </div>
         </div>
       </div>
     </div>

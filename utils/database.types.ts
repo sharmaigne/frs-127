@@ -10,35 +10,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      activity_design: {
-        Row: {
-          activity_design_id: string
-          is_pdf: boolean | null
-          pdf: string | null
-          request_id: string
-        }
-        Insert: {
-          activity_design_id?: string
-          is_pdf?: boolean | null
-          pdf?: string | null
-          request_id: string
-        }
-        Update: {
-          activity_design_id?: string
-          is_pdf?: boolean | null
-          pdf?: string | null
-          request_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "activity_design_request_id_fkey"
-            columns: ["request_id"]
-            isOneToOne: false
-            referencedRelation: "requests"
-            referencedColumns: ["request_id"]
-          },
-        ]
-      }
       comments: {
         Row: {
           comment_id: string
@@ -360,7 +331,8 @@ export type Database = {
       }
       requests: {
         Row: {
-          activity_design_id: string | null
+          activity_design_url: string | null
+          activity_request_url: string | null
           confirmation_ticket_id: string | null
           date_requested: string | null
           endorsement_ticket_id: string | null
@@ -370,14 +342,14 @@ export type Database = {
           organization: string | null
           request_id: string
           requestor_id: string
-          risk_analysis_id: string | null
+          risk_analysis_url: string | null
           status: Database["public"]["Enums"]["status"] | null
           timestamp_end: string
           timestamp_start: string
-          venue_request_pdf: string | null
         }
         Insert: {
-          activity_design_id?: string | null
+          activity_design_url?: string | null
+          activity_request_url?: string | null
           confirmation_ticket_id?: string | null
           date_requested?: string | null
           endorsement_ticket_id?: string | null
@@ -387,14 +359,14 @@ export type Database = {
           organization?: string | null
           request_id?: string
           requestor_id?: string
-          risk_analysis_id?: string | null
+          risk_analysis_url?: string | null
           status?: Database["public"]["Enums"]["status"] | null
           timestamp_end: string
           timestamp_start: string
-          venue_request_pdf?: string | null
         }
         Update: {
-          activity_design_id?: string | null
+          activity_design_url?: string | null
+          activity_request_url?: string | null
           confirmation_ticket_id?: string | null
           date_requested?: string | null
           endorsement_ticket_id?: string | null
@@ -404,20 +376,12 @@ export type Database = {
           organization?: string | null
           request_id?: string
           requestor_id?: string
-          risk_analysis_id?: string | null
+          risk_analysis_url?: string | null
           status?: Database["public"]["Enums"]["status"] | null
           timestamp_end?: string
           timestamp_start?: string
-          venue_request_pdf?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "requests_activity_design_id_fkey"
-            columns: ["activity_design_id"]
-            isOneToOne: false
-            referencedRelation: "activity_design"
-            referencedColumns: ["activity_design_id"]
-          },
           {
             foreignKeyName: "requests_confirmation_ticket_id_fkey"
             columns: ["confirmation_ticket_id"]
@@ -445,42 +409,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "requests_risk_analysis_id_fkey"
-            columns: ["risk_analysis_id"]
-            isOneToOne: false
-            referencedRelation: "risk_analysis"
-            referencedColumns: ["risk_analysis_id"]
-          },
-        ]
-      }
-      risk_analysis: {
-        Row: {
-          is_pdf: boolean | null
-          pdf: string | null
-          request_id: string
-          risk_analysis_id: string
-        }
-        Insert: {
-          is_pdf?: boolean | null
-          pdf?: string | null
-          request_id: string
-          risk_analysis_id?: string
-        }
-        Update: {
-          is_pdf?: boolean | null
-          pdf?: string | null
-          request_id?: string
-          risk_analysis_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "risk_analysis_request_id_fkey"
-            columns: ["request_id"]
-            isOneToOne: false
-            referencedRelation: "requests"
-            referencedColumns: ["request_id"]
           },
         ]
       }

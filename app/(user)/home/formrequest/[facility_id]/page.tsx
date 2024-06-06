@@ -9,6 +9,7 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
@@ -33,10 +34,14 @@ import ProgramTable from "../ProgramTable";
 
 import { Request, ActivityDesign, Program, Risk } from "@/lib/types";
 import useAddRequest from "@/hooks/mutations/useAddRequest";
-import useAddActivityDesign from "@/hooks/mutations/useAddActivityDesign";
 import useAddPrograms from "@/hooks/mutations/useAddPrograms";
-import useAddRiskAnalysis from "@/hooks/mutations/useAddRiskAnalysis";
 import useAddRisks from "@/hooks/mutations/useAddRisks";
+import uploadActivityDesign from "@/hooks/buckets/upload/uploadActivityDesign";
+import uploadActivityRequest from "@/hooks/buckets/upload/uploadActivityRequest";
+import uploadRiskAnalysis from "@/hooks/buckets/upload/uploadRiskAnalysis";
+import getActivityDesignByRequestId from "@/hooks/buckets/retrieve/getActivityDesignByRequestId";
+import getActivityRequestByRequestId from "@/hooks/buckets/retrieve/getActivityRequestByRequestId";
+import getRiskAnalysisByRequestId from "@/hooks/buckets/retrieve/getRiskAnalysisByRequestId";
 
 // dropdown
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -59,6 +64,9 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
 import { redirect, useParams } from "next/navigation";
+import Link from "next/link";
+import { useRef, useState, ChangeEvent } from "react";
+import useUpdateRequest from "@/hooks/mutations/useUpdateRequest";
 
 // Define the TypeScript type for the form data
 type FormData = z.infer<typeof requestFormSchema>;
@@ -76,7 +84,6 @@ const FormRequest = () => {
       organization: "",
       timestamp_start: "",
       timestamp_end: "",
-      files: undefined,
       risks_table: [
         {
           risk: "",
@@ -90,6 +97,12 @@ const FormRequest = () => {
       program_schedule: [{ time_start: "", time_end: "", program: "" }],
     },
   });
+
+  // states for the pdf files
+  const [activityDesignPdf, setActivityDesignPdf] = useState<File>();
+  const [activityRequestPdf, setActivityRequestPdf] = useState<File>();
+  const [riskAnalysisPdf, setRiskAnalysisPdf] =
+    useState<ChangeEvent<HTMLInputElement>>();
 
   const {
     fields: riskFields,
@@ -111,10 +124,9 @@ const FormRequest = () => {
 
   let requestId: string = "";
   const addRequest = useAddRequest();
-  const addActivityDesign = useAddActivityDesign();
   const addPrograms = useAddPrograms();
-  const addRiskAnalysis = useAddRiskAnalysis();
   const addRisks = useAddRisks();
+  const { mutate: mutateRequest } = useUpdateRequest();
 
   // Function to save the form data to local storage
   const saveDraft = () => {
@@ -161,12 +173,6 @@ const FormRequest = () => {
     console.log("Request: ", requestResult);
     requestId = requestResult.request_id;
 
-    // create activity design, send to backend
-    const activityDesignData: ActivityDesign["Insert"] = {
-      request_id: requestId,
-    };
-    addActivityDesign.mutate(activityDesignData);
-
     // create program schedule, send to backend
     const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
       (program) => ({
@@ -178,14 +184,6 @@ const FormRequest = () => {
     )!; // ! is used to tell TypeScript that the value is not null
     addPrograms.mutate(programScheduleData);
 
-    // create risk analysis, send to backend
-    // for some reason, not symmetric with activity design / program schedule
-    const riskAnalysisData = {
-      request_id: requestId,
-    };
-
-    addRiskAnalysis.mutate(riskAnalysisData);
-
     const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
       (risk) => ({
         risk: risk.risk,
@@ -196,8 +194,45 @@ const FormRequest = () => {
         escalation_point: risk.escalation_point,
       })
     );
-
     addRisks.mutate(risksData);
+
+    // handle files (upload to bucket)
+    if (activityDesignPdf) {
+      console.log("Uploading activity design pdf...");
+      await uploadActivityDesign(activityDesignPdf, requestId);
+    }
+    if (activityRequestPdf) {
+      console.log("Uploading activity request pdf...");
+      await uploadActivityRequest(activityRequestPdf, requestId);
+    }
+    if (riskAnalysisPdf) {
+      console.log("Uploading risk analysis pdf...");
+      await uploadRiskAnalysis(riskAnalysisPdf, requestId);
+    }
+
+    // add pdf urls to requests table
+    const pdfUrls: Request["Update"] = {};
+    if (activityDesignPdf) {
+      pdfUrls["activity_design_url"] =
+        getActivityDesignByRequestId(requestId).publicUrl;
+    }
+    if (activityRequestPdf) {
+      pdfUrls["activity_request_url"] =
+        getActivityRequestByRequestId(requestId).publicUrl;
+    }
+    if (riskAnalysisPdf) {
+      pdfUrls["risk_analysis_url"] =
+        getRiskAnalysisByRequestId(requestId).publicUrl;
+    }
+
+    mutateRequest({ requestData: requestData, request_id: requestId });
+
+    // success toast
+    toast({
+      title: "You have successfully Submitted the Form :)",
+      description: "Please wait patiently for Admin Feedback.",
+      action: <ToastAction altText="Undo">Undo</ToastAction>,
+    });
   };
 
   const { data: facilities = [], status, error } = useGetFacilities();
@@ -373,23 +408,23 @@ const FormRequest = () => {
                       )}
                     />
                   </div>
-                  <FormField
-                    control={form.control}
-                    name="files"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Optional: Attach Request File</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+
+                  <div>
+                    <Label>Optional: Attach Activity Request</Label>
+                    <p>
+                      <Link
+                        href=""
+                        className="underline italic text-secondary-500"
+                      >
+                        See template here
+                      </Link>
+                    </p>
+                  </div>
+                  <Input
+                    type="file"
+                    onChange={(e) => setActivityRequestPdf(e.target.files?.[0])}
                   />
+
                   <CardHeader className="pt-8 pl-0 pb-0">
                     <CardTitle className="text-primary font-bold text-3xl">
                       Risk Table
@@ -404,23 +439,22 @@ const FormRequest = () => {
                     append={appendRisk}
                     remove={removeRisk}
                   />
-                  <FormField
-                    control={form.control}
-                    name="files"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Optional: Attach Risk Table File</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+
+                  <div>
+                    <Label>
+                      Optional: Attach Risk Analysis and Management PDF
+                    </Label>
+                    <p>
+                      <Link
+                        href=""
+                        className="underline italic text-secondary-500"
+                      >
+                        See template here
+                      </Link>
+                    </p>
+                  </div>
+                  <Input type="file" onChange={(e) => setRiskAnalysisPdf(e)} />
+
                   <CardHeader className=" pt-8 pl-0 pb-0">
                     <CardTitle className="text-primary font-bold text-3xl">
                       Program Schedule
@@ -435,25 +469,23 @@ const FormRequest = () => {
                     append={appendProgram}
                     remove={removeProgram}
                   />
-                  <FormField
-                    control={form.control}
-                    name="files"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Optional: Attach Program Schedule File
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="file"
-                            onChange={(e) => field.onChange(e.target.files)}
-                            multiple
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+
+                  <div>
+                    <Label>Optional: Attach Activity Design PDF</Label>
+                    <p>
+                      <Link
+                        href=""
+                        className="underline italic text-secondary-500"
+                      >
+                        See template here
+                      </Link>
+                    </p>
+                  </div>
+                  <Input
+                    type="file"
+                    onChange={(e) => setActivityDesignPdf(e.target.files?.[0])}
                   />
+
                   <div className="flex space-x-4 justify-center py-8">
                     <Button
                       className="bg-primary-400 hover:bg-primary font-bold"

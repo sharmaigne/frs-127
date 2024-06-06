@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { ZodObject, z } from "zod";
+import { Facility } from "./types";
 
 // TODO: add facility manager & master facility
 export const createFacilitySchema = z.object({
@@ -29,8 +30,6 @@ export const requestFormSchema = z.object({
       (value) => { return new Date(value) > new Date(); },
       {message: "Start time must be in the future."}
     ),
-    files:
-      typeof window !== "undefined" ? z.instanceof(FileList).optional() : z.any(),
     risks_table: z
       .array(
         z.object({

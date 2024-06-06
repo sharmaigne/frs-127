@@ -1,8 +1,8 @@
 "use client"
 import { supabase } from "@/hooks/buckets/supabaseClient";
-import { ChangeEvent } from "react";
+// 
 // Handle file upload event
-const uploadFacilityImage = async (facility_id: string) => {
+const getFacilityImageById = (facility_id: string) => {
 
     const {data} = supabase
                 .storage.
@@ -11,4 +11,4 @@ const uploadFacilityImage = async (facility_id: string) => {
     return data;
 };
 
-export default uploadFacilityImage;
+export default getFacilityImageById;

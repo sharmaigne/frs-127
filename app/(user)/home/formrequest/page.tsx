@@ -34,9 +34,7 @@ import ProgramTable from "./ProgramTable";
 
 import { Request, ActivityDesign, Program, Risk } from "@/lib/types";
 import useAddRequest from "@/hooks/mutations/useAddRequest";
-import useAddActivityDesign from "@/hooks/mutations/useAddActivityDesign";
 import useAddPrograms from "@/hooks/mutations/useAddPrograms";
-import useAddRiskAnalysis from "@/hooks/mutations/useAddRiskAnalysis";
 import useAddRisks from "@/hooks/mutations/useAddRisks";
 
 // dropdown

@@ -79,14 +79,14 @@ const CreateFacility = () => {
     },
   });
   const [open, setOpen] = useState(false);
-  const [event, setEvent] = useState<ChangeEvent<HTMLInputElement> | null>(
-    null
-  );
 
   const { mutateAsync } = useAddFacility();
   const { mutate: mutateUpdateFacility } = useUpdateFacility();
 
-  const requestResultRef = useRef<Facility["Insert"]>()
+  const [event, setEvent] = useState<ChangeEvent<HTMLInputElement> | null>(
+    null
+  );
+  const requestResultRef = useRef<Facility["Insert"]>();
   const publicUrlRef = useRef<string | null>(null);
   const getImage = async (facility_id: string) => {
     const data = await getFacilityImageById(facility_id);
@@ -97,7 +97,6 @@ const CreateFacility = () => {
     getImage(requestResultRef.current?.facility_id || "");
   }, [requestResultRef.current]);
 
-
   const onSubmit = async (data: FormData) => {
     const facility: Facility["Insert"] = {
       name: data.name,
@@ -106,7 +105,6 @@ const CreateFacility = () => {
       location: data.location,
       capacity: data.capacity,
       facility_manager_id: data.facility_manager,
-      // image_url: "exists", // TODO: should be added after image upload
     };
 
     requestResultRef.current = await mutateAsync(facility);
@@ -118,10 +116,10 @@ const CreateFacility = () => {
     }
 
     // add image url to facility
-    mutateUpdateFacility(
-      {facilityData: { image_url: publicUrlRef.current },
-      facility_id: requestResultRef.current.facility_id!}
-    );
+    mutateUpdateFacility({
+      facilityData: { image_url: publicUrlRef.current },
+      facility_id: requestResultRef.current.facility_id!,
+    });
 
     // close dialog and alert user (success or error)
     setOpen(false);

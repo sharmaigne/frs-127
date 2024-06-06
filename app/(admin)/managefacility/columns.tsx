@@ -5,6 +5,8 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import EditFacility from "./editFacility";
 import { Facility } from "@/lib/types";
+import DeleteFacility from "./deleteFacility";
+
 
 export const columns: ColumnDef<Facility["Row"]>[] = [
   {
@@ -30,7 +32,7 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
   },
   {
     accessorKey: "name",
-    header: "facility",
+    header: "Facility",
     cell: ({ row }) => <div className="font-bold"> {row.getValue("name")}</div>,
   },
 
@@ -59,5 +61,26 @@ export const columns: ColumnDef<Facility["Row"]>[] = [
     accessorKey: "capacity",
     header: "Capacity",
     cell: ({ row }) => <div className="capacity">{row.getValue("capacity")}</div>,
-  }
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => {
+
+      console.log(row);
+      // const { id, someDataForRedirect } = row.original; // Access data from the row object
+
+      //ADD LOGIC FOR EDIT AND DELETE BUTTONS
+      return (
+        <div className="flex space-x-1">
+         
+            <EditFacility />
+         
+          <DeleteFacility />
+
+        </div>
+      );
+    },
+    size: 250,
+  },
 ];

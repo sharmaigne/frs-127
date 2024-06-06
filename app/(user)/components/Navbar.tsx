@@ -17,8 +17,8 @@ const Navbar = () => {
 
       {/* RIGHT SIDE: filter, notifs, profile */}
       <div className="flex items-center gap-4 mr-14">
-        <TuneIcon className="w-[30px] h-[30px] fill-light" />
-        <NotificationsIcon className="w-[30px] h-[30px] fill-light" />
+        {/* <TuneIcon className="w-[30px] h-[30px] fill-light" />
+        <NotificationsIcon className="w-[30px] h-[30px] fill-light" /> */}
         <Profile />
       </div>
     </div>

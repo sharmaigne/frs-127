@@ -61,29 +61,27 @@ export function RequestsTable({ data }: RequestsTableProps) {
     state: {
       sorting,
       columnFilters,
-      columnVisibility: {request_id: false},
+      columnVisibility: { request_id: false },
       rowSelection,
     },
   });
 
-  // const handleApprove = (id) => {
-  //   // Implement logic to approve the item with the given id (e.g., API call)
-  //   console.log("Approved item:", id);
-  // }
-
-  // const handleReject = (id) => {
-  //   // Implement logic to select the item with the given id (e.g., update state)
-  //   console.log("Selected item:", id);
-  // }
-
-  // const handleRedirect = (data) => {
-  //   // Implement logic to redirect the user based on the provided data
-  //   // You can use `window.location.href` or a routing library for this
-  //   console.log("Redirecting to:", data);
-  // }
+  const handleSort = (field: string) => {
+    setSorting((prevSorting) => {
+      const existingSort = prevSorting.find((sort) => sort.id === field);
+      if (existingSort) {
+        return prevSorting.map((sort) =>
+          sort.id === field
+            ? { ...sort, desc: !sort.desc }
+            : sort
+        );
+      }
+      return [{ id: field, desc: false }];
+    });
+  };
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Search user..."
@@ -96,12 +94,11 @@ export function RequestsTable({ data }: RequestsTableProps) {
           className="max-w-sm"
         />
 
-        {/* dropdown for toggling which columns are shown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            {/* <Button variant="outline" className="ml-auto">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
+            </Button> */}
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
@@ -125,17 +122,29 @@ export function RequestsTable({ data }: RequestsTableProps) {
 
       <div className="rounded-md border">
         <Table className="">
-          <TableHeader className="bg-primary" >
+          <TableHeader className="bg-primary">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="bg-[#8B0000] hover:bg-primary rounded-2xl">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-white font-extrabold text-base">
+                  <TableHead
+                    key={header.id}
+                    className="text-white font-extrabold text-base px-4 py-3 text-left cursor-pointer"
+                    onClick={() => handleSort(header.id)}
+                    style={{ width: header.column.getSize() }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
+                    {header.column.getCanSort() && (
+                      <>
+                        {header.column.getIsSorted() === 'asc' && ' ▲'}
+                        {header.column.getIsSorted() === 'desc' && ' ▼'}
+                      
+                      </>
+                    )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -151,7 +160,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -178,7 +187,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
           There are {""}
           {table.getFilteredRowModel().rows.length} user(s) waiting for approval.
         </div>
-        {/* <Button
+        <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
@@ -193,7 +202,7 @@ export function RequestsTable({ data }: RequestsTableProps) {
           disabled={!table.getCanNextPage()}
         >
           Next
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

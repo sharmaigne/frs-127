@@ -3,16 +3,6 @@
 import React from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { RequestsTable } from "./requestsTable";
 
 import useGetRequests from "@/hooks/queries/useGetRequests";
@@ -42,7 +32,7 @@ const RequestTabs = () => {
   );
 
   return (
-    <Tabs className="w-full " defaultValue="pending">
+    <Tabs className="w-full sticky" defaultValue="pending">
       <TabsList className="flex w-full justify-center border-b h-15 bg-accent text-black ">
         <TabsTrigger className="py-2 px-4 font-medium" value="pending">
           Pending Requests
@@ -78,7 +68,7 @@ const RequestTabs = () => {
       <TabsContent value="finished">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Finished Requests</h1>
-          <RequestsTable data={finishedRequests} />
+          <RequestsTable data={finishedRequests}  /> {/* Pass hideButtons prop */}
         </div>
       </TabsContent>
     </Tabs>

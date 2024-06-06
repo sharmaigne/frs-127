@@ -8,13 +8,16 @@ import {
 } from "@/components/ui/table";
 import CardWrapper from "./CardWrapper";
 import { Program } from "@/lib/types";
+import moment from "moment";
 import { Button } from "@/components/ui/button";
 
 interface ProgramDetailsTableProps {
   programs: Program["Row"][];
 }
 
-const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps) => {
+const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps) => 
+  {
+    const dateFormat = "LLLL";
   return (
     <CardWrapper title="Program Details">
       <Table>
@@ -28,8 +31,8 @@ const ProgramDetailsTable = ({ programs }: ProgramDetailsTableProps) => {
         <TableBody>
           {programs.map((program, index) => (
             <TableRow key={index}>
-              <TableCell>{program.timestamp_start}</TableCell>
-              <TableCell>{program.timestamp_end}</TableCell>
+              <TableCell>{moment(program.timestamp_start).format(dateFormat)}</TableCell>
+              <TableCell>{moment(program.timestamp_end).format(dateFormat)}</TableCell>
               <TableCell>{program.activity}</TableCell>
             </TableRow>
           ))}

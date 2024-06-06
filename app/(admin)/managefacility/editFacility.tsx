@@ -1,69 +1,217 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+"use client";
+// TODO: handle image upload
 
-import React from 'react'
+import { Button } from "@/components/ui/button";
+import {
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogFooter,
+  DialogContent,
+  Dialog,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+  SelectContent,
+  Select,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import { createFacilitySchema } from "@/lib/validators";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useAddFacility from "@/hooks/mutations/useAddFacility";
+import { Facility } from "@/lib/types";
+
+import { useState } from "react";
+
+type FormData = z.input<typeof createFacilitySchema>;
 
 const EditFacility = () => {
+  const form = useForm<FormData>({
+    resolver: zodResolver(createFacilitySchema),
+    defaultValues: {
+      name: "",
+      facility_type: undefined,
+      description: "",
+      location: "",
+      capacity: 0,
+      image_url: null,
+    },
+  });
+  const [open, setOpen] = useState(false);
+
+  const { mutate } = useAddFacility();
+
+  const onSubmit = async (data: FormData) => {
+    const facility: Facility["Insert"] = {
+      name: data.name,
+      type: data.facility_type,
+      description: data.description,
+      location: data.location,
+      capacity: data.capacity,
+    };
+
+    mutate(facility);
+
+    // TODO: handle image upload
+
+    // close dialog and alert user (success or error)
+
+    setOpen(false);
+    form.reset();
+  };
   return (
-    <Dialog defaultOpen>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Facility</Button>
+        <Button
+          variant="outline"
+          className=""
+        >
+          Edit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Add New Facility</DialogTitle>
-          <DialogDescription>Fill out the form to add a new facility to the system.</DialogDescription>
+          <DialogDescription>
+            Fill out the form to add a new facility to the system.
+          </DialogDescription>
         </DialogHeader>
-        <form className="grid gap-4 py-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Facility Name</Label>
-              <Input id="name" placeholder="Enter facility name" />
+
+        <Form {...form}>
+          <form
+            className="grid gap-4 py-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel>Facility Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter facility name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="facility_type"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel>Facility Type</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select facility type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="hall">Hall</SelectItem>
+                          <SelectItem value="classroom">Classroom</SelectItem>
+                          <SelectItem value="court">Court</SelectItem>
+                          <SelectItem value="field">Open Fields</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="type">Facility Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select facility type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="halls">Halls</SelectItem>
-                  <SelectItem value="classrooms">Classrooms</SelectItem>
-                  <SelectItem value="gymnasium">Gymnasium</SelectItem>
-                  <SelectItem value="openfields">Open Fields</SelectItem>
-                </SelectContent>
-              </Select>
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter facility description"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel>Location</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter facility location" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="capacity"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel>Capacity</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter facility capacity"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(+e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea id="description" placeholder="Enter facility description" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="location">Location</Label>
-              <Input id="location" placeholder="Enter facility location" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="capacity">Capacity</Label>
-              <Input id="capacity" placeholder="Enter capacity" type="number" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="picture">Upload Picture</Label>
-            <Input id="picture" type="file" />
-          </div>
-          <DialogFooter>
-            <Button type="submit">Save Facility</Button>
-          </DialogFooter>
-        </form>
+
+            <FormField
+              control={form.control}
+              name="image_url"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel>Upload Picture</FormLabel>
+                  <FormControl>
+                    <Input type="file" {...field} value={field.value ?? ""} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit">Save Facility</Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
-  )
-}
-export default EditFacility
+  );
+};
+export default EditFacility;

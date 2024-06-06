@@ -1,4 +1,5 @@
 "use client";
+
 // TODO: add logic to handle file uploads
 // TODO: add logic to get only either file upload or text inputs
 // TODO: make the form easier to use (eg. date picker)
@@ -156,33 +157,36 @@ const FormRequest = () => {
   }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log("Data: ", data);
-    // create request, send to backend
-    // doesnt handle files yet
-    const requestData: Request["Insert"] = {
-      event_name: data.event_name,
-      event_description: data.event_description,
-      organization: data.organization,
-      timestamp_start: data.timestamp_start,
-      timestamp_end: data.timestamp_end,
-      facility_id: data.facility_id,
-    };
+    try {
+      console.log("Data: ", data);
+      // create request, send to backend
+      // doesnt handle files yet
+      const requestData: Request["Insert"] = {
+        event_name: data.event_name,
+        event_description: data.event_description,
+        organization: data.organization,
+        timestamp_start: data.timestamp_start,
+        timestamp_end: data.timestamp_end,
+        facility_id: data.facility_id,
+      };
 
-    // mutateAsync is used instead of mutate since the next requests depend on the request_id
-    const requestResult = await addRequest.mutateAsync(requestData);
-    console.log("Request: ", requestResult);
-    requestId = requestResult.request_id;
+      // mutateAsync is used instead of mutate since the next requests depend on the request_id
+      const requestResult = await addRequest.mutateAsync(requestData);
+      console.log("Request: ", requestResult);
+      requestId = requestResult.request_id;
+
+      // create activity design, send to backend
+      const activityDesignData: ActivityDesign["Insert"] = {
+        request_id: requestId,
+      };
+      addActivityDesign.mutate(activityDesignData);
 
     // create program schedule, send to backend
     const programScheduleData: Program["Insert"][] = data.program_schedule?.map(
       (program) => ({
         activity: program.program,
         request_id: requestId,
-        timestamp_end: program.time_end,
-        timestamp_start: program.time_start,
-      })
-    )!; // ! is used to tell TypeScript that the value is not null
-    addPrograms.mutate(programScheduleData);
+      };
 
     const risksData: Risk["Insert"][] | undefined = data.risks_table?.map(
       (risk) => ({
@@ -227,12 +231,17 @@ const FormRequest = () => {
 
     mutateRequest({ requestData: pdfUrls, request_id: requestId });
 
-    // success toast
     toast({
-      title: "You have successfully Submitted the Form :)",
-      description: "Please wait patiently for Admin Feedback.",
+        title: "You have successfully Submitted the Form :)",
+        description: "Please wait patiently for Admin Feedback.",
       action: <ToastAction altText="Undo">Undo</ToastAction>,
-    });
+      });
+    } catch (error) {
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting the form.",
+      });
+    }
   };
 
   const { data: facilities = [], status, error } = useGetFacilities();
@@ -490,17 +499,6 @@ const FormRequest = () => {
                     <Button
                       className="bg-primary-400 hover:bg-primary font-bold"
                       type="submit"
-                      onClick={() => {
-                        // toast not working for some reason
-                        toast({
-                          title: "You have successfully Submitted the Form :)",
-                          description:
-                            "Please wait patiently for Admin Feedback.",
-                          action: (
-                            <ToastAction altText="Undo">Undo</ToastAction>
-                          ),
-                        });
-                      }}
                     >
                       Submit
                     </Button>
